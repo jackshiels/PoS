@@ -8,6 +8,6 @@ namespace PoS.BusDomain
 {
     public class Person
     {
-        // Fill
+        // Fill this file
     }
 }
