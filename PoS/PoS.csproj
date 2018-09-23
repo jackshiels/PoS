@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBMainDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DB\DB.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,9 +117,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DB\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DBMain.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
