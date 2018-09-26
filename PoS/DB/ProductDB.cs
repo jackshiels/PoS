@@ -23,6 +23,7 @@ namespace PoS.DB
         // This is the smart one. Passes into the base class and works so nice. Ayylmao
         public ProductDB(string Sql, string Table) : base(Sql, Table)
         {
+            prodList = new Collection<Product>();
             FillDataSet(sqlProd, tableProd);
             AddProducts(tableProd);
         }
@@ -73,6 +74,13 @@ namespace PoS.DB
 
             // Finally, return this guy
             return dimArr;
+        }
+        #endregion
+
+        #region Property Methods
+        public Collection<Product> ProdList
+        {
+            get { return prodList; }
         }
         #endregion
     }
