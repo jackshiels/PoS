@@ -25,12 +25,12 @@ namespace PoS.DB
         {
             prodList = new Collection<Product>();
             FillDataSet(sqlProd, tableProd);
-            AddProducts(tableProd);
+            ReadProducts(tableProd);
         }
         #endregion
 
         #region Methods
-        private void AddProducts(string table)
+        private void ReadProducts(string table)
         {
             DataRow myRow = null;
             Product aProd = new Product();
