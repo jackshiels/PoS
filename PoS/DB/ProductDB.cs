@@ -24,11 +24,12 @@ namespace PoS.DB
         public ProductDB(string Sql, string Table) : base(Sql, Table)
         {
             FillDataSet(sqlProd, tableProd);
+            AddProducts(tableProd);
         }
         #endregion
 
         #region Methods
-        private void Add2Collection(string table)
+        private void AddProducts(string table)
         {
             DataRow myRow = null;
             Product aProd = new Product();
