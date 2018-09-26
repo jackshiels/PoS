@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace PoS.DB
 {
+    // A DB superclass that handles normalised functions/data
     public class DB
     {
         #region Members
@@ -42,7 +43,7 @@ namespace PoS.DB
         #endregion
 
         #region Methods
-        protected void FillDataSet(string sql, string table)
+        public void FillDataSet(string sql, string table)
         {
             // Open the connection and fill the data set
             cnMain.Open();

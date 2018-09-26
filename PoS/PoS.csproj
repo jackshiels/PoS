@@ -73,6 +73,7 @@
       <DependentUpon>DBMainDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="DB\DB.cs" />
+    <Compile Include="DB\ProductDB.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
