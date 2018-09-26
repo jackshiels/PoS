@@ -74,7 +74,7 @@ namespace PoS.DB
                 // Submit it to the table
                 dsMain.Tables["CustomerRegister"].Rows.Add(newRegRow);
 
-                // Execute the command
+                // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                 daMain.InsertCommand.ExecuteNonQuery();
 
                 // Set true
