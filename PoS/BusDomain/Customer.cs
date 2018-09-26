@@ -10,16 +10,17 @@ namespace PoS.BusDomain
     {
         // Inherited class
         #region Members
+        private int customerId;
         private string paymentDetails;
         #endregion
 
         #region Constructors
         public Customer() : base() { }
 
-        public Customer(string name, string address, DateTime dob, string payment) : base()
+        public Customer(int CustomerID, string name, string address, DateTime dob, string payment) : base()
         {
             // Creates a Customer and fills the Person superclass with values
-
+            this.customerId = CustomerID;
             this.paymentDetails = payment;
             base.Name = name;
             base.Address = address;
@@ -28,6 +29,11 @@ namespace PoS.BusDomain
         #endregion
 
         #region Property Methods
+        public int CustomerID
+        {
+            get { return customerId; }
+            set { customerId = value; }
+        }
         public string Payment
         {
             get { return paymentDetails; }

@@ -21,7 +21,7 @@ namespace PoS.DB
 
         #region Constructors
         // Passes into the base class and works so nice. Ayylmao
-        public ProductDB(string Sql) : base(Sql)
+        public ProductDB(string sql) : base(sql)
         {
             prodList = new Collection<Product>();
             FillDataSet(sqlProd);

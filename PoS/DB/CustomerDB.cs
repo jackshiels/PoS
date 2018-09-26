@@ -14,7 +14,7 @@ namespace PoS.DB
     {
         #region Members
         private Collection<Customer> custList;
-        private string sqlProd = "SELECT * FROM CustomerRegister, SELECT * FROM Customer, SELECT * FROM Person";
+        private string sqlProd = "SELECT * FROM CustomerRegister; SELECT * FROM Customer, SELECT * FROM Person";
         #endregion
 
         #region Constructors
@@ -30,16 +30,22 @@ namespace PoS.DB
         #region Methods
         public void ReadCustomers()
         {
-            DataRow myRow = null;
             Customer aCust = new Customer();
 
+            // Parses the table to get data for each customer
             foreach (DataRow dRow in dsMain.Tables["CustomerRegister"].Rows)
             {
-                myRow = dRow;
-                if (!(myRow.RowState == DataRowState.Deleted))
+                if (!(dRow.RowState == DataRowState.Deleted))
                 {
                     // Do the conversion stuff here.
-                    
+                    aCust.CustomerID = Convert.ToInt32(dRow["CustomerID"]);
+                    // Creates a row from the customer table that shares the same key from CustomerRegister
+                    DataRow temp = dsMain.Tables["Customer"].Rows.Find(Convert.ToInt32(dRow["CustomerID"]));
+                    aCust.Name = Convert.ToString(temp["Name"]);
+                    aCust.Address = Convert.ToString(temp["Address"]);
+                    aCust.Name = Convert.ToString(temp["Name"]);
+                    aCust.DOB = Convert.ToDateTime(temp["DateOfBirth"]);
+                    aCust.Payment = Convert.ToString(temp["Payment"]);
                     // Add to the list
                     custList.Add(aCust);
                 }

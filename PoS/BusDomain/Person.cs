@@ -10,16 +10,18 @@ namespace PoS.BusDomain
     {
         // Superclass for customer and employee objects
         #region Members
-        private string name;
-        private string address;
-        private DateTime dob;
+        protected int personId;
+        protected string name;
+        protected string address;
+        protected DateTime dob;
         #endregion
 
         #region Constructors
         public Person() { }
 
-        public Person(string nameVal, string addressVal, DateTime birthDate)
+        public Person(int PersonID, string nameVal, string addressVal, DateTime birthDate)
         {
+            this.personId = PersonID;
             this.name = nameVal;
             this.address = addressVal;
             this.dob = birthDate;
@@ -27,18 +29,21 @@ namespace PoS.BusDomain
         #endregion
 
         #region Property Methods
+        public string PersonID
+        {
+            get { return name; }
+            set { name = value; }
+        }
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
-
         public string Address
         {
             get { return address; }
             set { address = value; }
         }
-
         public DateTime DOB
         {
             get { return dob; }
