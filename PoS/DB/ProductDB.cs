@@ -30,6 +30,7 @@ namespace PoS.DB
         #endregion
 
         #region Methods
+        // CRUD: READ
         private void ReadProducts()
         {
             DataRow myRow = null;
