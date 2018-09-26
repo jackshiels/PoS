@@ -23,7 +23,7 @@ namespace PoS.DB
 
         #region Constructors
         // Connection upon initialise, creates a data set.
-        public DB(string sql, string table)
+        public DB(string sql)
         {
             // Initialise the components of the DB class
             cnMain = new SqlConnection(connStr);
@@ -33,7 +33,7 @@ namespace PoS.DB
             // Fills the data set by default
             try
             {
-                FillDataSet(sql, table);
+                FillDataSet(sql);
             }
             catch
             {
@@ -43,11 +43,11 @@ namespace PoS.DB
         #endregion
 
         #region Methods
-        public void FillDataSet(string sql, string table)
+        public void FillDataSet(string sql)
         {
             // Open the connection and fill the data set
             cnMain.Open();
-            daMain.Fill(dsMain, table);
+            daMain.Fill(dsMain);
 
             // Close the connection
             cnMain.Close();
@@ -66,7 +66,7 @@ namespace PoS.DB
                 cnMain.Close();
 
                 // Refresh
-                FillDataSet(sql, table);
+                FillDataSet(sql);
 
                 // Update the success bool
                 success = true;

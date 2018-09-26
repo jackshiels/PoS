@@ -15,12 +15,13 @@ namespace PoS.BusDomain
         private double[] dimensions;
         private double weight;
         private float price;
+        private DateTime expiryDate;
         #endregion
 
         #region Constructors
         public Product() { }
 
-        public Product(string prodIdVal, string nameVal, string descr, double[] dim, double weightVal, float priceVal)
+        public Product(string prodIdVal, string nameVal, string descr, double[] dim, double weightVal, float priceVal, DateTime ExpiryDate)
         {
             this.prodId = prodIdVal;
             this.name = nameVal;
@@ -28,6 +29,7 @@ namespace PoS.BusDomain
             this.dimensions = dim;
             this.weight = weightVal;
             this.price = priceVal;
+            this.expiryDate = ExpiryDate;
         }
         #endregion
 
@@ -61,6 +63,11 @@ namespace PoS.BusDomain
         {
             get { return price; }
             set { price = value; }
+        }
+        public DateTime Expiry
+        {
+            get { return expiryDate; }
+            set { expiryDate = value; }
         }
         #endregion
     }

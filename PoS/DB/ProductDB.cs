@@ -20,17 +20,17 @@ namespace PoS.DB
         #endregion
 
         #region Constructors
-        // This is the smart one. Passes into the base class and works so nice. Ayylmao
-        public ProductDB(string Sql, string Table) : base(Sql, Table)
+        // Passes into the base class and works so nice. Ayylmao
+        public ProductDB(string Sql) : base(Sql)
         {
             prodList = new Collection<Product>();
-            FillDataSet(sqlProd, tableProd);
-            ReadProducts(tableProd);
+            FillDataSet(sqlProd);
+            ReadProducts();
         }
         #endregion
 
         #region Methods
-        private void ReadProducts(string table)
+        private void ReadProducts()
         {
             DataRow myRow = null;
             Product aProd = new Product();
