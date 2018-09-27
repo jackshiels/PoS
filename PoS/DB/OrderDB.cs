@@ -154,7 +154,7 @@ namespace PoS.DB
                     {
                         if (!(Convert.ToInt32(rRow["OrderID"]) != Convert.ToInt32(dRow["OrderID"])))
                         {
-
+                            // Loop through items
                         }
                     }
                 }
@@ -162,183 +162,10 @@ namespace PoS.DB
         }
         #endregion
 
-        #region Methods - UPDATE
-        public bool UpdateCustomer(Customer aCust)
-        {
-            bool successful = false;
-
-            // Create the parameters to hide data
-            CreateUpdateParameters();
-
-            // Create the insert command
-            daMain.UpdateCommand = new SqlCommand("UPDATE Customer SET Payment = @PMNT WHERE CustomerID = @CUID; UPDATE Person SET Name = @PENM, Address = @ADDR, DateOfBirth = @DOFB WHERE PersonID = @PEID;", cnMain);
-
-            // Checks if the object exists, replace it. Otherwise exit with a failure
-            if (ReplaceListItem(aCust) == true)
-            {
-                try
-                {
-                    // Update the customer in the DataSet via an existing row object in each table
-
-                    // --- CUSTOMER ------------------------------------------
-
-                    // Update a row based on the table schema
-                    DataRow updatedCustRow = dsMain.Tables["Customer"].Rows[FindRowIndex(aCust, "Customer")];
-                    // Parse the customer object into the row
-                    FillRow(updatedCustRow, aCust);
-
-                    // --- PERSON -------------------------------------------
-
-                    // Update a row based on the table schema
-                    DataRow updatedPersRow = dsMain.Tables["Person"].Rows[FindRowIndex(aCust, "Person")];
-                    // Parse the customer object into the row
-                    FillRow(updatedPersRow, aCust);
-
-                    // --- CUSTOMERREGISTER ---------------------------------
-
-                    // SHOULD AUTOMATICALLY CASCADE. TEST THIS!
-
-                    // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
-                    // daMain.UpdateCommand.ExecuteNonQuery();
-                    // UpdateDataSource(sqlProd);
-
-                    // Set true
-                    successful = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("An error of type " + ex);
-                }
-            }
-
-            return successful;
-        }
-
-        public void CreateUpdateParameters()
-        {
-            SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
-            daMain.UpdateCommand.Parameters.Add(param);
-
-            param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
-            daMain.UpdateCommand.Parameters.Add(param);
-
-            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
-            daMain.UpdateCommand.Parameters.Add(param);
-
-            param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
-            daMain.UpdateCommand.Parameters.Add(param);
-
-            param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
-            daMain.UpdateCommand.Parameters.Add(param);
-
-            param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
-            daMain.UpdateCommand.Parameters.Add(param);
-        }
-
-        public bool ReplaceListItem(Customer aCust)
-        {
-            bool success = false;
-
-            // Searches for the item, then replaces it
-            for (int i = 0; i < custList.Count; i++)
-            {
-                if (custList[i].CustomerID == aCust.CustomerID)
-                {
-                    custList.RemoveAt(i);
-                    custList[i] = aCust;
-                    // Set true for return
-                    success = true;
-                    // Exit loop
-                    break;
-                }
-            }
-
-            return success;
-        }
+        #region Methods - UPDATE    
         #endregion
 
         #region Methods - DELETE
-        public bool DeleteCustomer(Customer aCust)
-        {
-            bool successful = false;
-
-            // Create the parameters to hide data
-            CreateDeleteParameters();
-
-            // Create the sql command for deletion
-            daMain.DeleteCommand = new SqlCommand("DELETE FROM Customer WHERE CustomerID = @CUID; DELETE FROM Person WHERE PersonID = @PEID;", cnMain);
-
-            // Checks if the object exists, delete it. Otherwise exit with a failure
-            if (DeleteListItem(aCust) == true)
-            {
-                try
-                {
-                    // Delete the customer in the DataSet via an existing row object in each table
-
-                    // --- CUSTOMER ------------------------------------------
-
-                    // Delete a row based on the table schema
-                    DataRow updatedCustRow = dsMain.Tables["Customer"].Rows[FindRowIndex(aCust, "Customer")];
-                    // Kill it with fire
-                    updatedCustRow.Delete();
-
-                    // --- PERSON -------------------------------------------
-
-                    // Update a row based on the table schema
-                    DataRow updatedPersRow = dsMain.Tables["Person"].Rows[FindRowIndex(aCust, "Person")];
-                    // End its existence
-                    updatedPersRow.Delete();
-
-                    // --- CUSTOMERREGISTER ---------------------------------
-
-                    // SHOULD AUTOMATICALLY CASCADE. TEST THIS!
-
-                    // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
-                    // daMain.DeleteCommand.ExecuteNonQuery();
-                    // UpdateDataSource(sqlProd);
-
-                    // Set true
-                    successful = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("An error of type " + ex);
-                }
-            }
-
-            return successful;
-        }
-
-        public void CreateDeleteParameters()
-        {
-            SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
-            daMain.UpdateCommand.Parameters.Add(param);
-
-            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
-            daMain.UpdateCommand.Parameters.Add(param);
-        }
-
-        public bool DeleteListItem(Customer aCust)
-        {
-            bool success = false;
-
-            // Searches for the item, then replaces it
-            for (int i = 0; i < custList.Count; i++)
-            {
-                if (custList[i].CustomerID == aCust.CustomerID)
-                {
-                    custList.RemoveAt(i);
-                    // Set true for return
-                    success = true;
-                    // Exit loop
-                    break;
-                }
-            }
-
-            return success;
-        }
         #endregion
 
         #region Methods - GENERALISED
@@ -387,9 +214,13 @@ namespace PoS.DB
         #endregion
 
         #region Property Methods
-        public Collection<Customer> CustList
+        public Collection<Order> OrdList
         {
-            get { return custList; }
+            get { return ordList; }
+        }
+        public Collection<OrderItem> OrdItemList
+        {
+            get { return ordItemList; }
         }
         #endregion
     }
