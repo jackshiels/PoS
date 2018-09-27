@@ -22,6 +22,13 @@ namespace PoS.DB
         #endregion
 
         #region Constructors
+        public DB()
+        {
+            // Initialise the components of the DB class
+            cnMain = new SqlConnection(connStr);
+            dsMain = new DataSet();
+        }
+
         // Connection upon initialise, creates a data set.
         public DB(string sql)
         {
@@ -45,6 +52,10 @@ namespace PoS.DB
         #region Methods
         public void FillDataSet(string sql)
         {
+            if (daMain == null)
+            {
+                daMain = new SqlDataAdapter(sql, cnMain);
+            }
             // Open the connection and fill the data set
             cnMain.Open();
             daMain.Fill(dsMain);

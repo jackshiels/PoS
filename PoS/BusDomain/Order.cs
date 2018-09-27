@@ -12,9 +12,9 @@ namespace PoS.BusDomain
         #region Members
         private int orderId;
         private Collection<OrderItem> itemList;
+        private DateTime deliveryDate;
         private float total;
         private Customer owner;
-        private DateTime deliveryDate;
         // Orders may be directed to a different address than that of the Customer's on-file location.
         private string address;
         #endregion
@@ -128,7 +128,6 @@ namespace PoS.BusDomain
         #endregion
 
         #region Property Methods
-        // Get-set properties
         public Customer Owner
         {
             get { return owner; }
@@ -139,24 +138,26 @@ namespace PoS.BusDomain
             get { return address; }
             set { address = value; }
         }
-
-        // Get properties
         public int OrderID
         {
             get { return orderId; }
+            set { orderId = value; }
         }
         public Collection<OrderItem> ItemList
         {
             get { return itemList; }
+            set { itemList = value; }
         }
         public float Total
         {
             // Calculates and gets the total value
             get { return CalculateTotal(); }
+            set { total = value; }
         }
         public DateTime DeliveryDate
         {
             get { return deliveryDate; }
+            set { deliveryDate = value; }
         }
         #endregion
     }

@@ -11,20 +11,22 @@ using System.Windows.Forms;
 
 namespace PoS.DB
 {
-    public class CustomerDB : DB
+    public class OrderDB : DB
     {
         #region Members
-        private Collection<Customer> custList;
-        private string sqlProd = "SELECT * FROM CustomerRegister; SELECT * FROM Customer; SELECT * FROM Person";
+        private Collection<Order> ordList;
+        private Collection<OrderItem> ordItemList;
+        private string sqlOrd = "SELECT * FROM Order; SELECT * FROM OrderItem SELECT * FROM OrderItemRegister; SELECT * FROM OrderRegister;";
+        private string tableOrd = "Order";
         #endregion
 
         #region Constructors
-        // This is the smart one. Passes into the base class and works so nice. Ayylmao
-        public CustomerDB() : base()
+        // Passes into the base class and works so nice. Ayylmao
+        public OrderDB(string sql) : base(sql)
         {
-            custList = new Collection<Customer>();
-            FillDataSet(sqlProd);
-            ReadCustomers();
+            ordList = new Collection<Order>();
+            FillDataSet(sqlOrd);
+            ReadOrders();
         }
         #endregion
 
@@ -81,7 +83,7 @@ namespace PoS.DB
                 // Set true
                 successful = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An error of type " + ex);
             }
@@ -113,28 +115,48 @@ namespace PoS.DB
         #endregion
 
         #region Methods - READ
-        public void ReadCustomers()
+        private void ReadOrders()
         {
-            Customer aCust = new Customer();
-
-            // Parses the table to get data for each customer
-            foreach (DataRow dRow in dsMain.Tables["CustomerRegister"].Rows)
+            foreach (DataRow dRow in dsMain.Tables[tableOrd].Rows)
             {
                 if (!(dRow.RowState == DataRowState.Deleted))
                 {
-                    // Do the conversion stuff here.
-                    aCust.CustomerID = Convert.ToInt32(dRow["CustomerID"]);
-                    // Creates a row from the customer table that shares the same key from CustomerRegister
-                    DataRow temp = dsMain.Tables["Customer"].Rows.Find(Convert.ToInt32(dRow["CustomerID"]));
-                    aCust.Payment = Convert.ToString(temp["Payment"]);
-                    // Creates a row from the person table that shares the same key from CustomerRegister
-                    temp = dsMain.Tables["Person"].Rows.Find(Convert.ToInt32(dRow["PersonID"]));
-                    aCust.Name = Convert.ToString(temp["Name"]);
-                    aCust.Address = Convert.ToString(temp["Address"]);
-                    aCust.DOB = Convert.ToDateTime(temp["DateOfBirth"]);
-                    
-                    // Add to the list
-                    custList.Add(aCust);
+                    Order anOrd = new Order();
+
+                    // Do the Order conversion stuff here.
+                    anOrd.OrderID = Convert.ToInt32(dRow["OrderID"]);
+                    anOrd.DeliveryDate = Convert.ToDateTime(dRow["DeliveryDate"]);
+                    anOrd.Total = (float)Convert.ToDouble(dRow["Total"]);
+                    anOrd.Address = Convert.ToString(dRow["Address"]);
+
+                    // Find the corresponding customer id
+                    // THIS MAY THROW AN ERROR, AS THE PK IS TWO-PART. CHECK!
+                    DataRow temp = dsMain.Tables["OrderRegister"].Rows.Find(Convert.ToInt32(dRow["OrderID"]));
+                    int cust = Convert.ToInt32(temp["CustomerID"]);
+
+                    // Connect to the customer DB to get the customer
+                    CustomerDB findCust = new CustomerDB();
+                    Customer owner = findCust.FindCustomerObject(Convert.ToInt32(temp["CustomerID"]));
+
+                    // check for null
+                    if (owner.Name != null)
+                    {
+                        anOrd.Owner = findCust.FindCustomerObject(Convert.ToInt32(temp["CustomerID"]));
+                    }
+                    else
+                    {
+                        // If it can't find, throw an error
+                        MessageBox.Show("Could not find an owner for order " + Convert.ToString(temp["OrderID"]));
+                    }
+
+                    // Now the big one - get every orderitem and insert it into the order object
+                    foreach (DataRow rRow in dsMain.Tables["OrderItemRegister"].Rows)
+                    {
+                        if (!(Convert.ToInt32(rRow["OrderID"]) != Convert.ToInt32(dRow["OrderID"])))
+                        {
+
+                        }
+                    }
                 }
             }
         }
@@ -163,7 +185,7 @@ namespace PoS.DB
                     // Update a row based on the table schema
                     DataRow updatedCustRow = dsMain.Tables["Customer"].Rows[FindRowIndex(aCust, "Customer")];
                     // Parse the customer object into the row
-                    FillRow(updatedCustRow,aCust);
+                    FillRow(updatedCustRow, aCust);
 
                     // --- PERSON -------------------------------------------
 
@@ -361,22 +383,6 @@ namespace PoS.DB
             }
 
             return returnValue;
-        }
-
-        public Customer FindCustomerObject(int custId)
-        {
-            Customer foundCust = new Customer();
-
-            // Search for this thing
-            for (int i = 0; i < custList.Count; i++)
-            {
-                if (custList[i].CustomerID == custId)
-                {
-                    foundCust = custList[i];
-                }
-            }
-
-            return foundCust;
         }
         #endregion
 

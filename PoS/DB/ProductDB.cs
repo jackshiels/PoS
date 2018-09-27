@@ -29,7 +29,7 @@ namespace PoS.DB
         }
         #endregion
 
-        #region Methods
+        #region Methods - READ
         // CRUD: READ
         private void ReadProducts()
         {
