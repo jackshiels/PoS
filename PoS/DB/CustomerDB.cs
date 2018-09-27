@@ -29,6 +29,7 @@ namespace PoS.DB
         #endregion
 
         #region Methods - CREATE
+        // CRUD CREATE
         public bool InsertCustomer(Customer aCust)
         {
             bool successful = false;
@@ -37,8 +38,7 @@ namespace PoS.DB
             CreateInsertParameters();
 
             // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment) VALUES (@CUID, @PMNT); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);");
-
+            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment) VALUES (@CUID, @PMNT); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
 
             // Add the customer into the list anyway
             custList.Add(aCust);
@@ -75,7 +75,8 @@ namespace PoS.DB
                 dsMain.Tables["CustomerRegister"].Rows.Add(newRegRow);
 
                 // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
-                daMain.InsertCommand.ExecuteNonQuery();
+                // daMain.InsertCommand.ExecuteNonQuery();
+                // UpdateDataSource(sqlProd);
 
                 // Set true
                 successful = true;
@@ -108,28 +109,7 @@ namespace PoS.DB
             param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
             daMain.InsertCommand.Parameters.Add(param);
         }
-
         // This method fills the given row with appropriate members from a customer object, depending on the table the row comes from
-        public void FillRow(DataRow row, Customer cust)
-        {
-            if (row.Table.TableName == "Customer")
-            {
-                row["CustomerID"] = cust.CustomerID;
-                row["Payment"] = cust.Payment;
-            }
-            else if (row.Table.TableName == "Person")
-            {
-                row["PersonID"] = cust.PersonID;
-                row["Name"] = cust.Name;
-                row["Address"] = cust.Address;
-                row["DateOfBirth"] = cust.DOB;
-            }
-            else if (row.Table.TableName == "CustomerRegister")
-            {
-                row["CustomerID"] = cust.CustomerID;
-                row["PersonID"] = cust.PersonID;
-            }
-        }
         #endregion
 
         #region Methods - READ
@@ -158,7 +138,147 @@ namespace PoS.DB
             }
         }
         #endregion
-        
+
+        #region Methods - UPDATE
+        public bool UpdateCustomer(Customer cust)
+        {
+            bool successful = false;
+
+            // Create the parameters to hide data
+            CreateUpdateParameters();
+
+            // Create the insert command
+            daMain.UpdateCommand = new SqlCommand("UPDATE Customer SET Payment = @PMNT WHERE CustomerID = @CUID; UPDATE Person SET Name = @PENM, Address = @ADDR, DateOfBirth = @DOFB WHERE PersonID = @PEID;", cnMain);
+
+            // Checks if the object exists, replace it. Otherwise exit with a failure
+            if (ReplaceListItem(cust) == true)
+            {
+                try
+                {
+                    // Update the customer in the DataSet via an existing row object in each table
+
+                    // --- CUSTOMER ------------------------------------------
+
+                    // Update a row based on the table schema
+                    DataRow updatedCustRow = dsMain.Tables["Customer"].Rows[FindRowIndex(cust, "Customer")];
+                    // Parse the customer object into the row
+                    FillRow(updatedCustRow, cust);
+
+                    // --- PERSON -------------------------------------------
+
+                    // Update a row based on the table schema
+                    DataRow updatedPersRow = dsMain.Tables["Person"].Rows[FindRowIndex(cust, "Person")];
+                    // Parse the customer object into the row
+                    FillRow(updatedPersRow, cust);
+
+                    // --- CUSTOMERREGISTER ---------------------------------
+
+                    // SHOULD AUTOMATICALLY CASCADE. TEST THIS!
+
+                    // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
+                    // daMain.UpdateCommand.ExecuteNonQuery();
+                    // UpdateDataSource(sqlProd);
+
+                    // Set true
+                    successful = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error of type " + ex);
+                }
+            }
+
+            return successful;
+        }
+
+        public void CreateUpdateParameters()
+        {
+            SqlParameter param = default(SqlParameter);
+            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
+            daMain.UpdateCommand.Parameters.Add(param);
+        }
+
+        public bool ReplaceListItem(Customer aCust)
+        {
+            bool success = false;
+
+            // Searches for the item, then replaces it
+            for (int i = 0; i < custList.Count; i++)
+            {
+                if (custList[i] == aCust)
+                {
+                    custList.RemoveAt(i);
+                    custList[i] = aCust;
+                    // Set true for return
+                    success = true;
+                    // Exit loop
+                    break;
+                }
+            }
+
+            return success;
+        }
+        #endregion
+
+        #region Methods - GENERALISED
+        // Used by INSERT and UPDATE
+        public void FillRow(DataRow row, Customer cust)
+        {
+            if (row.Table.TableName == "Customer")
+            {
+                row["CustomerID"] = cust.CustomerID;
+                row["Payment"] = cust.Payment;
+            }
+            else if (row.Table.TableName == "Person")
+            {
+                row["PersonID"] = cust.PersonID;
+                row["Name"] = cust.Name;
+                row["Address"] = cust.Address;
+                row["DateOfBirth"] = cust.DOB;
+            }
+            else if (row.Table.TableName == "CustomerRegister")
+            {
+                row["CustomerID"] = cust.CustomerID;
+                row["PersonID"] = cust.PersonID;
+            }
+        }
+
+        // Used by UPDATE
+        private int FindRowIndex(Customer aCust, string table)
+        {
+            int rowIndex = 0;
+            int returnValue = -1;
+
+            foreach (DataRow row in dsMain.Tables[table].Rows)
+            {
+                if (!(row.RowState == DataRowState.Deleted))
+                {
+                    if (aCust.CustomerID == Convert.ToInt32(dsMain.Tables[table].Rows[rowIndex]["CustomerID"]))
+                    {
+                        returnValue = rowIndex;
+                    }
+                }
+                rowIndex += 1;
+            }
+
+            return returnValue;
+        }
+        #endregion
 
         #region Property Methods
         public Collection<Customer> CustList

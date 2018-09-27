@@ -53,7 +53,7 @@ namespace PoS.DB
             cnMain.Close();
         }
 
-        protected bool UpdateDataSource(string sql, string table)
+        protected bool UpdateDataSource(string sql)
         {
             // Success bool
             bool success = false;
@@ -62,7 +62,7 @@ namespace PoS.DB
             {
                 // Open the connection and update the data set
                 cnMain.Open();
-                daMain.Update(dsMain, table);
+                daMain.Update(dsMain);
                 cnMain.Close();
 
                 // Refresh
