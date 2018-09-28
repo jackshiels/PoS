@@ -9,7 +9,7 @@ namespace PoS.BusDomain
     public class Employee : Person
     {
         // Inherited class. Enumeration RoleType defines the employee role.
-        public enum RoleType { MarketingClerk = 0, PickingClerk = 1 };
+        public enum RoleType { MarketingClerk = 0, PickingClerk = 1, StockControlClerk = 2 };
 
         #region Members
         private RoleType role;

@@ -21,7 +21,7 @@ namespace PoS.DB
 
         #region Constructors
         // Passes into the base class and works so nice. Ayylmao
-        public ProductDB(string sql) : base(sql)
+        public ProductDB() : base()
         {
             prodList = new Collection<Product>();
             FillDataSet(sqlProd);
@@ -30,7 +30,6 @@ namespace PoS.DB
         #endregion
 
         #region Methods - READ
-        // CRUD: READ
         private void ReadProducts()
         {
             DataRow myRow = null;
@@ -47,6 +46,7 @@ namespace PoS.DB
                     aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
                     aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
                     aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
+                    aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
                     // Add to the list
                     prodList.Add(aProd);
                 }
@@ -75,6 +75,15 @@ namespace PoS.DB
 
             // Finally, return this guy
             return dimArr;
+        }
+        #endregion
+
+        #region Methods - Generalised
+        public Collection<Product> ExpiringList()
+        {
+            Collection<Product> expiringList = new Collection<Product>();
+
+            return expiringList;
         }
         #endregion
 
