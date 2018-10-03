@@ -12,6 +12,7 @@ namespace PoS.BusDomain
         #region Members
         private int customerId;
         private string paymentDetails;
+        private int blackListed;
         #endregion
 
         #region Constructors
@@ -22,9 +23,24 @@ namespace PoS.BusDomain
             // Creates a Customer and fills the Person superclass with values
             this.customerId = CustomerID;
             this.paymentDetails = payment;
+            this.blackListed = 0;
             base.Name = name;
             base.Address = address;
             base.DOB = dob;
+        }
+        #endregion
+
+        #region Methods
+        public void ChangeBlackListed(bool val)
+        {
+            if (val == true)
+            {
+                blackListed = 1;
+            }
+            else
+            {
+                blackListed = 0;
+            }
         }
         #endregion
 
@@ -38,6 +54,11 @@ namespace PoS.BusDomain
         {
             get { return paymentDetails; }
             set { paymentDetails = value; }
+        }
+        public int BlackListed
+        {
+            get { return blackListed; }
+            set { blackListed = value; }
         }
         #endregion
     }
