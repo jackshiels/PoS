@@ -38,7 +38,7 @@ namespace PoS.DB
             CreateInsertParameters();
 
             // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment) VALUES (@CUID, @PMNT); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
+            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, BlackListed) VALUES (@CUID, @PMNT, @BLCK); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
 
             // Add the customer into the list anyway
             custList.Add(aCust);
@@ -97,6 +97,9 @@ namespace PoS.DB
             param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
             daMain.InsertCommand.Parameters.Add(param);
 
+            param = new SqlParameter("@BLCK", SqlDbType.Bit, 1, "BlackListed");
+            daMain.InsertCommand.Parameters.Add(param);
+
             param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
             daMain.InsertCommand.Parameters.Add(param);
 
@@ -127,6 +130,7 @@ namespace PoS.DB
                     // Creates a row from the customer table that shares the same key from CustomerRegister
                     DataRow temp = dsMain.Tables["Customer"].Rows.Find(Convert.ToInt32(dRow["CustomerID"]));
                     aCust.Payment = Convert.ToString(temp["Payment"]);
+                    aCust.BlackListed = Convert.ToInt32(temp["BlackListed"]);
                     // Creates a row from the person table that shares the same key from CustomerRegister
                     temp = dsMain.Tables["Person"].Rows.Find(Convert.ToInt32(dRow["PersonID"]));
                     aCust.Name = Convert.ToString(temp["Name"]);
