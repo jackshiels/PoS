@@ -96,6 +96,9 @@
     <EmbeddedResource Include="Presentation\LogIn.resx">
       <DependentUpon>LogIn.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -139,10 +142,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>DBMain.mdf</DependentUpon>
     </Content>
-    <None Include="Resources\Logo22.png" />
-    <None Include="Resources\Logo21.png" />
+    <None Include="Resources\Divide.png" />
+    <None Include="Resources\UserIcon.png" />
+    <None Include="Resources\Square.png" />
     <None Include="Resources\Logo2.png" />
-    <None Include="Resources\PoppelLogo1.png" />
     <None Include="Resources\PoppelLogo.png" />
     <None Include="Resources\Motif.png" />
   </ItemGroup>
