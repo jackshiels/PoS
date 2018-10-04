@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,14 @@ namespace PoS.BusDomain
         #region Members
         private int hashVal; //int value that will be returned by the CreateID method
         private Guid hashKey; //GUID object used to generate the random string used as input for the Hash method
+        private Collection<int> values;
         #endregion
         
         #region Constructors
         public IDGen()
         {
             hashVal = 0; //setting the hashVal variable to 0
+            values = new Collection<int>();
         }
         #endregion
         
@@ -28,9 +31,8 @@ namespace PoS.BusDomain
          */
         public int CreateID()
         {
-            hashKey = System.Guid.NewGuid(); //create new GUID object to decrease chance of recurring IDs
+            hashKey = Guid.NewGuid(); //create new GUID object to decrease chance of recurring IDs
             string x = hashKey.ToString();
-            int id = Hash(x);
             return Hash(x);
         }
          /** Method that uses the fundamentals of hash tables to generate an integer which is used as the ID
@@ -44,10 +46,25 @@ namespace PoS.BusDomain
             for (int i = 0; i < splitKey.Length; i++)
             {
                 char temp = splitKey[i];
-                int asciiValue = (int) temp;
+                int asciiValue = temp;
                 hashVal = ((hashVal * 128) + asciiValue) % hashTableSize; //128 is the encryption value, could be set to anything
             }
+            if (AlreadyMade(hashVal))
+                hashVal = Hash(Guid.NewGuid().ToString()); // recursive
+            
+            values.Add(hashVal);          
             return hashVal;
+        }
+
+        private Boolean AlreadyMade(int key)
+        {
+            Boolean made = false;
+            foreach (int x in values)
+            {
+                if (key == x)
+                    made = true;
+            }
+            return made;
         }
         #endregion
         
