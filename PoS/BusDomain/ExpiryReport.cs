@@ -15,13 +15,15 @@ namespace PoS.BusDomain
         ProductDB prodConnect;
         Collection<Product> expiring;
         Collection<Product> expired;
+        private IDGen generator;
         #endregion
 
         #region Constructors
         public ExpiryReport()
         {
             // Tumi-side software dev
-            reportId = IDGen.CreateID();
+            generator = new IDGen();
+            reportId = generator.CreateID();
             expiring = new Collection<Product>();
             expired = new Collection<Product>();
             prodConnect = new ProductDB();

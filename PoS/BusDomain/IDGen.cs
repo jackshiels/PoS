@@ -50,12 +50,16 @@ namespace PoS.BusDomain
                 hashVal = ((hashVal * 128) + asciiValue) % hashTableSize; //128 is the encryption value, could be set to anything
             }
             if (AlreadyMade(hashVal))
-                hashVal = Hash(Guid.NewGuid().ToString()); // recursive
+                hashVal = Hash(Guid.NewGuid().ToString()); // recursive call with a new encrypter string
+            else
+                values.Add(hashVal); //Add that value to the collection once it is confirmed that it has not been remade
             
-            values.Add(hashVal);          
             return hashVal;
         }
 
+        /**
+         * A method used to check if a particular ID has been made before
+         */
         private Boolean AlreadyMade(int key)
         {
             Boolean made = false;
