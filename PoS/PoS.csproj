@@ -110,14 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="DBMainDataSet.xsc">
       <DependentUpon>DBMainDataSet.xsd</DependentUpon>
     </None>
@@ -133,6 +128,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -151,11 +151,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>DBMain.mdf</DependentUpon>
     </Content>
-    <None Include="Resources\Divide.png" />
-    <None Include="Resources\UserIcon.png" />
-    <None Include="Resources\Square.png" />
-    <None Include="Resources\Logo2.png" />
-    <None Include="Resources\PoppelLogo.png" />
+    <None Include="Resources\Background.bmp" />
+    <None Include="Resources\Background.png" />
     <None Include="Resources\Motif.png" />
   </ItemGroup>
   <ItemGroup>

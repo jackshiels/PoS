@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogIn));
             this.btnLogIn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblLogInWelcome = new System.Windows.Forms.Label();
             this.lblLogInName = new System.Windows.Forms.Label();
             this.lblLogInPassword = new System.Windows.Forms.Label();
-            this.pbTitle = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTitle)).BeginInit();
+            this.pbOrderLogo = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLogIn
@@ -65,17 +66,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(219, 27);
             this.textBox2.TabIndex = 2;
-            // 
-            // pbLogo
-            // 
-            this.pbLogo.BackColor = System.Drawing.Color.Transparent;
-            this.pbLogo.BackgroundImage = global::PoS.Properties.Resources.PoppelLogo1;
-            this.pbLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pbLogo.Location = new System.Drawing.Point(12, 12);
-            this.pbLogo.Name = "pbLogo";
-            this.pbLogo.Size = new System.Drawing.Size(188, 136);
-            this.pbLogo.TabIndex = 3;
-            this.pbLogo.TabStop = false;
             // 
             // lblLogInWelcome
             // 
@@ -107,39 +97,46 @@
             this.lblLogInPassword.TabIndex = 8;
             this.lblLogInPassword.Text = "Password:";
             // 
-            // pbTitle
+            // pbOrderLogo
             // 
-            this.pbTitle.BackColor = System.Drawing.Color.Transparent;
-            this.pbTitle.BackgroundImage = global::PoS.Properties.Resources.Logo22;
-            this.pbTitle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pbTitle.Location = new System.Drawing.Point(206, 42);
-            this.pbTitle.Name = "pbTitle";
-            this.pbTitle.Size = new System.Drawing.Size(438, 106);
-            this.pbTitle.TabIndex = 9;
-            this.pbTitle.TabStop = false;
+            this.pbOrderLogo.BackColor = System.Drawing.Color.Transparent;
+            this.pbOrderLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbOrderLogo.BackgroundImage")));
+            this.pbOrderLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pbOrderLogo.Location = new System.Drawing.Point(132, 12);
+            this.pbOrderLogo.Name = "pbOrderLogo";
+            this.pbOrderLogo.Size = new System.Drawing.Size(387, 95);
+            this.pbOrderLogo.TabIndex = 9;
+            this.pbOrderLogo.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(114, 95);
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
             // 
             // LogIn
             // 
-            this.AcceptButton = this.btnLogIn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.BackgroundImage = global::PoS.Properties.Resources.Motif;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(814, 329);
-            this.Controls.Add(this.pbTitle);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(794, 338);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pbOrderLogo);
             this.Controls.Add(this.lblLogInPassword);
             this.Controls.Add(this.lblLogInName);
             this.Controls.Add(this.lblLogInWelcome);
-            this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnLogIn);
             this.DoubleBuffered = true;
             this.Name = "LogIn";
             this.Text = "Log In";
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTitle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,11 +147,11 @@
         private System.Windows.Forms.Button btnLogIn;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.Label lblLogInWelcome;
         private System.Windows.Forms.Label lblLogInName;
         private System.Windows.Forms.Label lblLogInPassword;
-        private System.Windows.Forms.PictureBox pbTitle;
+        private System.Windows.Forms.PictureBox pbOrderLogo;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
