@@ -9,12 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace PoS.Presentation
 {
     public partial class Main : Form
     {
         private CustomerDB customerDB = new CustomerDB();
+
         public Main()
         {
             InitializeComponent();
@@ -118,7 +121,21 @@ namespace PoS.Presentation
             String name = txtCustName.Text;
             String address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " + 
                 txtCustCity.Text + " " + txtCustProvince.Text;
-            Customer customer = new Customer();
+            Customer customer;
+            if (cmbCustPayment.Text.Equals("EFT"))
+            {
+                customer = new Customer(name,address);
+            }
+            else
+            {
+                string paymentDetails = txtCustCardNum.Text+txtCustCVV+txtCustCardName;
+                customer = new Customer(name,address,paymentDetails);
+            }
+            Boolean success = customerDB.InsertCustomer(customer);
+            grpNewCustomer.Hide();
+            grpSuccessfulCustomer.Show();
+            Thread.Sleep(5000);
+            grpFunction.Show();
         }
 
         private void cmbCustPayment_SelectedIndexChanged(object sender, EventArgs e)
@@ -135,6 +152,26 @@ namespace PoS.Presentation
                 txtCustCardNum.Enabled = true;
                 txtCustCVV.Enabled = true;
             }
+        }
+        #endregion
+
+        #region Auxilary
+        public void fillLists()
+        {
+            Collection<Customer> customers = customerDB.CustList;
+            foreach (Customer customer in customers)
+            {
+                lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID);
+            }
+            
+            //lstOrderItems;
+            //lstUpdateList;
+        }
+       
+
+        private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillLists();
         }
         #endregion
     }
