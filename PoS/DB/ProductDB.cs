@@ -47,6 +47,8 @@ namespace PoS.DB
                     aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
                     aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
+                    aProd.Location = Convert.ToString(myRow["Location"]);
+                    aProd.Reserved = Convert.ToInt32(myRow["Reserved"]);
                     // Add to the list
                     prodList.Add(aProd);
                 }
@@ -97,10 +99,11 @@ namespace PoS.DB
                     aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
                     aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
+                    aProd.Location = Convert.ToString(myRow["Location"]);
+                    aProd.Reserved = Convert.ToInt32(myRow["Reserved"]);
                 }
-
                 
-                if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
+                if (aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
                 {
                     for (int i = 0; i < expiryList.Count(); i++)  //iterate through all orderItems already in the Collection
                     {
