@@ -48,9 +48,10 @@ namespace PoS.DB
                     aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
                     aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
+                    aProd.Location = Convert.ToString(myRow["Location"]);
+                    aProd.Reserved = Convert.ToByte(myRow["Reserved"]);
                 }
 
-                
                 if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
                 {
                     for (int i = 0; i < expiryList.Count(); i++)  //iterate through all orderItems already in the Collection
@@ -122,27 +123,63 @@ namespace PoS.DB
             // Finally, return this guy
             return dimArr;
         }
+
+        private Product FindNonResrvedProduct(string name)
+        {
+            Product aProd = new Product();
+            DataRow myRow;
+            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows) //Iterate through every row in the product table
+            {
+                myRow = dRow;
+                if (!(myRow.RowState == DataRowState.Deleted))
+                {
+                    if (name.Equals(Convert.ToString(myRow["Name"]).TrimEnd()) && Convert.ToByte(myRow["Reserved"]) == 0)
+                    {
+                        // Fill in the product Item with all the appropriate details
+                        aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
+                        aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
+                        aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
+                        aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
+                        aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
+                        aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
+                        aProd.Location = Convert.ToString(myRow["Location"]);
+                        aProd.Reserved = Convert.ToByte(myRow["Reserved"]);
+                        break;
+                    }
+                }
+
+            }
+
+            return aProd;
+        }
         #endregion
 
         #region Methods - Update
         public void CreateUpdateParameters()
         {
             SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
-            daMain.UpdateCommand.Parameters.Add(param);
-            param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
+            param = new SqlParameter("@PRID", SqlDbType.Int, 30, "ProductID");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
+            param = new SqlParameter("@PRNM", SqlDbType.NVarChar, 50, "Name");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PRIC", SqlDbType.Float, 10, "Price");
             daMain.UpdateCommand.Parameters.Add(param);
             
-            param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
+            param = new SqlParameter("@DIMS", SqlDbType.NVarChar, 40, "Dimensions");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
+            param = new SqlParameter("@WGHT", SqlDbType.Float, 10, "Weight");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
+            param = new SqlParameter("@LOCN", SqlDbType.NVarChar, 20, "Location");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@EXPD", SqlDbType.Date, 100, "ExpiryDate");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@RSVD", SqlDbType.Bit, 1, "Reserved");
             daMain.UpdateCommand.Parameters.Add(param);
         }
         #endregion
