@@ -11,7 +11,6 @@ namespace PoS.BusDomain
         #region Members
         private string prodId;
         private string name;
-        private string description;
         private double[] dimensions;
         private double weight;
         private float price;
@@ -23,11 +22,10 @@ namespace PoS.BusDomain
         #region Constructors
         public Product() { }
 
-        public Product(string prodIdVal, string nameVal, string descr, double[] dim, double weightVal, float priceVal, string Location, DateTime ExpiryDate, int Reserved)
+        public Product(string prodIdVal, string nameVal, double[] dim, double weightVal, float priceVal, string Location, DateTime ExpiryDate, int Reserved)
         {
             this.prodId = prodIdVal;
             this.name = nameVal;
-            this.description = descr;
             this.dimensions = dim;
             this.weight = weightVal;
             this.price = priceVal;
