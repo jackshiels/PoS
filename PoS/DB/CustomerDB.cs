@@ -359,6 +359,7 @@ namespace PoS.DB
                     if (aCust.CustomerID == Convert.ToInt32(dsMain.Tables[table].Rows[rowIndex]["CustomerID"]))
                     {
                         returnValue = rowIndex;
+                        break;
                     }
                 }
                 rowIndex += 1;
