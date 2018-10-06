@@ -29,55 +29,6 @@ namespace PoS.DB
         }
         #endregion
 
-        #region Methods - READ
-        private void ReadProducts()
-        {
-            DataRow myRow = null;
-            Product aProd = new Product();
-
-            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows)
-            {
-                myRow = dRow;
-                if (!(myRow.RowState == DataRowState.Deleted))
-                {
-                    // Do the conversion stuff here.
-                    aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
-                    aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
-                    aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
-                    aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
-                    aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
-                    aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
-                    // Add to the list
-                    prodList.Add(aProd);
-                }
-            }
-        }
-
-        private double[] DimensionParser(string input)
-        {
-            // Creates an array of double to represent dimensions
-            // Dimensions are entered in the format x y z
-            string[] splitStrings = input.Split(' ');
-            double[] dimArr = new double[3];
-
-            for(int i = 0; i < 3; i++)
-            {
-                try
-                {
-                    double dim = Convert.ToDouble(splitStrings[i]);
-                    dimArr[i] = dim;
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("There has been an error of type " + ex);
-                }
-            }
-
-            // Finally, return this guy
-            return dimArr;
-        }
-        #endregion
-
         #region Methods - Generalised
         public Collection<OrderItem> ExpiryList()
         {
@@ -119,6 +70,81 @@ namespace PoS.DB
             }
 
             return expiryList;
+        }
+        #endregion
+
+        #region Methods - READ
+        private void ReadProducts()
+        {
+            DataRow myRow = null;
+            Product aProd = new Product();
+
+            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows)
+            {
+                myRow = dRow;
+                if (!(myRow.RowState == DataRowState.Deleted))
+                {
+                    // Do the conversion stuff here.
+                    aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
+                    aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
+                    aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
+                    aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
+                    aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
+                    aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
+                    // Add to the list
+                    prodList.Add(aProd);
+                }
+            }
+        }
+
+        private double[] DimensionParser(string input)
+        {
+            // Creates an array of double to represent dimensions
+            // Dimensions are entered in the format x y z
+            string[] splitStrings = input.Split(' ');
+            double[] dimArr = new double[3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                try
+                {
+                    double dim = Convert.ToDouble(splitStrings[i]);
+                    dimArr[i] = dim;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("There has been an error of type " + ex);
+                }
+            }
+
+            // Finally, return this guy
+            return dimArr;
+        }
+
+        private
+        #endregion
+
+        #region Methods - Update
+         public void CreateUpdateParameters()
+        {
+            SqlParameter param = default(SqlParameter);
+            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
+            daMain.UpdateCommand.Parameters.Add(param);
         }
         #endregion
 
