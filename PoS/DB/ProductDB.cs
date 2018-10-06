@@ -96,6 +96,42 @@ namespace PoS.DB
             //Product coke = new Product("xyz", "coke", "Spicy Drink", new double[]{ 6.66,5.55}, 0.15, (float) 12.00,"Shelf 2 Aisle 3",DateTime.Now,0);
             //OrderItem cokeList = new OrderItem(coke,5000);
 
+            DataRow myRow = null;
+            //Product aProd = new Product();
+
+            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows)
+            {
+                myRow = dRow;
+                Product aProd = new Product();
+                if (!(myRow.RowState == DataRowState.Deleted))
+                {
+                    // Do the conversion stuff here.
+                    aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
+                    aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
+                    aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
+                    aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
+                    aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
+                    aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
+                }
+
+                if (aProd.Expiry <= DateTime.Now)
+                {
+                    for (int i = 0; i < expiredList.Count(); i++)
+                    {
+                        if (expiredList[i].ItemProduct.Name.Equals(aProd.Name))
+                        {
+                            expiredList[i].Quantity += 1;
+                        }
+                        else if (!(expiredList[i].ItemProduct.Name.Equals(aProd.Name)) && expiredList[i + 1] == null)
+                        {
+                            expiredList.Add(new OrderItem(aProd,1));
+                        }
+                        else
+                            continue;
+                    }
+                }
+            }
+
             return expiredList;
         }
         #endregion
