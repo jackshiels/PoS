@@ -12,6 +12,7 @@ namespace PoS.BusDomain
         #region Members
         private string customerId;
         private int blackListed;
+        private float debt;
         private IDGen generator;
         private string[] cardholderDetails;
         private PaymentMethod payment;
@@ -69,15 +70,25 @@ namespace PoS.BusDomain
         #endregion
 
         #region Property Methods
-        public int CustomerID
+        public string CustomerID
         {
             get { return customerId; }
             set { customerId = value; }
         }
-        public string Payment
+        public string[] CardHolderDetails
         {
-            get { return paymentDetails; }
-            set { paymentDetails = value; }
+            get { return cardholderDetails; }
+            set { cardholderDetails = value; }
+        }
+        public float Debt
+        {
+            get { return debt; }
+            set { debt = value; }
+        }
+        public PaymentMethod Payment
+        {
+            get { return payment; }
+            set { payment = value; }
         }
         public int BlackListed
         {
