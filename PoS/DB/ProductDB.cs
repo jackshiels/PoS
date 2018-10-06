@@ -83,12 +83,18 @@ namespace PoS.DB
         {
             Collection<OrderItem> expiringList = new Collection<OrderItem>();
 
+            //Product coke = new Product("xyz", "coke", "Spicy Drink", new double[]{ 6.66,5.55}, 0.15, (float) 12.00,"Shelf 2 Aisle 3",DateTime.Now,0);
+            //OrderItem cokeList = new OrderItem(coke,5000);
+
             return expiringList;
         }
 
         public Collection<OrderItem> ExpiredList()
         {
             Collection<OrderItem> expiredList = new Collection<OrderItem>();
+
+            //Product coke = new Product("xyz", "coke", "Spicy Drink", new double[]{ 6.66,5.55}, 0.15, (float) 12.00,"Shelf 2 Aisle 3",DateTime.Now,0);
+            //OrderItem cokeList = new OrderItem(coke,5000);
 
             return expiredList;
         }
