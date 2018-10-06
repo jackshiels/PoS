@@ -15,15 +15,15 @@ namespace PoS.BusDomain
         private double[] dimensions;
         private double weight;
         private float price;
+        private string location;
         private DateTime expiryDate;
-        private int stockLevel;
         private int reserved;
         #endregion
 
         #region Constructors
         public Product() { }
 
-        public Product(string prodIdVal, string nameVal, string descr, double[] dim, double weightVal, float priceVal, DateTime ExpiryDate, int StockLevel, int Reserved)
+        public Product(string prodIdVal, string nameVal, string descr, double[] dim, double weightVal, float priceVal, string Location, DateTime ExpiryDate, int Reserved)
         {
             this.prodId = prodIdVal;
             this.name = nameVal;
@@ -31,8 +31,8 @@ namespace PoS.BusDomain
             this.dimensions = dim;
             this.weight = weightVal;
             this.price = priceVal;
+            this.location = Location;
             this.expiryDate = ExpiryDate;
-            this.stockLevel = StockLevel;
             this.reserved = Reserved;
         }
         #endregion
@@ -68,15 +68,15 @@ namespace PoS.BusDomain
             get { return price; }
             set { price = value; }
         }
+        public string Location
+        {
+            get { return location; }
+            set { location = value; }
+        }
         public DateTime Expiry
         {
             get { return expiryDate; }
             set { expiryDate = value; }
-        }
-        public int StockLevel
-        {
-            get { return stockLevel; }
-            set { stockLevel = value; }
         }
         public int Reserved
         {
