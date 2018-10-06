@@ -29,7 +29,7 @@ namespace PoS.BusDomain
         public float CalculateSubTotal()
         {
             // Updates the subtotal value
-            float value = (quantity * itemProduct.Price);
+            float value = (quantity * ItemProduct.Price);
             return value;
         }
         #endregion
@@ -49,6 +49,14 @@ namespace PoS.BusDomain
         {
             get { return orderItemId; }
         }
+
+        public Product ItemProduct
+        {
+            get => itemProduct;
+            set => itemProduct = value;
+        }
+
         #endregion
     }
 }
+

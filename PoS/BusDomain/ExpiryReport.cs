@@ -14,8 +14,8 @@ namespace PoS.BusDomain
         #region Members
         private int reportId;
         ProductDB prodConnect;
-        Collection<Product> expiring;
-        Collection<Product> expired;
+        Collection<OrderItem> expiring;
+        Collection<OrderItem> expired;
         private IDGen generator;
         #endregion
 
@@ -32,11 +32,11 @@ namespace PoS.BusDomain
              */
             generator = new IDGen();
             reportId = generator.CreateID();
-            expiring = new Collection<Product>();
-            expired = new Collection<Product>();
+            expiring = new Collection<OrderItem>();
+            expired = new Collection<OrderItem>();
             prodConnect = new ProductDB();
-            expiring = prodConnect.ExpiringList();
-            expired = prodConnect.ExpiredList();
+            expiring = prodConnect.ExpiringList(); //collection of Order Items
+            expired = prodConnect.ExpiredList(); // Collection of OrderItems
         }
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PoS.BusDomain;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -51,7 +52,7 @@ namespace PoS.Presentation
         }
 
         //call this after making report
-        public void populateChart(Collection<string> items,Collection<int> numericalValues)
+        public void populateChart(Collection<OrderItem> items)
         {
             // both collections should alays be of the same length
             string date = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture); //get todays date in the form dd/mm/yy
@@ -64,7 +65,7 @@ namespace PoS.Presentation
             // add items to columns
             for (int i = 0; i < items.Count; i++)
             {
-                expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i],numericalValues[i]); // add Coke,500 to chart
+                expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i].ItemProduct, items[i].Quantity); // add Coke,500 to chart
             }
 
             Color[] colors = new Color[] {Color.Red, Color.Blue, Color.Yellow, Color.Chartreuse, Color.Fuchsia, Color.SlateBlue, Color.Cyan }; // order of colours in chart
@@ -77,14 +78,11 @@ namespace PoS.Presentation
            
         }
         
-        public void populateTable(Collection<string> prodName, Collection<DateTime> expiryDate, Collection<int> expiringQuantity, Collection<int> location, Collection<float> writeOff)
+        public void populateTable(Collection<OrderItem> items)
         {
-            //reportTable
-            //all collections should be the same length
-
-            for (int i = 0; i < prodName.Count(); i++)
+            for (int i = 0; i < items.Count(); i++)
             {
-                reportTable.Rows.Add(prodName[i],expiryDate[i].ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),expiringQuantity[i],location[i],writeOff[i]);
+                reportTable.Rows.Add(items[i].ItemProduct.Name,items[i].ItemProduct.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),items[i].Quantity,items[i].ItemProduct.Location,items[i].SubTotal);
             }
             reportTable.Visible = true;
         }

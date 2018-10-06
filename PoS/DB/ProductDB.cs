@@ -79,11 +79,18 @@ namespace PoS.DB
         #endregion
 
         #region Methods - Generalised
-        public Collection<Product> ExpiringList()
+        public Collection<OrderItem> ExpiringList()
         {
-            Collection<Product> expiringList = new Collection<Product>();
+            Collection<OrderItem> expiringList = new Collection<OrderItem>();
 
             return expiringList;
+        }
+
+        public Collection<OrderItem> ExpiredList()
+        {
+            Collection<OrderItem> expiredList = new Collection<OrderItem>();
+
+            return expiredList;
         }
         #endregion
 
