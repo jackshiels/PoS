@@ -15,7 +15,7 @@ namespace PoS.DB
     {
         #region Members
         private Collection<Customer> custList;
-        private string sqlProd = "SELECT * FROM CustomerRegister; SELECT * FROM Customer; SELECT * FROM Person";
+        private string sqlCust = "SELECT * FROM CustomerRegister; SELECT * FROM Customer; SELECT * FROM Person";
         #endregion
 
         #region Constructors
@@ -23,7 +23,7 @@ namespace PoS.DB
         public CustomerDB() : base()
         {
             custList = new Collection<Customer>();
-            FillDataSet(sqlProd);
+            FillDataSet(sqlCust);
             ReadCustomers();
         }
         #endregion
@@ -38,7 +38,7 @@ namespace PoS.DB
             CreateInsertParameters();
 
             // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, Debt, BlackListed) VALUES (@CUID, @PMNT, @DEBT, @BLCK); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
+            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, Debt, BlackListed) VALUES (@CUID, @PMNT, @DEBT, @BLCK); INSERT INTO Person (PersonID, Name, Address) VALUES (@PEID, @PENM, @ADDR); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
 
             // Add the customer into the list anyway
             custList.Add(aCust);
@@ -76,7 +76,7 @@ namespace PoS.DB
 
                 // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                 // daMain.InsertCommand.ExecuteNonQuery();
-                // UpdateDataSource(sqlProd);
+                UpdateDataSource(sqlCust);
 
                 // Set true
                 successful = true;
@@ -112,8 +112,6 @@ namespace PoS.DB
             param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
-            daMain.InsertCommand.Parameters.Add(param);
         }
         // This method fills the given row with appropriate members from a customer object, depending on the table the row comes from
         #endregion
@@ -139,7 +137,6 @@ namespace PoS.DB
                     temp = dsMain.Tables["Person"].Rows.Find(Convert.ToInt32(dRow["PersonID"]));
                     aCust.Name = Convert.ToString(temp["Name"]);
                     aCust.Address = Convert.ToString(temp["Address"]);
-                    aCust.DOB = Convert.ToDateTime(temp["DateOfBirth"]);
                     
                     // Add to the list
                     custList.Add(aCust);
@@ -169,7 +166,7 @@ namespace PoS.DB
             CreateUpdateParameters();
 
             // Create the insert command
-            daMain.UpdateCommand = new SqlCommand("UPDATE Customer SET Payment = @PMNT, Debt = @DEBT, BlackListed = @BLCK WHERE CustomerID = @CUID; UPDATE Person SET Name = @PENM, Address = @ADDR, DateOfBirth = @DOFB WHERE PersonID = @PEID;", cnMain);
+            daMain.UpdateCommand = new SqlCommand("UPDATE Customer SET Payment = @PMNT, Debt = @DEBT, BlackListed = @BLCK WHERE CustomerID = @CUID; UPDATE Person SET Name = @PENM, Address = @ADDR WHERE PersonID = @PEID;", cnMain);
 
             // Checks if the object exists, replace it. Otherwise exit with a failure
             if (ReplaceListItem(aCust) == true)
@@ -198,7 +195,7 @@ namespace PoS.DB
 
                     // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                     // daMain.UpdateCommand.ExecuteNonQuery();
-                    UpdateDataSource(sqlProd);
+                    UpdateDataSource(sqlCust);
 
                     // Set true
                     successful = true;
@@ -236,8 +233,6 @@ namespace PoS.DB
             param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
-            daMain.InsertCommand.Parameters.Add(param);
         }
 
         public bool ReplaceListItem(Customer aCust)
@@ -300,7 +295,7 @@ namespace PoS.DB
 
                     // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                     // daMain.DeleteCommand.ExecuteNonQuery();
-                    UpdateDataSource(sqlProd);
+                    UpdateDataSource(sqlCust);
 
                     // Set true
                     successful = true;
@@ -361,7 +356,6 @@ namespace PoS.DB
                 row["PersonID"] = cust.PersonID;
                 row["Name"] = cust.Name;
                 row["Address"] = cust.Address;
-                row["DateOfBirth"] = cust.DOB;
             }
             else if (row.Table.TableName == "CustomerRegister")
             {

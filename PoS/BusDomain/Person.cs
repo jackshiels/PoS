@@ -13,18 +13,16 @@ namespace PoS.BusDomain
         protected int personId;
         protected string name;
         protected string address;
-        protected DateTime dob;
         #endregion
 
         #region Constructors
         public Person() { }
 
-        public Person(int PersonID, string nameVal, string addressVal, DateTime birthDate)
+        public Person(int PersonID, string nameVal, string addressVal)
         {
             this.personId = PersonID;
             this.name = nameVal;
             this.address = addressVal;
-            this.dob = birthDate;
         }
         #endregion
 
@@ -43,11 +41,6 @@ namespace PoS.BusDomain
         {
             get { return address; }
             set { address = value; }
-        }
-        public DateTime DOB
-        {
-            get { return dob; }
-            set { dob = value; }
         }
         #endregion
     }

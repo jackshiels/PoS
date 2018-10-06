@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PoS.BusDomain;
 
 namespace PoS.BusDomain
 {
@@ -13,18 +14,35 @@ namespace PoS.BusDomain
 
         #region Members
         private RoleType role;
+        private string empId;
+        private int hash;
         #endregion
 
         #region Constructors
         public Employee() : base() { }
 
-        public Employee(string name, string address, DateTime dob, RoleType roleVal) : base()
+        public Employee(string name, string address, RoleType roleVal) : base()
         {
             // Creates an Employee and fills the Person superclass with values
             this.role = roleVal;
             base.Name = name;
             base.Address = address;
-            base.DOB = dob;
+        }
+        #endregion
+
+        #region Methods
+        public bool CompareHash(string value)
+        {
+            IDGen generator = new IDGen();
+            bool validPass = false;
+
+            // Check if valid
+            if(hash == generator.Hash(value))
+            {
+                validPass = true;
+            }
+
+            return validPass;
         }
         #endregion
 
@@ -33,6 +51,16 @@ namespace PoS.BusDomain
         {
             get { return role; }
             set { role = value; }
+        }
+        public string EmpID
+        {
+            get { return empId; }
+            set { empId = value; }
+        }
+        public int Hash
+        {
+            get { return hash; }
+            set { hash = value; }
         }
         #endregion
     }

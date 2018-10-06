@@ -38,7 +38,7 @@ namespace PoS.BusDomain
          /** Method that uses the fundamentals of hash tables to generate an integer which is used as the ID
           * @param = key
           */
-        private int Hash(string key)
+        public int Hash(string key)
         {
             hashVal = 0;
             int hashTableSize = 1000000000; //This defines the range of the ID's available to us (between 0 and 999 999 999 inclusive)
