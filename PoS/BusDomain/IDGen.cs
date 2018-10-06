@@ -41,7 +41,7 @@ namespace PoS.BusDomain
         private int Hash(string key)
         {
             hashVal = 0;
-            int hashTableSize = 1000; //This defines the range of the ID's available to us (between 0 and 999 inclusive)
+            int hashTableSize = 10000; //This defines the range of the ID's available to us (between 0 and 999 inclusive)
             char[] splitKey = key.ToCharArray();
             for (int i = 0; i < splitKey.Length; i++)
             {
