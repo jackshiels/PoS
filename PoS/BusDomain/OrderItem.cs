@@ -45,6 +45,7 @@ namespace PoS.BusDomain
         {
             // Live updates the subtotal on request
             get { return CalculateSubTotal(); }
+            set { subTotal = value; }
         }
         public int Quantity
         {
@@ -54,6 +55,7 @@ namespace PoS.BusDomain
         public string OrderItemID
         {
             get { return orderItemId; }
+            set { orderItemId = value; }
         }
 
         public Product ItemProduct

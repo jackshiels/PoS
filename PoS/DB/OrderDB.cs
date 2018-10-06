@@ -15,7 +15,6 @@ namespace PoS.DB
     {
         #region Members
         private Collection<Order> ordList;
-        private Collection<OrderItem> ordItemList;
         private string sqlOrd = "SELECT * FROM Order; SELECT * FROM OrderItem SELECT * FROM OrderItemRegister; SELECT * FROM OrderRegister;";
         private string tableOrd = "Order";
         #endregion
@@ -30,7 +29,7 @@ namespace PoS.DB
         }
         #endregion
 
-        #region Methods - CREATE
+        #region Methods - CREATE/UPDATE
         // CRUD CREATE
         public bool InsertOrder(Order anOrd)
         {
@@ -40,7 +39,7 @@ namespace PoS.DB
             CreateInsertParameters();
 
             // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Order (OrderID, DeliveryDate, Total) VALUES (@ORID, @DELD, @TOTL); INSERT INTO OrderRegister (OrderID, CustomerID) VALUES (@ORID, @CUID); INSERT INTO OrderItem (OrderItemID, Quantity, Subtotal) VALUES (@OIID, @QUAN, @STOT); INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@ORID, @PRID, @OIID);", cnMain);
+            daMain.InsertCommand = new SqlCommand("INSERT INTO Order (OrderID, Total) VALUES (@ORID, @TOTL); INSERT INTO OrderRegister (OrderID, CustomerID) VALUES (@ORID, @CUID); INSERT INTO OrderItem (OrderItemID, Quantity, Subtotal) VALUES (@OIID, @QUAN, @STOT); INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@ORID, @PRID, @OIID);", cnMain);
 
             // Add the customer into the list anyway
             ordList.Add(anOrd);
@@ -62,23 +61,33 @@ namespace PoS.DB
 
                 // Create a new row based on the table schema
                 DataRow newOrdRegRow = dsMain.Tables["OrderRegister"].NewRow();
-                // Parse the customer object into the row
+                // Parse the register object into the row
                 FillRow(newOrdRegRow, anOrd);
                 // Submit it to the table
                 dsMain.Tables["OrderRegister"].Rows.Add(newOrdRegRow);
 
-                // --- CUSTOMERREGISTER ---------------------------------
+                // --- OrderItem ---------------------------------
 
-                // Create a new row based on the table schema
-                DataRow newRegRow = dsMain.Tables["CustomerRegister"].NewRow();
-                // Parse the customer object into the row
-                FillRow(newRegRow, aCust);
-                // Submit it to the table
-                dsMain.Tables["CustomerRegister"].Rows.Add(newRegRow);
+                foreach (OrderItem item in anOrd.ItemList)
+                {
+                    // Create a new row based on the table schema
+                    DataRow newOItemRow = dsMain.Tables["OrderItem"].NewRow();
+                    // Parse the orderitem object into the row
+                    FillRow(newOItemRow, item, anOrd);
+                    // Submit it to the table
+                    dsMain.Tables["OrderItem"].Rows.Add(newOItemRow);
+
+                    // Create a new row based on the table schema
+                    DataRow newOIRtemRow = dsMain.Tables["OrderItemRegister"].NewRow();
+                    // Parse the orderitemregister object into the row
+                    FillRow(newOIRtemRow, item, anOrd);
+                    // Submit it to the table
+                    dsMain.Tables["OrderItemRegister"].Rows.Add(newOIRtemRow);
+                }
 
                 // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                 // daMain.InsertCommand.ExecuteNonQuery();
-                // UpdateDataSource(sqlProd);
+                UpdateDataSource(sqlOrd);
 
                 // Set true
                 successful = true;
@@ -95,9 +104,6 @@ namespace PoS.DB
         {
             SqlParameter param = default(SqlParameter);
             param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
-            daMain.InsertCommand.Parameters.Add(param);
-
-            param = new SqlParameter("@DELD", SqlDbType.Date, 20, "DeliveryDate");
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@TOTL", SqlDbType.Money, 15, "Total");
@@ -131,24 +137,22 @@ namespace PoS.DB
                     Order anOrd = new Order();
 
                     // Do the Order conversion stuff here.
-                    anOrd.OrderID = Convert.ToInt32(dRow["OrderID"]);
-                    anOrd.DeliveryDate = Convert.ToDateTime(dRow["DeliveryDate"]);
+                    anOrd.OrderID = Convert.ToString(dRow["OrderID"]);
                     anOrd.Total = (float)Convert.ToDouble(dRow["Total"]);
-                    anOrd.Address = Convert.ToString(dRow["Address"]);
 
                     // Find the corresponding customer id
                     // THIS MAY THROW AN ERROR, AS THE PK IS TWO-PART. CHECK!
-                    DataRow temp = dsMain.Tables["OrderRegister"].Rows.Find(Convert.ToInt32(dRow["OrderID"]));
-                    int cust = Convert.ToInt32(temp["CustomerID"]);
+                    DataRow temp = dsMain.Tables["OrderRegister"].Rows.Find(Convert.ToString(dRow["OrderID"]));
+                    string cust = Convert.ToString(temp["CustomerID"]);
 
                     // Connect to the customer DB to get the customer
                     CustomerDB findCust = new CustomerDB();
-                    Customer owner = findCust.FindCustomerObject(Convert.ToInt32(temp["CustomerID"]));
+                    Customer owner = findCust.FindCustomerObject(Convert.ToString(temp["CustomerID"]));
 
                     // check for null
                     if (owner.Name != null)
                     {
-                        anOrd.Owner = findCust.FindCustomerObject(Convert.ToInt32(temp["CustomerID"]));
+                        anOrd.Owner = findCust.FindCustomerObject(Convert.ToString(temp["CustomerID"]));
                     }
                     else
                     {
@@ -159,9 +163,17 @@ namespace PoS.DB
                     // Now the big one - get every orderitem and insert it into the order object
                     foreach (DataRow rRow in dsMain.Tables["OrderItemRegister"].Rows)
                     {
-                        if (!(Convert.ToInt32(rRow["OrderID"]) != Convert.ToInt32(dRow["OrderID"])))
+                        if (Convert.ToString(rRow["OrderItemID"]) == Convert.ToString(dRow["OrderItemID"]))
                         {
-                            // Loop through items
+                            OrderItem item = new OrderItem();
+
+                            item.OrderItemID = Convert.ToString(rRow["OrderItemID"]);
+                            DataRow tempRow = dsMain.Tables["OrderItem"].Rows.Find(Convert.ToString(rRow["OrderItemID"]));
+                            item.Quantity = Convert.ToInt32(tempRow["Quantity"]);
+                            item.SubTotal = (float)Convert.ToDouble(tempRow["Subtotal"]);
+
+                            // Add item to the order's list
+                            anOrd.ItemList.Add(item);
                         }
                     }
                 }
@@ -169,10 +181,89 @@ namespace PoS.DB
         }
         #endregion
 
-        #region Methods - UPDATE    
-        #endregion
-
         #region Methods - DELETE
+        // CRUD CREATE
+        public bool Delete(Order anOrd)
+        {
+            bool successful = false;
+
+            // Create the parameters to hide data
+            CreateDeleteParameters();
+
+            // Create the sql command for deletion
+            daMain.DeleteCommand = new SqlCommand("DELETE FROM Order WHERE OrderID = @ORID; DELETE FROM OrderItem WHERE OrderItemID = @OIID;", cnMain);
+
+            // Checks if the object exists, delete it. Otherwise exit with a failure
+            if (DeleteListItem(anOrd) == true)
+            {
+                try
+                {
+                    // Delete the order in the DataSet via an existing row object in each table
+
+                    // --- Order ------------------------------------------
+
+                    // Delete a row based on the table schema
+                    DataRow updatedOrderRow = dsMain.Tables["Order"].Rows[FindRowIndex(anOrd, "Order")];
+                    // Kill it with fire
+                    updatedOrderRow.Delete();
+
+                    // --- OrderItem -------------------------------------------
+
+                    foreach(OrderItem item in anOrd.ItemList)
+                    {
+                        // Update a row based on the table schema
+                        DataRow updatedOrderItemRow = dsMain.Tables["OrderItem"].Rows[FindRowIndex(item, "OrderItem")];
+                        // End its existence
+                        updatedOrderItemRow.Delete();
+                    }
+
+                    // SHOULD AUTOMATICALLY CASCADE. TEST THIS!
+
+                    // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
+                    // daMain.DeleteCommand.ExecuteNonQuery();
+                    UpdateDataSource(sqlOrd);
+
+                    // Set true
+                    successful = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error of type " + ex);
+                }
+            }
+
+            return successful;
+        }
+
+        public void CreateDeleteParameters()
+        {
+            SqlParameter param = default(SqlParameter);
+            param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@OIID", SqlDbType.NVarChar, 12, "OrderItemID");
+            daMain.InsertCommand.Parameters.Add(param);
+        }
+
+        public bool DeleteListItem(Order ord)
+        {
+            bool success = false;
+
+            // Searches for the item, then replaces it
+            for (int i = 0; i < ordList.Count; i++)
+            {
+                if (ordList[i].OrderID == ord.OrderID)
+                {
+                    ordList.RemoveAt(i);
+                    // Set true for return
+                    success = true;
+                    // Exit loop
+                    break;
+                }
+            }
+
+            return success;
+        }
         #endregion
 
         #region Methods - GENERALISED
@@ -182,24 +273,33 @@ namespace PoS.DB
             if (row.Table.TableName == "Order")
             {
                 row["OrderID"] = ord.OrderID;
-                row["DeliveryDate"] = ord.DeliveryDate;
                 row["Total"] = ord.Total;
             }
             else if (row.Table.TableName == "OrderRegister")
             {
                 row["OrderID"] = ord.OrderID;
                 row["CustomerID"] = ord.Owner.CustomerID;
-
             }
-            else if (row.Table.TableName == "CustomerRegister")
+        }
+
+        public void FillRow(DataRow row, OrderItem item, Order ord)
+        {
+            if (row.Table.TableName == "OrderItem")
             {
-                row["CustomerID"] = cust.CustomerID;
-                row["PersonID"] = cust.PersonID;
+                row["OrderItemID"] = item.OrderItemID;
+                row["Quantity"] = item.Quantity;
+                row["Subtotal"] = item.SubTotal;
+            }
+            else if (row.Table.TableName == "OrderItemRegister")
+            {
+                row["OrderID"] = ord.OrderID;
+                row["Product"] = item.ItemProduct.ProdID;
+                row["OrderItemID"] = item.OrderItemID;
             }
         }
 
         // Used by UPDATE and DELETE
-        private int FindRowIndex(Customer aCust, string table)
+        private int FindRowIndex(Order ord, string table)
         {
             int rowIndex = 0;
             int returnValue = -1;
@@ -208,7 +308,27 @@ namespace PoS.DB
             {
                 if (!(row.RowState == DataRowState.Deleted))
                 {
-                    if (aCust.CustomerID == Convert.ToInt32(dsMain.Tables[table].Rows[rowIndex]["CustomerID"]))
+                    if (ord.OrderID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["Order"]))
+                    {
+                        returnValue = rowIndex;
+                    }
+                }
+                rowIndex += 1;
+            }
+
+            return returnValue;
+        }
+
+        private int FindRowIndex(OrderItem ord, string table)
+        {
+            int rowIndex = 0;
+            int returnValue = -1;
+
+            foreach (DataRow row in dsMain.Tables[table].Rows)
+            {
+                if (!(row.RowState == DataRowState.Deleted))
+                {
+                    if (ord.OrderItemID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["OrderItem"]))
                     {
                         returnValue = rowIndex;
                     }
@@ -224,10 +344,6 @@ namespace PoS.DB
         public Collection<Order> OrdList
         {
             get { return ordList; }
-        }
-        public Collection<OrderItem> OrdItemList
-        {
-            get { return ordItemList; }
         }
         #endregion
     }

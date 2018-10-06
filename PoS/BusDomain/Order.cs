@@ -10,19 +10,18 @@ namespace PoS.BusDomain
     public class Order
     {
         #region Members
-        private int orderId;
+        private string orderId;
         private Collection<OrderItem> itemList;
-        private DateTime deliveryDate;
         private float total;
         private Customer owner;
-        // Orders may be directed to a different address than that of the Customer's on-file location.
-        private string address;
+        private IDGen generator;
         #endregion
 
         #region Constructors
         public Order()
         {
             Collection<OrderItem> itemList = new Collection<OrderItem>();
+            orderId = "ORD" + Convert.ToString(generator.CreateID());
         }
 
         public Order(Customer Cust)
@@ -30,15 +29,7 @@ namespace PoS.BusDomain
             // This constructor takes the address field from the customer
             Collection<OrderItem> itemList = new Collection<OrderItem>();
             this.owner = Cust;
-            this.address = Cust.Address;
-        }
-
-        public Order(Customer Cust, string Address)
-        {
-            // This constructor can take a custom address
-            Collection<OrderItem> itemList = new Collection<OrderItem>();
-            this.owner = Cust;
-            this.address = Address;
+            orderId = "ORD" + Convert.ToString(generator.CreateID());
         }
         #endregion
 
@@ -133,12 +124,7 @@ namespace PoS.BusDomain
             get { return owner; }
             set { owner = value; }
         }
-        public string Address
-        {
-            get { return address; }
-            set { address = value; }
-        }
-        public int OrderID
+        public string OrderID
         {
             get { return orderId; }
             set { orderId = value; }
@@ -153,11 +139,6 @@ namespace PoS.BusDomain
             // Calculates and gets the total value
             get { return CalculateTotal(); }
             set { total = value; }
-        }
-        public DateTime DeliveryDate
-        {
-            get { return deliveryDate; }
-            set { deliveryDate = value; }
         }
         #endregion
     }
