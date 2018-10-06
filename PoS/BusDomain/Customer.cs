@@ -14,7 +14,7 @@ namespace PoS.BusDomain
         private int blackListed;
         private float debt;
         private IDGen generator;
-        private string[] cardholderDetails;
+        private string cardholderDetails;
         private PaymentMethod payment;
 
         public enum PaymentMethod
@@ -42,7 +42,7 @@ namespace PoS.BusDomain
             payment = PaymentMethod.CreditCard;
         }
 
-        public Customer(string name, string address, string[] paymentDetails) : base()
+        public Customer(string name, string address, string paymentDetails) : base()
         {
             // Creates a Customer and fills the Person superclass with values
             generator = new IDGen();
@@ -75,7 +75,7 @@ namespace PoS.BusDomain
             get { return customerId; }
             set { customerId = value; }
         }
-        public string[] CardHolderDetails
+        public string CardHolderDetails
         {
             get { return cardholderDetails; }
             set { cardholderDetails = value; }
