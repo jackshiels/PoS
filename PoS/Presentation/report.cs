@@ -65,7 +65,9 @@ namespace PoS.Presentation
             // add items to columns
             for (int i = 1; i < items.Count+1; i++)
             {
-                expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i].ItemProduct, items[i].Quantity); // add Coke,500 to chart
+                //expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i].ItemProduct, items[i].Quantity); // add Coke,500 to chart
+                expiredItems.Series["Expired/Expiring Objects"].Points.AddY(items[i].Quantity);
+                expiredItems.Series["Expired/Expiring Objects"].Points[i].AxisLabel = items[i].ItemProduct.Name;
             }
 
             Color[] colors = new Color[] {Color.Red, Color.Blue, Color.Yellow, Color.Chartreuse, Color.Fuchsia, Color.SlateBlue, Color.Cyan }; // order of colours in chart
