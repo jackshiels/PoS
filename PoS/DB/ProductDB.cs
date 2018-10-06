@@ -79,33 +79,18 @@ namespace PoS.DB
         #endregion
 
         #region Methods - Generalised
-        public Collection<OrderItem> ExpiringList()
+        public Collection<OrderItem> ExpiryList()
         {
-            Collection<OrderItem> expiringList = new Collection<OrderItem>();
-
-            //Product coke = new Product("xyz", "coke", "Spicy Drink", new double[]{ 6.66,5.55}, 0.15, (float) 12.00,"Shelf 2 Aisle 3",DateTime.Now,0);
-            //OrderItem cokeList = new OrderItem(coke,5000);
-
-            return expiringList;
-        }
-
-        public Collection<OrderItem> ExpiredList()
-        {
-            Collection<OrderItem> expiredList = new Collection<OrderItem>();
-
-            //Product coke = new Product("xyz", "coke", "Spicy Drink", new double[]{ 6.66,5.55}, 0.15, (float) 12.00,"Shelf 2 Aisle 3",DateTime.Now,0);
-            //OrderItem cokeList = new OrderItem(coke,5000);
-
+            Collection<OrderItem> expiryList = new Collection<OrderItem>();
             DataRow myRow = null;
-            //Product aProd = new Product();
 
-            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows)
+            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows) //Iterate through every row in the product table
             {
                 myRow = dRow;
                 Product aProd = new Product();
                 if (!(myRow.RowState == DataRowState.Deleted))
                 {
-                    // Do the conversion stuff here.
+                    // Fill in the product Item with all the appropriate details
                     aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
                     aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
                     aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
@@ -114,17 +99,18 @@ namespace PoS.DB
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
                 }
 
-                if (aProd.Expiry <= DateTime.Now)
+                
+                if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
                 {
-                    for (int i = 0; i < expiredList.Count(); i++)
+                    for (int i = 0; i < expiryList.Count(); i++)  //iterate through all orderItems already in the Collection
                     {
-                        if (expiredList[i].ItemProduct.Name.Equals(aProd.Name))
+                        if (expiryList[i].ItemProduct.Name.Equals(aProd.Name))
                         {
-                            expiredList[i].Quantity += 1;
+                            expiryList[i].Quantity += 1;
                         }
-                        else if (!(expiredList[i].ItemProduct.Name.Equals(aProd.Name)) && expiredList[i + 1] == null)
+                        else if (!(expiryList[i].ItemProduct.Name.Equals(aProd.Name)) && expiryList[i + 1] == null)
                         {
-                            expiredList.Add(new OrderItem(aProd,1));
+                            expiryList.Add(new OrderItem(aProd,1));
                         }
                         else
                             continue;
@@ -132,7 +118,7 @@ namespace PoS.DB
                 }
             }
 
-            return expiredList;
+            return expiryList;
         }
         #endregion
 
