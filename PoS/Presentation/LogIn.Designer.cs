@@ -81,11 +81,11 @@
             // 
             this.lblLogInName.AutoSize = true;
             this.lblLogInName.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogInName.Location = new System.Drawing.Point(214, 183);
+            this.lblLogInName.Location = new System.Drawing.Point(199, 183);
             this.lblLogInName.Name = "lblLogInName";
-            this.lblLogInName.Size = new System.Drawing.Size(79, 19);
+            this.lblLogInName.Size = new System.Drawing.Size(94, 19);
             this.lblLogInName.TabIndex = 7;
-            this.lblLogInName.Text = "Username:";
+            this.lblLogInName.Text = "Employee ID:";
             // 
             // lblLogInPassword
             // 

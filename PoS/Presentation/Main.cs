@@ -16,5 +16,10 @@ namespace PoS.Presentation
         {
             InitializeComponent();
         }
+
+        private void expiredItems_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
