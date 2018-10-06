@@ -38,7 +38,7 @@ namespace PoS.DB
             CreateInsertParameters();
 
             // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, BlackListed) VALUES (@CUID, @PMNT, @BLCK); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
+            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, Debt, BlackListed) VALUES (@CUID, @PMNT, @DEBT, @BLCK); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
 
             // Add the customer into the list anyway
             custList.Add(aCust);
@@ -97,7 +97,10 @@ namespace PoS.DB
             param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@BLCK", SqlDbType.Bit, 1, "BlackListed");
+            param = new SqlParameter("@DEBT", SqlDbType.Money, 50, "Debt");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@BLCK", SqlDbType.Int, 1, "BlackListed");
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
@@ -126,10 +129,11 @@ namespace PoS.DB
                 if (!(dRow.RowState == DataRowState.Deleted))
                 {
                     // Do the conversion stuff here.
-                    aCust.CustomerID = Convert.ToInt32(dRow["CustomerID"]);
+                    aCust.CustomerID = Convert.ToString(dRow["CustomerID"]);
                     // Creates a row from the customer table that shares the same key from CustomerRegister
                     DataRow temp = dsMain.Tables["Customer"].Rows.Find(Convert.ToInt32(dRow["CustomerID"]));
-                    aCust.Payment = Convert.ToString(temp["Payment"]);
+                    aCust.CardHolderDetails = CreatePaymentArray(Convert.ToString(temp["Payment"]));
+                    aCust.Debt = (float)Convert.ToDouble(temp["Debt"]);
                     aCust.BlackListed = Convert.ToInt32(temp["BlackListed"]);
                     // Creates a row from the person table that shares the same key from CustomerRegister
                     temp = dsMain.Tables["Person"].Rows.Find(Convert.ToInt32(dRow["PersonID"]));
@@ -142,6 +146,18 @@ namespace PoS.DB
                 }
             }
         }
+
+        public string[] CreatePaymentArray(string value)
+        {
+            string passed = value;
+            string[] newArr = new string[3];
+
+            newArr[0] = passed.Substring(0,16);
+            newArr[1] = passed.Substring(16,3);
+            newArr[2] = passed.Substring(19, (passed.Length - 19));
+
+            return newArr;
+        }
         #endregion
 
         #region Methods - UPDATE
@@ -153,7 +169,7 @@ namespace PoS.DB
             CreateUpdateParameters();
 
             // Create the insert command
-            daMain.UpdateCommand = new SqlCommand("UPDATE Customer SET Payment = @PMNT WHERE CustomerID = @CUID; UPDATE Person SET Name = @PENM, Address = @ADDR, DateOfBirth = @DOFB WHERE PersonID = @PEID;", cnMain);
+            daMain.UpdateCommand = new SqlCommand("UPDATE Customer SET Payment = @PMNT, Debt = @DEBT, BlackListed = @BLCK WHERE CustomerID = @CUID; UPDATE Person SET Name = @PENM, Address = @ADDR, DateOfBirth = @DOFB WHERE PersonID = @PEID;", cnMain);
 
             // Checks if the object exists, replace it. Otherwise exit with a failure
             if (ReplaceListItem(aCust) == true)
@@ -182,7 +198,7 @@ namespace PoS.DB
 
                     // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                     // daMain.UpdateCommand.ExecuteNonQuery();
-                    // UpdateDataSource(sqlProd);
+                    UpdateDataSource(sqlProd);
 
                     // Set true
                     successful = true;
@@ -200,22 +216,28 @@ namespace PoS.DB
         {
             SqlParameter param = default(SqlParameter);
             param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
-            daMain.UpdateCommand.Parameters.Add(param);
+            daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
-            daMain.UpdateCommand.Parameters.Add(param);
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@DEBT", SqlDbType.Money, 50, "Debt");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@BLCK", SqlDbType.Int, 1, "BlackListed");
+            daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
-            daMain.UpdateCommand.Parameters.Add(param);
+            daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
-            daMain.UpdateCommand.Parameters.Add(param);
+            daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
-            daMain.UpdateCommand.Parameters.Add(param);
+            daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
-            daMain.UpdateCommand.Parameters.Add(param);
+            daMain.InsertCommand.Parameters.Add(param);
         }
 
         public bool ReplaceListItem(Customer aCust)
@@ -278,7 +300,7 @@ namespace PoS.DB
 
                     // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                     // daMain.DeleteCommand.ExecuteNonQuery();
-                    // UpdateDataSource(sqlProd);
+                    UpdateDataSource(sqlProd);
 
                     // Set true
                     successful = true;
@@ -330,7 +352,9 @@ namespace PoS.DB
             if (row.Table.TableName == "Customer")
             {
                 row["CustomerID"] = cust.CustomerID;
-                row["Payment"] = cust.Payment;
+                row["BlackListed"] = cust.BlackListed;
+                row["Debt"] = cust.Debt;
+                row["Payment"] = cust.CardHolderDetails;
             }
             else if (row.Table.TableName == "Person")
             {
@@ -356,7 +380,7 @@ namespace PoS.DB
             {
                 if (!(row.RowState == DataRowState.Deleted))
                 {
-                    if (aCust.CustomerID == Convert.ToInt32(dsMain.Tables[table].Rows[rowIndex]["CustomerID"]))
+                    if (aCust.CustomerID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["CustomerID"]))
                     {
                         returnValue = rowIndex;
                         break;
@@ -368,7 +392,7 @@ namespace PoS.DB
             return returnValue;
         }
 
-        public Customer FindCustomerObject(int custId)
+        public Customer FindCustomerObject(string custId)
         {
             Customer foundCust = new Customer();
 
