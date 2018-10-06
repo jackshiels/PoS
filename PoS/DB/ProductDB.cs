@@ -122,60 +122,20 @@ namespace PoS.DB
             // Finally, return this guy
             return dimArr;
         }
-
-        private
         #endregion
 
         #region Methods - Update
-         public void CreateUpdateParameters()
+        public void CreateUpdateParameters()
         {
             SqlParameter param = default(SqlParameter);
             param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
             daMain.UpdateCommand.Parameters.Add(param);
-
-<<<<<<< HEAD
             param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
             daMain.UpdateCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
             daMain.UpdateCommand.Parameters.Add(param);
-=======
-            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows) //Iterate through every row in the product table
-            {
-                myRow = dRow;
-                Product aProd = new Product();
-                if (!(myRow.RowState == DataRowState.Deleted))
-                {
-                    // Fill in the product Item with all the appropriate details
-                    aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
-                    aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
-                    aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
-                    aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
-                    aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
-                    aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
-                    aProd.Location = Convert.ToString(myRow["Location"]);
-                    aProd.Reserved = Convert.ToInt32(myRow["Reserved"]);
-                }
-                
-                if (aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
-                {
-                    for (int i = 0; i < expiryList.Count(); i++)  //iterate through all orderItems already in the Collection
-                    {
-                        if (expiryList[i].ItemProduct.Name.Equals(aProd.Name)) //if it finds its product within the list add to quantity
-                        {
-                            expiryList[i].Quantity += 1;
-                        }
-                        else if (!(expiryList[i].ItemProduct.Name.Equals(aProd.Name)) && expiryList[i + 1] == null) //if it hasen't matched yet and its at thelast item on the list, create an order item for it in the list
-                        {
-                            expiryList.Add(new OrderItem(aProd,1));
-                        }
-                        else //otherwise just continue looping through the list
-                            continue;
-                    }
-                }
-            }
->>>>>>> 1e1b4d331693fc6bd75335ac3070aaaf911ab7e5
-
+            
             param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
             daMain.UpdateCommand.Parameters.Add(param);
 
