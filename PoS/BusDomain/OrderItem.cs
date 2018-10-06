@@ -9,19 +9,25 @@ namespace PoS.BusDomain
     public class OrderItem
     {
         #region Members
-        private int orderItemId;
+        private string orderItemId;
         private float subTotal;
         private int quantity;
         private Product itemProduct;
+
+        IDGen generator = new IDGen();
         #endregion
 
         #region Constructors
-        public OrderItem() { }
+        public OrderItem()
+        {
+            orderItemId = "OID"+generator.CreateID();
+        }
 
         public OrderItem(Product itemProduct, int quant)
         {
             // Creates an order item and calculates the subtotal
             subTotal = quant * itemProduct.Price;
+            orderItemId = "OID"+generator.CreateID();
         }
         #endregion
 
@@ -45,7 +51,7 @@ namespace PoS.BusDomain
             get { return quantity; }
             set { quantity = value; }
         }
-        public int OrderItemID
+        public string OrderItemID
         {
             get { return orderItemId; }
         }

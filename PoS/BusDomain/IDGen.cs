@@ -25,7 +25,7 @@ namespace PoS.BusDomain
         }
         #endregion
         
-        #region Methods
+        #region Methods - General
         /**
          * Method that creates a random ID and then returns it for further use
          */
@@ -41,7 +41,7 @@ namespace PoS.BusDomain
         private int Hash(string key)
         {
             hashVal = 0;
-            int hashTableSize = 10000; //This defines the range of the ID's available to us (between 0 and 999 inclusive)
+            int hashTableSize = 1000000000; //This defines the range of the ID's available to us (between 0 and 999 999 999 inclusive)
             char[] splitKey = key.ToCharArray();
             for (int i = 0; i < splitKey.Length; i++)
             {
@@ -49,26 +49,7 @@ namespace PoS.BusDomain
                 int asciiValue = temp;
                 hashVal = ((hashVal * 128) + asciiValue) % hashTableSize; //128 is the encryption value, could be set to anything
             }
-            if (AlreadyMade(hashVal))
-                hashVal = Hash(Guid.NewGuid().ToString()); // recursive call with a new encrypter string
-            else
-                values.Add(hashVal); //Add that value to the collection once it is confirmed that it has not been remade
-            
             return hashVal;
-        }
-
-        /**
-         * A method used to check if a particular ID has been made before
-         */
-        private Boolean AlreadyMade(int key)
-        {
-            Boolean made = false;
-            foreach (int x in values)
-            {
-                if (key == x)
-                    made = true;
-            }
-            return made;
         }
         #endregion
         
