@@ -182,12 +182,64 @@ namespace PoS.DB
             param = new SqlParameter("@RSVD", SqlDbType.Bit, 1, "Reserved");
             daMain.UpdateCommand.Parameters.Add(param);
         }
+
+        public Boolean ReserveProduct(string name)
+        {
+            Product aProd = FindNonResrvedProduct(name);
+            aProd.Reserved = 1;
+            bool successful = false;
+            // Create the parameters to hide data
+            CreateUpdateParameters();
+            // Create the insert command
+            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved=@RSVD WHERE ProductID = @PRID;", cnMain);
+            try
+            {
+                DataRow updatedProdRow = dsMain.Tables["Product"].Rows[FindRowIndex(aProd, "Product")];
+                // Parse the product object into the row
+                FillRow(updatedProdRow, aProd);
+                UpdateDataSource(sqlProd);
+
+                successful = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error of type " + ex);
+            }
+            return successful;
+        }
         #endregion
 
         #region Property Methods
         public Collection<Product> ProdList
         {
             get { return prodList; }
+        }
+        #endregion
+
+        #region Methods - Generalized
+        private int FindRowIndex(Product aProd, string table)
+        {
+            int rowIndex = 0;
+            int returnValue = -1;
+
+            foreach (DataRow row in dsMain.Tables[table].Rows)
+            {
+                if (!(row.RowState == DataRowState.Deleted))
+                {
+                    if (aProd.ProdID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["ProductID"]))
+                    {
+                        returnValue = rowIndex;
+                        break;
+                    }
+                }
+                rowIndex += 1;
+            }
+            return returnValue;
+        }
+
+        public void FillRow(DataRow row, Product aProd)
+        {
+            row["Reserved"] = aProd.Reserved;
         }
         #endregion
     }
