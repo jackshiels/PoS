@@ -58,7 +58,7 @@ namespace PoS.BusDomain
             return added;
         }
 
-        public bool RemoveFromOrder(int itemId)
+        public bool RemoveFromOrder(string itemId)
         {
             // Checks if the item exists. Removes if it does.
             int index = FindItem(itemId);
@@ -74,7 +74,7 @@ namespace PoS.BusDomain
             return removed;
         }
 
-        public bool UpdateOrderItemQuantity(int itemId, int quant)
+        public bool UpdateOrderItemQuantity(string itemId, int quant)
         {
             // Finds the order item and updates the quantity
             bool updated = false;
@@ -90,7 +90,7 @@ namespace PoS.BusDomain
             return updated;
         }
 
-        public int FindItem(int itemId)
+        public int FindItem(string itemId)
         {
             // Creates an index value. -1 indicates the item is not found
             int index = -1;

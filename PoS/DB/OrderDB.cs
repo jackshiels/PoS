@@ -32,7 +32,7 @@ namespace PoS.DB
 
         #region Methods - CREATE
         // CRUD CREATE
-        public bool InsertCustomer(Customer aCust)
+        public bool InsertOrder(Order anOrd)
         {
             bool successful = false;
 
@@ -40,32 +40,32 @@ namespace PoS.DB
             CreateInsertParameters();
 
             // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment) VALUES (@CUID, @PMNT); INSERT INTO Person (PersonID, Name, Address, DateOfBirth) VALUES (@PEID, @PENM, @ADDR, @DOFB); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
+            daMain.InsertCommand = new SqlCommand("INSERT INTO Order (OrderID, DeliveryDate, Total) VALUES (@ORID, @DELD, @TOTL); INSERT INTO OrderRegister (OrderID, CustomerID) VALUES (@ORID, @CUID); INSERT INTO OrderItem (OrderItemID, Quantity, Subtotal) VALUES (@OIID, @QUAN, @STOT); INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@ORID, @PRID, @OIID);", cnMain);
 
             // Add the customer into the list anyway
-            custList.Add(aCust);
+            ordList.Add(anOrd);
 
             try
             {
-                // Add the customer into the DataSet via a new row object in each table
+                // Add the order into the DataSet via a new row object in each table
 
-                // --- CUSTOMER ------------------------------------------
-
-                // Create a new row based on the table schema
-                DataRow newCustRow = dsMain.Tables["Customer"].NewRow();
-                // Parse the customer object into the row
-                FillRow(newCustRow, aCust);
-                // Submit it to the table
-                dsMain.Tables["Customer"].Rows.Add(newCustRow);
-
-                // --- PERSON -------------------------------------------
+                // --- Order ------------------------------------------
 
                 // Create a new row based on the table schema
-                DataRow newPersRow = dsMain.Tables["Person"].NewRow();
-                // Parse the customer object into the row
-                FillRow(newPersRow, aCust);
+                DataRow newOrderRow = dsMain.Tables["Order"].NewRow();
+                // Parse the order object into the row
+                FillRow(newOrderRow, anOrd);
                 // Submit it to the table
-                dsMain.Tables["Person"].Rows.Add(newPersRow);
+                dsMain.Tables["Order"].Rows.Add(newOrderRow);
+
+                // --- OrderRegister -------------------------------------------
+
+                // Create a new row based on the table schema
+                DataRow newOrdRegRow = dsMain.Tables["OrderRegister"].NewRow();
+                // Parse the customer object into the row
+                FillRow(newOrdRegRow, anOrd);
+                // Submit it to the table
+                dsMain.Tables["OrderRegister"].Rows.Add(newOrdRegRow);
 
                 // --- CUSTOMERREGISTER ---------------------------------
 
@@ -90,25 +90,32 @@ namespace PoS.DB
 
             return successful;
         }
+
         public void CreateInsertParameters()
         {
             SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
+            param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
+            param = new SqlParameter("@DELD", SqlDbType.Date, 20, "DeliveryDate");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
+            param = new SqlParameter("@TOTL", SqlDbType.Money, 15, "Total");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
+            param = new SqlParameter("@OIID", SqlDbType.NVarChar, 12, "OrderItemID");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
+            param = new SqlParameter("@QUAN", SqlDbType.Int, 12, "Quantity");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@DOFB", SqlDbType.Date, 50, "DateOfBirth");
+            param = new SqlParameter("@STOT", SqlDbType.Money, 12, "Subtotal");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@PRID", SqlDbType.NVarChar, 12, "ProductID");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
             daMain.InsertCommand.Parameters.Add(param);
         }
         // This method fills the given row with appropriate members from a customer object, depending on the table the row comes from
@@ -170,19 +177,19 @@ namespace PoS.DB
 
         #region Methods - GENERALISED
         // Used by INSERT and UPDATE
-        public void FillRow(DataRow row, Customer cust)
+        public void FillRow(DataRow row, Order ord)
         {
-            if (row.Table.TableName == "Customer")
+            if (row.Table.TableName == "Order")
             {
-                row["CustomerID"] = cust.CustomerID;
-                row["Payment"] = cust.Payment;
+                row["OrderID"] = ord.OrderID;
+                row["DeliveryDate"] = ord.DeliveryDate;
+                row["Total"] = ord.Total;
             }
-            else if (row.Table.TableName == "Person")
+            else if (row.Table.TableName == "OrderRegister")
             {
-                row["PersonID"] = cust.PersonID;
-                row["Name"] = cust.Name;
-                row["Address"] = cust.Address;
-                row["DateOfBirth"] = cust.DOB;
+                row["OrderID"] = ord.OrderID;
+                row["CustomerID"] = ord.Owner.CustomerID;
+
             }
             else if (row.Table.TableName == "CustomerRegister")
             {
