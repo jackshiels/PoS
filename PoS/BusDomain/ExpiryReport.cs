@@ -14,8 +14,7 @@ namespace PoS.BusDomain
         #region Members
         private int reportId;
         ProductDB prodConnect;
-        Collection<OrderItem> expiring;
-        Collection<OrderItem> expired;
+        Collection<OrderItem> expiredAndExpiring;
         private IDGen generator;
         #endregion
 
@@ -23,20 +22,11 @@ namespace PoS.BusDomain
 
         public ExpiryReport()
         {
-            /*
-            Tumi-side software dev
-            will have to split collections into 2 collections when expired and expiringList methods are complete
-            Collection 1 = coke, Fanta, Lays etc. just the names
-            Collection 2 = 500, 250 , 70, etc. just the values expired and expiring 
-            Collections should obviously be the same length and 1[x] should talk about 2[x]
-             */
             generator = new IDGen();
             reportId = generator.CreateID();
-            expiring = new Collection<OrderItem>();
-            expired = new Collection<OrderItem>();
+            expiredAndExpiring = new Collection<OrderItem>();
             prodConnect = new ProductDB();
-            expiring = prodConnect.ExpiringList(); //collection of Order Items
-            expired = prodConnect.ExpiredList(); // Collection of OrderItems
+            expiredAndExpiring = prodConnect.ExpiryList();
         }
         #endregion
 
@@ -44,17 +34,8 @@ namespace PoS.BusDomain
         public void generate()
         {
             report expiryReport = new report();
-            //expiryReport.populateChart();
-            //Collection<string> items
-            //Collection<int> numericalValues
-
-            //expiryReport.populateTable(); 
-            //Collection<string> prodName
-            //Collection<DateTime> expiryDate
-            //Collection<int> expiringQuantity
-            //Collection<int> location
-            //Collection<float> writeOff
-
+            expiryReport.populateChart(expiredAndExpiring);
+            expiryReport.populateTable(expiredAndExpiring); 
             expiryReport.load();
         }
         #endregion
@@ -65,16 +46,12 @@ namespace PoS.BusDomain
             get { return reportId; }
             set { reportId = value; }
         }
-        public Collection<Product> Expiring
+        public Collection<OrderItem> ExpiredAndExpiring
         {
-            get { return expiring; }
-            set { expiring = value; }
+            get => expiredAndExpiring;
+            set => expiredAndExpiring = value;
         }
-        public Collection<Product> Expired
-        {
-            get { return expired; }
-            set { expired = value; }
-        }
+
         #endregion
     }
 }

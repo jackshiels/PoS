@@ -104,15 +104,15 @@ namespace PoS.DB
                 {
                     for (int i = 0; i < expiryList.Count(); i++)  //iterate through all orderItems already in the Collection
                     {
-                        if (expiryList[i].ItemProduct.Name.Equals(aProd.Name))
+                        if (expiryList[i].ItemProduct.Name.Equals(aProd.Name)) //if it finds its product within the list add to quantity
                         {
                             expiryList[i].Quantity += 1;
                         }
-                        else if (!(expiryList[i].ItemProduct.Name.Equals(aProd.Name)) && expiryList[i + 1] == null)
+                        else if (!(expiryList[i].ItemProduct.Name.Equals(aProd.Name)) && expiryList[i + 1] == null) //if it hasen't matched yet and its at thelast item on the list, create an order item for it in the list
                         {
                             expiryList.Add(new OrderItem(aProd,1));
                         }
-                        else
+                        else //otherwise just continue looping through the list
                             continue;
                     }
                 }
