@@ -19,6 +19,7 @@ namespace PoS.Presentation
         private CustomerDB customerDB = new CustomerDB();
         private ProductDB productDB = new ProductDB();
         private OrderDB orderDB = new OrderDB();
+        private Order order;
         private Customer aCust;
 
         public Main()
@@ -73,15 +74,15 @@ namespace PoS.Presentation
         #endregion
 
         #region Create an Order
-        private void btnOrderBack_Click(object sender, EventArgs e)
+        private void btnOrderBack_Click(object sender, EventArgs e) //go backto select customer order is for
         {
             grpOrderSelect.Show();
             grpOrderManagement.Show();
         }
 
-        private void btnOrderAddItem_Click(object sender, EventArgs e)
+        private void btnOrderAddItem_Click(object sender, EventArgs e) // add item to the order
         {
-            if (cmbOrderProducts.Text.Equals("") || txtOrderQuantity.Text.Equals("0"))
+            if (cmbOrderProducts.Text.Equals("") || txtOrderQuantity.Text.Equals("0")) //invalid input error
             {
                 MessageBox.Show("Please input valid data");
             }
@@ -90,26 +91,37 @@ namespace PoS.Presentation
                 int number;
                 Int32.TryParse(txtOrderQuantity.Text, out number);
                 Product prod = productDB.FindNonResrvedProduct(cmbOrderProducts.Text);
-                OrderItem order = new OrderItem(prod, number);
-                cmbOrderProducts.Items.Add("Order Item ID: "+order.OrderItemID+" Item Name: "+order.ItemProduct.Name+" Quantity: "+order.Quantity+" Sub-total: "+order.SubTotal);
+                OrderItem orderItem = new OrderItem(prod, number);
+                cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+order.SubTotal);
+                Boolean success = order.AddToOrder(prod,number);
             }
         }
         
+        // add order to the orderDB
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
-
+            orderDB.InsertOrder(order);
+            grpOrderManagement.Hide();
+            grpOrderSubmitted.Show();
+            Thread.Sleep(5000);
+            grpOrderSubmitted.Hide();
+            grpFunction.Show();
         }
-
+         //cancel the order  and go back to home screen
         private void btnOrderCancel_Click(object sender, EventArgs e)
         {
-
+            lstOrderItems.Text = "";
+            grpOrderManagement.Hide();
+            grpFunction.Show();
         }
-
+        // remove an item from the order
         private void btnOrderRemoveItem_Click(object sender, EventArgs e)
         {
             string item = cmbOrderProducts.Text.Split()[3];
+            order.RemoveFromOrder(item);
+            fillLists();
         }
-
+        // select that customer for the order
         private void btnSelect_Click(object sender, EventArgs e)
         {
             String[] text = lstOrderCustList.Text.Split();
@@ -117,11 +129,13 @@ namespace PoS.Presentation
             grpOrderSelect.Hide();
             grpOrderManagement.Show();
             lblOrderCustName.Text = aCust.Name;
+            order = new Order(aCust);
         }
 
         #endregion
 
         #region Create a new Customer
+        // Clear all the text Boxes
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtCustCardName.Text = "";
@@ -135,12 +149,14 @@ namespace PoS.Presentation
             txtCustCVV.Text = "";
         }
 
+        // Submit and add that cutsomer to the DB
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             String name = txtCustName.Text;
             String address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " + 
                 txtCustCity.Text + " " + txtCustProvince.Text;
             Customer customer;
+
             if (cmbCustPayment.Text.Equals("EFT"))
             {
                 customer = new Customer(name,address);
@@ -150,10 +166,12 @@ namespace PoS.Presentation
                 string paymentDetails = txtCustCardNum.Text+txtCustCVV+txtCustCardName;
                 customer = new Customer(name,address,paymentDetails);
             }
+
             Boolean success = customerDB.InsertCustomer(customer);
             grpNewCustomer.Hide();
             grpSuccessfulCustomer.Show();
-            Thread.Sleep(5000);
+            Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
+            grpSuccessfulCustomer.Hide();
             grpFunction.Show();
         }
 
@@ -175,6 +193,9 @@ namespace PoS.Presentation
         #endregion
 
         #region Auxilary
+        /**
+         * Populate some of the list and combo box objects 
+         */
         public void fillLists()
         {
             Collection<Customer> customers = customerDB.CustList;
@@ -182,7 +203,7 @@ namespace PoS.Presentation
             Collection<String> seen = new Collection<string>();
             foreach (Customer customer in customers)
             {
-                lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID);
+                lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
             }
             
             foreach (Product product in products)
