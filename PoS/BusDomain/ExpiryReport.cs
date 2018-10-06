@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PoS.DB;
+using PoS.Presentation;
 
 namespace PoS.BusDomain
 {
@@ -19,9 +20,16 @@ namespace PoS.BusDomain
         #endregion
 
         #region Constructors
+
         public ExpiryReport()
         {
-            // Tumi-side software dev
+            /*
+            Tumi-side software dev
+            will have to split collections into 2 collections when expired and expiringList methods are complete
+            Collection 1 = coke, Fanta, Lays etc. just the names
+            Collection 2 = 500, 250 , 70, etc. just the values expired and expiring 
+            Collections should obviously be the same length and 1[x] should talk about 2[x]
+             */
             generator = new IDGen();
             reportId = generator.CreateID();
             expiring = new Collection<Product>();
@@ -29,6 +37,25 @@ namespace PoS.BusDomain
             prodConnect = new ProductDB();
             expiring = prodConnect.ExpiringList();
             expired = prodConnect.ExpiredList();
+        }
+        #endregion
+
+        #region reportGUI
+        public void generate()
+        {
+            report expiryReport = new report();
+            //expiryReport.populateChart();
+            //Collection<string> items
+            //Collection<int> numericalValues
+
+            //expiryReport.populateTable(); 
+            //Collection<string> prodName
+            //Collection<DateTime> expiryDate
+            //Collection<int> expiringQuantity
+            //Collection<int> location
+            //Collection<float> writeOff
+
+            expiryReport.load();
         }
         #endregion
 
