@@ -59,6 +59,14 @@
             this.grpSuccessfulCustomer = new System.Windows.Forms.GroupBox();
             this.grpOrderSelect = new System.Windows.Forms.GroupBox();
             this.grpOrderManagement = new System.Windows.Forms.GroupBox();
+            this.grpOrderSubmitted = new System.Windows.Forms.GroupBox();
+            this.grpUpdateOrder = new System.Windows.Forms.GroupBox();
+            this.grpPickingSelect = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.btnUpdateSelect = new System.Windows.Forms.Button();
+            this.lstUpdateList = new System.Windows.Forms.ListBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lblOrderQuantity = new System.Windows.Forms.Label();
             this.btnOrderAddItem = new System.Windows.Forms.Button();
             this.textBox7 = new System.Windows.Forms.TextBox();
@@ -69,17 +77,9 @@
             this.lblOrderCustName = new System.Windows.Forms.Label();
             this.btnOrderBack = new System.Windows.Forms.Button();
             this.lstOrderItems = new System.Windows.Forms.ListView();
+            this.lstOrderCustList = new System.Windows.Forms.ListBox();
             this.btnSelect = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.grpOrderSubmitted = new System.Windows.Forms.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.grpUpdateOrder = new System.Windows.Forms.GroupBox();
-            this.lstUpdateList = new System.Windows.Forms.ListBox();
-            this.lstOrderCustList = new System.Windows.Forms.ListBox();
-            this.btnUpdateSelect = new System.Windows.Forms.Button();
-            this.grpPickingSelect = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.grpFunction.SuspendLayout();
             this.grpNewCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).BeginInit();
@@ -88,11 +88,11 @@
             this.grpSuccessfulCustomer.SuspendLayout();
             this.grpOrderSelect.SuspendLayout();
             this.grpOrderManagement.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.grpOrderSubmitted.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.grpUpdateOrder.SuspendLayout();
             this.grpPickingSelect.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // lblHome
@@ -414,6 +414,91 @@
             this.grpOrderManagement.TabStop = false;
             this.grpOrderManagement.Text = "Order";
             // 
+            // grpOrderSubmitted
+            // 
+            this.grpOrderSubmitted.Controls.Add(this.grpUpdateOrder);
+            this.grpOrderSubmitted.Controls.Add(this.pictureBox3);
+            this.grpOrderSubmitted.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpOrderSubmitted.Location = new System.Drawing.Point(0, 0);
+            this.grpOrderSubmitted.Name = "grpOrderSubmitted";
+            this.grpOrderSubmitted.Size = new System.Drawing.Size(623, 327);
+            this.grpOrderSubmitted.TabIndex = 40;
+            this.grpOrderSubmitted.TabStop = false;
+            this.grpOrderSubmitted.Text = "Submitted";
+            // 
+            // grpUpdateOrder
+            // 
+            this.grpUpdateOrder.Controls.Add(this.btnUpdateSelect);
+            this.grpUpdateOrder.Controls.Add(this.lstUpdateList);
+            this.grpUpdateOrder.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpUpdateOrder.Location = new System.Drawing.Point(0, 0);
+            this.grpUpdateOrder.Name = "grpUpdateOrder";
+            this.grpUpdateOrder.Size = new System.Drawing.Size(623, 327);
+            this.grpUpdateOrder.TabIndex = 41;
+            this.grpUpdateOrder.TabStop = false;
+            this.grpUpdateOrder.Text = "Update an Order";
+            // 
+            // grpPickingSelect
+            // 
+            this.grpPickingSelect.Controls.Add(this.button1);
+            this.grpPickingSelect.Controls.Add(this.listBox1);
+            this.grpPickingSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpPickingSelect.Location = new System.Drawing.Point(257, 107);
+            this.grpPickingSelect.Name = "grpPickingSelect";
+            this.grpPickingSelect.Size = new System.Drawing.Size(623, 327);
+            this.grpPickingSelect.TabIndex = 42;
+            this.grpPickingSelect.TabStop = false;
+            this.grpPickingSelect.Text = "Select an Order";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(519, 294);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(98, 27);
+            this.button1.TabIndex = 31;
+            this.button1.Text = "&Select";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 19;
+            this.listBox1.Location = new System.Drawing.Point(6, 26);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(611, 213);
+            this.listBox1.TabIndex = 0;
+            // 
+            // btnUpdateSelect
+            // 
+            this.btnUpdateSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateSelect.Location = new System.Drawing.Point(519, 294);
+            this.btnUpdateSelect.Name = "btnUpdateSelect";
+            this.btnUpdateSelect.Size = new System.Drawing.Size(98, 27);
+            this.btnUpdateSelect.TabIndex = 31;
+            this.btnUpdateSelect.Text = "&Select";
+            this.btnUpdateSelect.UseVisualStyleBackColor = true;
+            // 
+            // lstUpdateList
+            // 
+            this.lstUpdateList.FormattingEnabled = true;
+            this.lstUpdateList.ItemHeight = 19;
+            this.lstUpdateList.Location = new System.Drawing.Point(6, 26);
+            this.lstUpdateList.Name = "lstUpdateList";
+            this.lstUpdateList.Size = new System.Drawing.Size(611, 213);
+            this.lstUpdateList.TabIndex = 0;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox3.Location = new System.Drawing.Point(12, 26);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(396, 212);
+            this.pictureBox3.TabIndex = 16;
+            this.pictureBox3.TabStop = false;
+            // 
             // lblOrderQuantity
             // 
             this.lblOrderQuantity.AutoSize = true;
@@ -505,6 +590,15 @@
             this.lstOrderItems.TabIndex = 0;
             this.lstOrderItems.UseCompatibleStateImageBehavior = false;
             // 
+            // lstOrderCustList
+            // 
+            this.lstOrderCustList.FormattingEnabled = true;
+            this.lstOrderCustList.ItemHeight = 19;
+            this.lstOrderCustList.Location = new System.Drawing.Point(6, 26);
+            this.lstOrderCustList.Name = "lstOrderCustList";
+            this.lstOrderCustList.Size = new System.Drawing.Size(611, 232);
+            this.lstOrderCustList.TabIndex = 32;
+            // 
             // btnSelect
             // 
             this.btnSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -526,106 +620,12 @@
             this.pictureBox2.TabIndex = 15;
             this.pictureBox2.TabStop = false;
             // 
-            // grpOrderSubmitted
-            // 
-            this.grpOrderSubmitted.Controls.Add(this.grpUpdateOrder);
-            this.grpOrderSubmitted.Controls.Add(this.pictureBox3);
-            this.grpOrderSubmitted.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpOrderSubmitted.Location = new System.Drawing.Point(0, 0);
-            this.grpOrderSubmitted.Name = "grpOrderSubmitted";
-            this.grpOrderSubmitted.Size = new System.Drawing.Size(623, 327);
-            this.grpOrderSubmitted.TabIndex = 40;
-            this.grpOrderSubmitted.TabStop = false;
-            this.grpOrderSubmitted.Text = "Submitted";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox3.Location = new System.Drawing.Point(12, 26);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(396, 212);
-            this.pictureBox3.TabIndex = 16;
-            this.pictureBox3.TabStop = false;
-            // 
-            // grpUpdateOrder
-            // 
-            this.grpUpdateOrder.Controls.Add(this.grpPickingSelect);
-            this.grpUpdateOrder.Controls.Add(this.btnUpdateSelect);
-            this.grpUpdateOrder.Controls.Add(this.lstUpdateList);
-            this.grpUpdateOrder.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpUpdateOrder.Location = new System.Drawing.Point(0, 0);
-            this.grpUpdateOrder.Name = "grpUpdateOrder";
-            this.grpUpdateOrder.Size = new System.Drawing.Size(623, 327);
-            this.grpUpdateOrder.TabIndex = 41;
-            this.grpUpdateOrder.TabStop = false;
-            this.grpUpdateOrder.Text = "Update an Order";
-            // 
-            // lstUpdateList
-            // 
-            this.lstUpdateList.FormattingEnabled = true;
-            this.lstUpdateList.ItemHeight = 19;
-            this.lstUpdateList.Location = new System.Drawing.Point(6, 26);
-            this.lstUpdateList.Name = "lstUpdateList";
-            this.lstUpdateList.Size = new System.Drawing.Size(611, 213);
-            this.lstUpdateList.TabIndex = 0;
-            // 
-            // lstOrderCustList
-            // 
-            this.lstOrderCustList.FormattingEnabled = true;
-            this.lstOrderCustList.ItemHeight = 19;
-            this.lstOrderCustList.Location = new System.Drawing.Point(6, 26);
-            this.lstOrderCustList.Name = "lstOrderCustList";
-            this.lstOrderCustList.Size = new System.Drawing.Size(611, 232);
-            this.lstOrderCustList.TabIndex = 32;
-            // 
-            // btnUpdateSelect
-            // 
-            this.btnUpdateSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateSelect.Location = new System.Drawing.Point(519, 294);
-            this.btnUpdateSelect.Name = "btnUpdateSelect";
-            this.btnUpdateSelect.Size = new System.Drawing.Size(98, 27);
-            this.btnUpdateSelect.TabIndex = 31;
-            this.btnUpdateSelect.Text = "&Select";
-            this.btnUpdateSelect.UseVisualStyleBackColor = true;
-            // 
-            // grpPickingSelect
-            // 
-            this.grpPickingSelect.Controls.Add(this.button1);
-            this.grpPickingSelect.Controls.Add(this.listBox1);
-            this.grpPickingSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpPickingSelect.Location = new System.Drawing.Point(0, 0);
-            this.grpPickingSelect.Name = "grpPickingSelect";
-            this.grpPickingSelect.Size = new System.Drawing.Size(623, 327);
-            this.grpPickingSelect.TabIndex = 42;
-            this.grpPickingSelect.TabStop = false;
-            this.grpPickingSelect.Text = "Select an Order";
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(519, 294);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 27);
-            this.button1.TabIndex = 31;
-            this.button1.Text = "&Select";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 19;
-            this.listBox1.Location = new System.Drawing.Point(6, 26);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(611, 213);
-            this.listBox1.TabIndex = 0;
-            // 
             // Main
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(892, 443);
+            this.Controls.Add(this.grpPickingSelect);
             this.Controls.Add(this.grpSuccessfulCustomer);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pictureBox1);
@@ -649,11 +649,11 @@
             this.grpOrderSelect.ResumeLayout(false);
             this.grpOrderManagement.ResumeLayout(false);
             this.grpOrderManagement.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.grpOrderSubmitted.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.grpUpdateOrder.ResumeLayout(false);
             this.grpPickingSelect.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
