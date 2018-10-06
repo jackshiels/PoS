@@ -63,7 +63,7 @@ namespace PoS.Presentation
             expiredItems.Series["Expired/Expiring Objects"].Enabled = true;
             expiredItems.Series["Expired/Expiring Objects"].SetDefault(true);
             // add items to columns
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 1; i < items.Count+1; i++)
             {
                 expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i].ItemProduct, items[i].Quantity); // add Coke,500 to chart
             }
