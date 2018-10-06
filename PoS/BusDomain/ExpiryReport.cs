@@ -31,7 +31,7 @@ namespace PoS.BusDomain
         #endregion
 
         #region reportGUI
-        public void generateGUI()
+        public void generateReport()
         {
             report expiryReport = new report();
             expiryReport.populateChart(expiredAndExpiring);

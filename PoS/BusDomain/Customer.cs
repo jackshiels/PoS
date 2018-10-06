@@ -10,23 +10,47 @@ namespace PoS.BusDomain
     {
         // Inherited class
         #region Members
-        private int customerId;
-        private string paymentDetails;
+        private string customerId;
         private int blackListed;
+        private IDGen generator;
+        private string[] cardholderDetails;
+        private PaymentMethod payment;
+
+        public enum PaymentMethod
+        {
+            EFT = 0,
+            CreditCard = 1
+        }
         #endregion
 
         #region Constructors
-        public Customer() : base() { }
+        public Customer() : base()
+        {
+            generator = new IDGen();
+            customerId = "CUS" + generator.CreateID();
+        }
 
-        public Customer(int CustomerID, string name, string address, DateTime dob, string payment) : base()
+        public Customer(string name, string address) : base()
         {
             // Creates a Customer and fills the Person superclass with values
-            this.customerId = CustomerID;
-            this.paymentDetails = payment;
+            generator = new IDGen();
+            customerId = "CUS" + generator.CreateID();
             this.blackListed = 0;
             base.Name = name;
             base.Address = address;
-            base.DOB = dob;
+            payment = PaymentMethod.CreditCard;
+        }
+
+        public Customer(string name, string address, string[] paymentDetails) : base()
+        {
+            // Creates a Customer and fills the Person superclass with values
+            generator = new IDGen();
+            customerId = "CUS" + generator.CreateID();
+            this.blackListed = 0;
+            base.Name = name;
+            base.Address = address;
+            cardholderDetails = paymentDetails;
+            payment = PaymentMethod.CreditCard;
         }
         #endregion
 
