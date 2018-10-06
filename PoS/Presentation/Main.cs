@@ -17,6 +17,9 @@ namespace PoS.Presentation
     public partial class Main : Form
     {
         private CustomerDB customerDB = new CustomerDB();
+        private ProductDB productDB = new ProductDB();
+        private OrderDB orderDB = new OrderDB();
+        private Customer aCust;
 
         public Main()
         {
@@ -72,14 +75,26 @@ namespace PoS.Presentation
         #region Create an Order
         private void btnOrderBack_Click(object sender, EventArgs e)
         {
-
+            grpOrderSelect.Show();
+            grpOrderManagement.Show();
         }
 
         private void btnOrderAddItem_Click(object sender, EventArgs e)
         {
-
+            if (cmbOrderProducts.Text.Equals("") || txtOrderQuantity.Text.Equals("0"))
+            {
+                MessageBox.Show("Please input valid data");
+            }
+            else
+            {
+                int number;
+                Int32.TryParse(txtOrderQuantity.Text, out number);
+                Product prod = productDB.FindNonResrvedProduct(cmbOrderProducts.Text);
+                OrderItem order = new OrderItem(prod, number);
+                cmbOrderProducts.Items.Add("Order Item ID: "+order.OrderItemID+" Item Name: "+order.ItemProduct.Name+" Quantity: "+order.Quantity+" Sub-total: "+order.SubTotal);
+            }
         }
-
+        
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
 
@@ -92,12 +107,16 @@ namespace PoS.Presentation
 
         private void btnOrderRemoveItem_Click(object sender, EventArgs e)
         {
-
+            string item = cmbOrderProducts.Text.Split()[3];
         }
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-
+            String[] text = lstOrderCustList.Text.Split();
+            aCust = customerDB.FindCustomerObject(text[text.Length]);
+            grpOrderSelect.Hide();
+            grpOrderManagement.Show();
+            lblOrderCustName.Text = aCust.Name;
         }
 
         #endregion
@@ -159,11 +178,23 @@ namespace PoS.Presentation
         public void fillLists()
         {
             Collection<Customer> customers = customerDB.CustList;
+            Collection<Product> products = productDB.ProdList;
+            Collection<String> seen = new Collection<string>();
             foreach (Customer customer in customers)
             {
                 lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID);
             }
             
+            foreach (Product product in products)
+            {
+                if (seen.Contains(product.Name))
+                    continue;
+                else
+                {
+                    cmbOrderProducts.Items.Add(product.Name);
+                    seen.Add(product.Name);
+                }
+            }
             //lstOrderItems;
             //lstUpdateList;
         }

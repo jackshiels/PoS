@@ -21,7 +21,7 @@ namespace PoS.DB
 
         #region Constructors
         // Passes into the base class and works so nice. Ayylmao
-        public OrderDB(string sql) : base(sql)
+        public OrderDB() : base(sql)
         {
             ordList = new Collection<Order>();
             FillDataSet(sqlOrd);
