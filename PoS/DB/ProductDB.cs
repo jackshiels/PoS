@@ -124,7 +124,7 @@ namespace PoS.DB
             return dimArr;
         }
 
-        private Product FindNonResrvedProduct(string name)
+        public Product FindNonResrvedProduct(string name)
         {
             Product aProd = new Product();
             DataRow myRow;
