@@ -42,9 +42,9 @@ namespace PoS.DB
             {
                 FillDataSet(sql);
             }
-            catch
+            catch(Exception e)
             {
-                MessageBox.Show("Connection Error Exception");
+                MessageBox.Show("Connection Error Exception of type " + e.Message);
             }
         }
         #endregion

@@ -91,7 +91,7 @@ namespace PoS.DB
         public void CreateInsertParameters()
         {
             SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
+            param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
@@ -103,7 +103,7 @@ namespace PoS.DB
             param = new SqlParameter("@BLCK", SqlDbType.Int, 1, "BlackListed");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
+            param = new SqlParameter("@PEID", SqlDbType.NVarChar, 12, "PersonID");
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
