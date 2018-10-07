@@ -71,6 +71,7 @@
     <Compile Include="BusDomain\Person.cs" />
     <Compile Include="BusDomain\Product.cs" />
     <Compile Include="Controllers\CreateACustomer.cs" />
+    <Compile Include="Controllers\CreateAnOrder.cs" />
     <Compile Include="DBMainDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

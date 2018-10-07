@@ -43,6 +43,7 @@ namespace PoS.BusDomain
             {
                 OrderItem item = new OrderItem(prod, quant);
                 itemList.Add(item);
+                CalculateTotal();
                 added = true;
             }
 

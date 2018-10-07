@@ -21,7 +21,7 @@ namespace PoS.DB
 
         #region Constructors
         // Passes into the base class and works so nice. Ayylmao
-        public OrderDB() : base(sql)
+        public OrderDB() : base()
         {
             ordList = new Collection<Order>();
             FillDataSet(sqlOrd);
@@ -41,7 +41,7 @@ namespace PoS.DB
             // Create the insert command
             daMain.InsertCommand = new SqlCommand("INSERT INTO Order (OrderID, Total) VALUES (@ORID, @TOTL); INSERT INTO OrderRegister (OrderID, CustomerID) VALUES (@ORID, @CUID); INSERT INTO OrderItem (OrderItemID, Quantity, Subtotal) VALUES (@OIID, @QUAN, @STOT); INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@ORID, @PRID, @OIID);", cnMain);
 
-            // Add the customer into the list anyway
+            // Add the order into the list anyway
             ordList.Add(anOrd);
 
             try
@@ -112,7 +112,7 @@ namespace PoS.DB
             param = new SqlParameter("@OIID", SqlDbType.NVarChar, 12, "OrderItemID");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@QUAN", SqlDbType.Int, 12, "Quantity");
+            param = new SqlParameter("@QUAN", SqlDbType.Int, 8, "Quantity");
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@STOT", SqlDbType.Money, 12, "Subtotal");
@@ -137,7 +137,7 @@ namespace PoS.DB
                     Order anOrd = new Order();
 
                     // Do the Order conversion stuff here.
-                    anOrd.OrderID = Convert.ToString(dRow["OrderID"]);
+                    anOrd.OrderID = Convert.ToString(dRow["OrderID"]).TrimEnd();
                     anOrd.Total = (float)Convert.ToDouble(dRow["Total"]);
 
                     // Find the corresponding customer id
@@ -167,7 +167,7 @@ namespace PoS.DB
                         {
                             OrderItem item = new OrderItem();
 
-                            item.OrderItemID = Convert.ToString(rRow["OrderItemID"]);
+                            item.OrderItemID = Convert.ToString(rRow["OrderItemID"]).TrimEnd();
                             DataRow tempRow = dsMain.Tables["OrderItem"].Rows.Find(Convert.ToString(rRow["OrderItemID"]));
                             item.Quantity = Convert.ToInt32(tempRow["Quantity"]);
                             item.SubTotal = (float)Convert.ToDouble(tempRow["Subtotal"]);
@@ -293,7 +293,7 @@ namespace PoS.DB
             else if (row.Table.TableName == "OrderItemRegister")
             {
                 row["OrderID"] = ord.OrderID;
-                row["Product"] = item.ItemProduct.ProdID;
+                row["ProductID"] = item.ItemProduct.ProdID;
                 row["OrderItemID"] = item.OrderItemID;
             }
         }

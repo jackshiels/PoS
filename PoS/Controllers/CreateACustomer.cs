@@ -11,8 +11,8 @@ namespace PoS.Controllers
     public class CreateACustomer
     {
         #region Members
-        CustomerDB custDB;
-        Customer aCust;
+        private CustomerDB custDB;
+        private Customer aCust;
         #endregion
 
         #region Constructors
@@ -21,13 +21,13 @@ namespace PoS.Controllers
         public CreateACustomer(string name, string address, string[] paymentDetails)
         {
             custDB = new CustomerDB();
-            Submit(name, address, paymentDetails);
+            SubmitCustomer(name, address, paymentDetails);
         }
         #endregion
 
         #region Methods
         // Create the customer object to submit. Send an empty string[] if EFT
-        public bool Submit(string name, string address, string[] paymentDetails)
+        public bool SubmitCustomer(string name, string address, string[] paymentDetails)
         {
             // Passed bool
             bool success = false;
@@ -59,6 +59,14 @@ namespace PoS.Controllers
             // Insert the customer
             success = custDB.InsertCustomer(aCust);
             return success;
+        }
+        #endregion
+
+        #region Properties
+        public Customer Cust
+        {
+            get { return aCust; }
+            set { aCust = value; }
         }
         #endregion
     }

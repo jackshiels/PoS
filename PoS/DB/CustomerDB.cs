@@ -121,26 +121,33 @@ namespace PoS.DB
         {
             Customer aCust = new Customer();
 
-            // Parses the table to get data for each customer
-            foreach (DataRow dRow in dsMain.Tables["CustomerRegister"].Rows)
+            try
             {
-                if (!(dRow.RowState == DataRowState.Deleted))
+                // Parses the table to get data for each customer
+                foreach (DataRow dRow in dsMain.Tables["CustomerRegister"].Rows)
                 {
-                    // Do the conversion stuff here.
-                    aCust.CustomerID = Convert.ToString(dRow["CustomerID"]);
-                    // Creates a row from the customer table that shares the same key from CustomerRegister
-                    DataRow temp = dsMain.Tables["Customer"].Rows.Find(Convert.ToInt32(dRow["CustomerID"]));
-                    aCust.CardHolderDetails = CreatePaymentArray(Convert.ToString(temp["Payment"]));
-                    aCust.Debt = (float)Convert.ToDouble(temp["Debt"]);
-                    aCust.BlackListed = Convert.ToInt32(temp["BlackListed"]);
-                    // Creates a row from the person table that shares the same key from CustomerRegister
-                    temp = dsMain.Tables["Person"].Rows.Find(Convert.ToInt32(dRow["PersonID"]));
-                    aCust.Name = Convert.ToString(temp["Name"]);
-                    aCust.Address = Convert.ToString(temp["Address"]);
-                    
-                    // Add to the list
-                    custList.Add(aCust);
+                    if (!(dRow.RowState == DataRowState.Deleted))
+                    {
+                        // Do the conversion stuff here.
+                        aCust.CustomerID = Convert.ToString(dRow["CustomerID"]).TrimEnd();
+                        // Creates a row from the customer table that shares the same key from CustomerRegister
+                        DataRow temp = dsMain.Tables["Customer"].Rows.Find(Convert.ToInt32(dRow["CustomerID"]));
+                        aCust.CardHolderDetails = CreatePaymentArray(Convert.ToString(temp["Payment"]));
+                        aCust.Debt = (float)Convert.ToDouble(temp["Debt"]);
+                        aCust.BlackListed = Convert.ToInt32(temp["BlackListed"]);
+                        // Creates a row from the person table that shares the same key from CustomerRegister
+                        temp = dsMain.Tables["Person"].Rows.Find(Convert.ToInt32(dRow["PersonID"]));
+                        aCust.Name = Convert.ToString(temp["Name"]).TrimEnd();
+                        aCust.Address = Convert.ToString(temp["Address"]).TrimEnd();
+
+                        // Add to the list
+                        custList.Add(aCust);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error of type " + ex);
             }
         }
 

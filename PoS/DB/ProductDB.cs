@@ -78,32 +78,41 @@ namespace PoS.DB
         private void ReadProducts()
         {
             DataRow myRow = null;
-            Product aProd = new Product();
+            Product aProd;
 
-            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows)
+            try
             {
-                myRow = dRow;
-                if (!(myRow.RowState == DataRowState.Deleted))
+                foreach (DataRow dRow in dsMain.Tables[tableProd].Rows)
                 {
-                    // Do the conversion stuff here.
-                    aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
-                    aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
-                    aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
-                    aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
-                    aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
-                    aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
-                    aProd.Location = Convert.ToString(myRow["Location"]);
-                    aProd.Reserved = Convert.ToInt32(myRow["Reserved"]);
-                    // Add to the list
-                    prodList.Add(aProd);
+                    aProd = new Product();
+                    myRow = dRow;
+                    if (!(myRow.RowState == DataRowState.Deleted))
+                    {
+                        // Do the conversion stuff here.
+                        aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
+                        aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
+                        aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
+                        aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
+                        aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
+                        aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
+                        aProd.Location = Convert.ToString(myRow["Location"]).TrimEnd();
+                        aProd.Reserved = Convert.ToInt32(myRow["Reserved"]);
+                        // Add to the list
+                        prodList.Add(aProd);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error of type " + ex);
+            }
+
         }
 
         private double[] DimensionParser(string input)
         {
             // Creates an array of double to represent dimensions
-            // Dimensions are entered in the format x y z
+            // Dimensions are entered in the format x y z (note spacing)
             string[] splitStrings = input.Split(' ');
             double[] dimArr = new double[3];
 
@@ -124,7 +133,7 @@ namespace PoS.DB
             return dimArr;
         }
 
-        public Product FindNonResrvedProduct(string name)
+        public Product FindNonReservedProduct(string name)
         {
             Product aProd = new Product();
             DataRow myRow;
@@ -170,7 +179,7 @@ namespace PoS.DB
             param = new SqlParameter("@DIMS", SqlDbType.NVarChar, 40, "Dimensions");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@WGHT", SqlDbType.Float, 10, "Weight");
+            param = new SqlParameter("@WGHT", SqlDbType.Float, 53, "Weight");
             daMain.UpdateCommand.Parameters.Add(param);
 
             param = new SqlParameter("@LOCN", SqlDbType.NVarChar, 20, "Location");
@@ -179,13 +188,13 @@ namespace PoS.DB
             param = new SqlParameter("@EXPD", SqlDbType.Date, 100, "ExpiryDate");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@RSVD", SqlDbType.Bit, 1, "Reserved");
+            param = new SqlParameter("@RSVD", SqlDbType.Int, 1, "Reserved");
             daMain.UpdateCommand.Parameters.Add(param);
         }
 
         public Boolean ReserveProduct(string name)
         {
-            Product aProd = FindNonResrvedProduct(name);
+            Product aProd = FindNonReservedProduct(name);
             aProd.Reserved = 1;
             bool successful = false;
             // Create the parameters to hide data

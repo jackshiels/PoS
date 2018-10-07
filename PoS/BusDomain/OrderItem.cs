@@ -23,11 +23,12 @@ namespace PoS.BusDomain
             orderItemId = "OID"+generator.CreateID();
         }
 
-        public OrderItem(Product itemProduct, int quant)
+        public OrderItem(Product inputProduct, int quant)
         {
             // Creates an order item and calculates the subtotal
             subTotal = quant * itemProduct.Price;
             orderItemId = "OID"+generator.CreateID();
+            itemProduct = inputProduct;
         }
         #endregion
 
