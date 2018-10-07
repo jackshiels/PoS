@@ -163,7 +163,7 @@ namespace PoS.DB
         }
         #endregion
 
-        #region Methods - Update
+        #region Methods - UPDATE
         public void CreateUpdateParameters()
         {
             SqlParameter param = default(SqlParameter);
@@ -192,7 +192,7 @@ namespace PoS.DB
             daMain.UpdateCommand.Parameters.Add(param);
         }
 
-        public Boolean ReserveProduct(string name)
+        public bool ReserveProduct(string name)
         {
             Product aProd = FindNonReservedProduct(name);
             aProd.Reserved = 1;
@@ -200,7 +200,7 @@ namespace PoS.DB
             // Create the parameters to hide data
             CreateUpdateParameters();
             // Create the insert command
-            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved=@RSVD WHERE ProductID = @PRID;", cnMain);
+            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved = @RSVD WHERE ProductID = @PRID;", cnMain);
             try
             {
                 DataRow updatedProdRow = dsMain.Tables["Product"].Rows[FindRowIndex(aProd, "Product")];
