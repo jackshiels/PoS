@@ -134,6 +134,7 @@
             this.Controls.Add(this.txtLoginPass);
             this.Controls.Add(this.btnLogIn);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LogIn";
             this.Text = "Log In";
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).EndInit();

@@ -900,7 +900,7 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1014, 504);
+            this.ClientSize = new System.Drawing.Size(1014, 486);
             this.Controls.Add(this.grpOrderManagement);
             this.Controls.Add(this.grpSuccessfulCustomer);
             this.Controls.Add(this.grpReport);
@@ -914,6 +914,7 @@
             this.Controls.Add(this.lblUserName);
             this.Controls.Add(this.btnLogOut);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "Main";
             this.grpFunction.ResumeLayout(false);

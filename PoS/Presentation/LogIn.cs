@@ -27,7 +27,7 @@ namespace PoS
             // only if password matches user name
             if (login.LogInCheck(txtLoginEmpId.Text, txtLoginPass.Text))
             {
-                Employee anEmp = login.EmpDB.findEmp(txtLoginEmpId.Text));
+                Employee anEmp = login.EmpDB.findEmp(txtLoginEmpId.Text);
                 Main main = new Main(anEmp);
                 main.Show();
                 Hide();
