@@ -134,31 +134,29 @@ namespace PoS.DB
 
         public Product FindNonReservedProduct(string name)
         {
-            Product aProd = new Product();
-            DataRow myRow;
-            foreach (DataRow dRow in dsMain.Tables[tableProd].Rows) //Iterate through every row in the product table
+            Product aProd = null;
+            foreach(Product product in prodList)
             {
-                myRow = dRow;
-                if (!(myRow.RowState == DataRowState.Deleted))
+                if (name.Equals(product.Name) && product.Reserved == 0)
                 {
-                    if (name.Equals(Convert.ToString(myRow["Name"]).TrimEnd()) && Convert.ToByte(myRow["Reserved"]) == 0)
-                    {
-                        // Fill in the product Item with all the appropriate details
-                        aProd.ProdID = Convert.ToString(myRow["ProductID"]).TrimEnd();
-                        aProd.Name = Convert.ToString(myRow["Name"]).TrimEnd();
-                        aProd.Price = (float)Convert.ToDecimal(myRow["Price"]);
-                        aProd.Dimensions = DimensionParser(Convert.ToString(myRow["Dimensions"]).TrimEnd());
-                        aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
-                        aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
-                        aProd.Location = Convert.ToString(myRow["Location"]);
-                        aProd.Reserved = Convert.ToByte(myRow["Reserved"]);
-                        break;
-                    }
+                    aProd = product;
+                    break;
                 }
-
             }
-
             return aProd;
+        }
+
+        public int FindNumProduct(string name)
+        {
+            int count = 0;
+            foreach (Product product in prodList)
+            {
+                if (name.Equals(product.Name) && product.Reserved == 0)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
         #endregion
 
