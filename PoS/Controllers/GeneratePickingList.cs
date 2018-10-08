@@ -31,7 +31,7 @@ namespace PoS.Controllers
             // Iterate and generate the strings
             foreach(OrderItem item in anOrd.ItemList)
             {
-                pickingList.Add(item.OrderItemID + " " + item.ItemProduct.Name + " " + item.ItemProduct.Location);
+                pickingList.Add("Product ID: "+item.OrderItemID + " Product Name: " + item.ItemProduct.Name + " Product Location: " + item.ItemProduct.Location);
             }
 
             return pickingList;

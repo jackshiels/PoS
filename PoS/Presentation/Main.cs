@@ -22,7 +22,7 @@ namespace PoS.Presentation
         private ProductDB productDB = new ProductDB();
         private CreateAnOrder createOrder = new CreateAnOrder();
         private CreateACustomer createCust = new CreateACustomer();
-        private 
+        private GeneratePickingList genPicking = new GeneratePickingList();
         private OrderDB orderDB = new OrderDB();
         private Order order;
         private Customer aCust;
@@ -69,12 +69,18 @@ namespace PoS.Presentation
         #region Picking List
         private void btnPickingSelect_Click(object sender, EventArgs e)
         {
+            fillLists();
+            string orderID = lstOrderCustList.Text.Split()[2];
+
+            order = null;
+            order = createOrder.AnOrd.FindOrder(orderID); //fill in
             grpPickingSelect.Hide();
             grpPickingList.Show();
         }
 
         private void btnPickingBack_Click(object sender, EventArgs e)
         {
+            populatePickingList(order);
             grpPickingList.Hide();
             grpPickingSelect.Show();
         }
@@ -218,8 +224,8 @@ namespace PoS.Presentation
         {
             Collection<Customer> customers = createOrder.CustDB.CustList;
             Collection<Product> products = createOrder.ProdDB.ProdList;
-            Collection<Orders> orders = 
             Collection<String> seen = new Collection<string>();
+            Collection<Order> orders = createOrder.OrdDb.OrdList;
             foreach (Customer customer in customers)
             {
                 lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
@@ -235,9 +241,22 @@ namespace PoS.Presentation
                     seen.Add(product.Name);
                 }
             }
-            lstReportOrders
+            foreach (Order x in orders)
+            {
+                lstOrderCustList.Items.Add("Order ID: "+x.OrderID +" Customer: "+x.Owner);
+            }
+            //lstOrderCustList
             //lstOrderItems;
             //lstUpdateList;
+        }
+
+        public void populatePickingList(Order ord)
+        {
+            Collection<string> list = genPicking.GetPickingList(ord);
+            foreach (string x in list)
+            {
+                lstReportOrders.Items.Add(x);
+            }
         }
        
         // make it open screens
