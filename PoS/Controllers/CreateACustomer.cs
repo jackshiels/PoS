@@ -20,7 +20,7 @@ namespace PoS.Controllers
 
         public CreateACustomer(string name, string address, string[] paymentDetails)
         {
-            custDB = new CustomerDB();
+            CustDB = new CustomerDB();
             SubmitCustomer(name, address, paymentDetails);
         }
         #endregion
@@ -57,7 +57,7 @@ namespace PoS.Controllers
             }
 
             // Insert the customer
-            success = custDB.InsertCustomer(aCust);
+            success = CustDB.InsertCustomer(aCust);
             return success;
         }
         #endregion
@@ -67,6 +67,12 @@ namespace PoS.Controllers
         {
             get { return aCust; }
             set { aCust = value; }
+        }
+
+        public CustomerDB CustDB
+        {
+            get { return custDB; }
+            set { custDB = value; }
         }
         #endregion
     }

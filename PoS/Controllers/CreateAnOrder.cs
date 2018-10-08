@@ -25,7 +25,7 @@ namespace PoS.Controllers
 
         public CreateAnOrder(Customer aCust)
         {
-            ordDb = new OrderDB();
+            OrdDb = new OrderDB();
             prodDb = new ProductDB();
             anOrd = new Order(aCust);
             custDb = new CustomerDB();
@@ -52,7 +52,7 @@ namespace PoS.Controllers
             bool second = false;
 
             // Do the insert
-            first = ordDb.InsertOrder(ord);
+            first = OrdDb.InsertOrder(ord);
 
             // Reserve the correct amount of products
             foreach (string name in toBeReserved)
@@ -138,6 +138,12 @@ namespace PoS.Controllers
         {
             get { return anOrd; }
             set { anOrd = value; }
+        }
+
+        public OrderDB OrdDb
+        {
+            get { return ordDb; }
+            set { ordDb = value; }
         }
         #endregion
     }
