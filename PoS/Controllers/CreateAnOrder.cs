@@ -100,6 +100,7 @@ namespace PoS.Controllers
             Collection<string> prodList = new Collection<string>();
             Collection<string> seen = new Collection<string>();
 
+            // Iterate
             foreach(Product prod in prodDb.ProdList)
             {
                 if (seen.Contains(prod.Name))

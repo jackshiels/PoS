@@ -70,6 +70,7 @@
     <Compile Include="BusDomain\OrderItem.cs" />
     <Compile Include="BusDomain\Person.cs" />
     <Compile Include="BusDomain\Product.cs" />
+    <Compile Include="Controllers\CancelAnItem.cs" />
     <Compile Include="Controllers\CreateACustomer.cs" />
     <Compile Include="Controllers\CreateAnOrder.cs" />
     <Compile Include="Controllers\LogIn.cs" />
