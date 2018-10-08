@@ -113,7 +113,6 @@ namespace PoS.DB
             daMain.InsertCommand.Parameters.Add(param);
 
         }
-        // This method fills the given row with appropriate members from a customer object, depending on the table the row comes from
         #endregion
 
         #region Methods - READ
@@ -356,7 +355,8 @@ namespace PoS.DB
                 row["CustomerID"] = cust.CustomerID;
                 row["BlackListed"] = cust.BlackListed;
                 row["Debt"] = cust.Debt;
-                row["Payment"] = cust.CardHolderDetails;
+                // Converts the array into a single string
+                row["Payment"] = cust.CardHolderDetails[0] + cust.CardHolderDetails[1] + cust.CardHolderDetails[2];
             }
             else if (row.Table.TableName == "Person")
             {

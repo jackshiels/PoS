@@ -164,6 +164,21 @@ namespace PoS.DB
         #endregion
 
         #region Methods - UPDATE
+        public bool CommitUpdate()
+        {
+            bool successful = false;
+            try
+            {
+                UpdateDataSource(sqlProd);
+                successful = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error of type " + ex);
+            }
+            return successful;
+        }
+
         public void CreateUpdateParameters()
         {
             SqlParameter param = default(SqlParameter);
