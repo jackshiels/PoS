@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PoS.BusDomain;
 using PoS.Controllers;
 using PoS.Presentation;
 
@@ -26,7 +27,8 @@ namespace PoS
             // only if password matches user name
             if (login.LogInCheck(txtLoginEmpId.Text, txtLoginPass.Text))
             {
-                Main main = new Main();
+                Employee anEmp = login.EmpDB.findEmp(txtLoginEmpId.Text));
+                Main main = new Main(anEmp);
                 main.Show();
                 Hide();
             }

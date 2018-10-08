@@ -21,8 +21,10 @@ namespace PoS.Controllers
         #region Constructors
         public LogInController()
         {
-            empDB = new EmployeeDB();
+            EmpDB = new EmployeeDB();
         }
+
+        public EmployeeDB EmpDB { get => empDB; set => empDB = value; }
         #endregion
 
         #region Methods
@@ -31,7 +33,7 @@ namespace PoS.Controllers
             bool success = false;
 
             // Check for the user
-            foreach(Employee emp in empDB.EmpList)
+            foreach(Employee emp in EmpDB.EmpList)
             {
                 if (empId == emp.EmpID)
                 {

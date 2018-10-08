@@ -50,9 +50,34 @@ namespace PoS.Presentation
             grpPickingList.Hide();
             grpPickingSelect.Hide();
         }
+
+        public Main(Employee anEmp)
+        {
+            lblUserName.Text = anEmp.Name;
+            lblUserRole.Text = anEmp.Role.ToString();
+            InitializeComponent();
+
+            grpFunction.Show();
+
+            grpUpdateOrder.Hide();
+
+            grpOrderManagement.Hide();
+
+            grpOrderSelect.Hide();
+            grpOrderSubmitted.Hide();
+
+            grpReport.Hide();
+
+            grpNewCustomer.Hide();
+            grpSuccessfulCustomer.Hide();
+
+            grpPickingList.Hide();
+            grpPickingSelect.Hide();
+        }
         #endregion
 
         #region Constant Buttons
+        // COnstant Logout Button top of display back to login screen
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             LogIn logIn = new LogIn();
@@ -60,6 +85,7 @@ namespace PoS.Presentation
             Hide();
         }
 
+        // Completely exit the code
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -68,6 +94,7 @@ namespace PoS.Presentation
         #endregion
 
         #region Picking List
+        //Method to select the order to print an order list for
         private void btnPickingSelect_Click(object sender, EventArgs e)
         {
             //fillLists();
@@ -80,21 +107,30 @@ namespace PoS.Presentation
             populatePickingList(order);
         }
 
+        // go back to the picking list screen
         private void btnPickingBack_Click(object sender, EventArgs e)
         {
             grpPickingList.Hide();
+            fillLists(); // Auxilary method
             grpPickingSelect.Show();
         }
         #endregion
 
         #region Update Order
+        //choose order to update
         private void btnUpdateSelect_Click(object sender, EventArgs e)
         {
             string orderID = lstOrderItems.Text.Split()[2];
             order = null;
             order = createOrder.OrdDb.FindOrder(orderID);
+            lblOrderCustName.Text = order.Owner.Name;
             grpUpdateOrder.Hide();
+            foreach (OrderItem orderitem in order.ItemList)
+            {
+                cmbOrderProducts.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Item Name: " + orderitem.ItemProduct.Name + " Quantity: " + orderitem.Quantity + " Sub-total: " + orderitem.SubTotal);
+            }
             grpOrderManagement.Show();
+            
         }
         #endregion
 
@@ -132,7 +168,7 @@ namespace PoS.Presentation
             {
                 Product prod = createOrder.ProdDB.FindNonReservedProduct(cmbOrderProducts.Text);
                 OrderItem orderItem = new OrderItem(prod, number);
-                cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+order.SubTotal);
+                cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
             }
         }
@@ -204,6 +240,7 @@ namespace PoS.Presentation
             grpFunction.Show();
         }
 
+        //payment method
         private void cmbCustPayment_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbCustPayment.Text.Equals("EFT"))
@@ -251,6 +288,7 @@ namespace PoS.Presentation
             {
                 lstOrderCustList.Items.Add("Order ID: "+x.OrderID +" Customer: "+x.Owner);
                 lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner);
+                lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner);
             }
             //lstUpdateList;
         }

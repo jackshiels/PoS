@@ -79,6 +79,21 @@ namespace PoS.DB
                 MessageBox.Show("An error of type " + ex);
             }
         }
+
+        // method used to find a certain employee based off of their emp ID
+        public Employee findEmp(String empID)
+        {
+            Employee anEmp = null;
+            foreach (Employee emp in empList)
+            {
+                if (emp.EmpID.Equals(empID))
+                {
+                    anEmp = emp;
+                    break;
+                }
+            }
+            return anEmp;
+        }
         #endregion
 
         #region Property Methods
