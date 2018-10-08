@@ -46,11 +46,6 @@ namespace PoS.BusDomain
             get { return name; }
             set { name = value; }
         }
-        public string Description
-        {
-            get { return description; }
-            set { description = value; }
-        }
         public double[] Dimensions
         {
             get { return dimensions; }
