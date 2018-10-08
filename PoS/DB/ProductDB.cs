@@ -132,19 +132,7 @@ namespace PoS.DB
             return dimArr;
         }
 
-        public Product FindNonReservedProduct(string name)
-        {
-            Product aProd = null;
-            foreach(Product product in prodList)
-            {
-                if (name.Equals(product.Name) && product.Reserved == 0)
-                {
-                    aProd = product;
-                    break;
-                }
-            }
-            return aProd;
-        }
+
 
         public int FindNumProduct(string name)
         {
@@ -204,6 +192,20 @@ namespace PoS.DB
             daMain.UpdateCommand.Parameters.Add(param);
         }
 
+        public Product FindNonReservedProduct(string name)
+        {
+            Product aProd = null;
+            foreach (Product product in prodList)
+            {
+                if (name.Equals(product.Name) && product.Reserved == 0)
+                {
+                    aProd = product;
+                    break;
+                }
+            }
+            return aProd;
+        }
+
         public bool ReserveProduct(string name)
         {
             Product aProd = FindNonReservedProduct(name);
@@ -227,6 +229,63 @@ namespace PoS.DB
                 MessageBox.Show("Error of type " + ex);
             }
             return successful;
+        }
+
+        public bool DereserveProduct(string name)
+        {
+            Product aProd = FindReservedProduct(name);
+            aProd.Reserved = 0;
+            bool successful = false;
+            // Create the parameters to hide data
+            CreateUpdateParameters();
+            // Create the insert command
+            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved = @RSVD WHERE ProductID = @PRID;", cnMain);
+            try
+            {
+                DataRow updatedProdRow = dsMain.Tables["Product"].Rows[FindRowIndex(aProd, "Product")];
+                // Parse the product object into the row
+                FillRow(updatedProdRow, aProd);
+                UpdateDataSource(sqlProd);
+
+                successful = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error of type " + ex);
+            }
+            return successful;
+        }
+
+        public Product FindReservedProduct(string name)
+        {
+            Product aProd = null;
+            foreach (Product product in prodList)
+            {
+                if (name.Equals(product.Name) && product.Reserved == 1)
+                {
+                    aProd = product;
+                }
+            }
+            return aProd;
+        }
+
+        public bool DereserveProducts(string name, int num)
+        {
+            bool[] successful = new bool[num];
+            int count = 0;
+
+            for (int i = 0; i < num; i++)
+            {
+                successful[count] = DereserveProduct(name);
+                count++;
+            }
+
+            if (successful.Contains(false))
+                return false;
+            else
+                return true;
+
+
         }
         #endregion
 

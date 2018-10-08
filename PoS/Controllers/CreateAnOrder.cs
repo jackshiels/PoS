@@ -134,6 +134,11 @@ namespace PoS.Controllers
             get { return custDb; }
             set { custDb = value; }
         }
+        public Order AnOrd
+        {
+            get { return anOrd; }
+            set { anOrd = value; }
+        }
         #endregion
     }
 }
