@@ -35,14 +35,13 @@ namespace PoS.Controllers
 
         #region Methods
         // Takes a collection of orderitems into the order. Called after confirmation.
-        public bool InsertIntoOrderDB(Collection<OrderItem> items)
+        public bool InsertIntoOrderDB(Order ord)
         {
-            foreach (OrderItem ordItem in items)
+            foreach (OrderItem ordItem in ord.ItemList)
             {
                 // Add the name of the product to the list
                 toBeReserved.Add(ordItem.ItemProduct.Name);
                 // Add it to the order
-                anOrd.ItemList.Add(ordItem);
             }
 
             // Passed bool
@@ -53,7 +52,7 @@ namespace PoS.Controllers
             bool second = false;
 
             // Do the insert
-            first = ordDb.InsertOrder(anOrd);
+            first = ordDb.InsertOrder(ord);
 
             // Reserve the correct amount of products
             foreach (string name in toBeReserved)

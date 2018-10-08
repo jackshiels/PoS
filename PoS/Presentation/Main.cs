@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Collections.ObjectModel;
+using PoS.Controllers;
 
 namespace PoS.Presentation
 {
@@ -19,6 +20,7 @@ namespace PoS.Presentation
         #region Members
         private CustomerDB customerDB = new CustomerDB();
         private ProductDB productDB = new ProductDB();
+        private CreateAnOrder createOrder = new CreateAnOrder();
         private OrderDB orderDB = new OrderDB();
         private Order order;
         private Customer aCust;
@@ -78,6 +80,17 @@ namespace PoS.Presentation
         #endregion
 
         #region Create an Order
+        // select that customer for the order
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            String[] text = lstOrderCustList.Text.Split();
+            aCust = customerDB.FindCustomerObject(text[text.Length]);
+            grpOrderSelect.Hide();
+            grpOrderManagement.Show();
+            lblOrderCustName.Text = aCust.Name;
+            order = new Order(aCust);
+        }
+
         private void btnOrderBack_Click(object sender, EventArgs e) //go backto select customer order is for
         {
             grpOrderSelect.Show();
@@ -94,7 +107,7 @@ namespace PoS.Presentation
             {
                 int number;
                 Int32.TryParse(txtOrderQuantity.Text, out number);
-                Product prod = productDB.FindNonReservedProduct(cmbOrderProducts.Text);
+                Product prod = createOrder.ProdDB.FindNonReservedProduct(cmbOrderProducts.Text);
                 OrderItem orderItem = new OrderItem(prod, number);
                 cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+order.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
@@ -125,17 +138,6 @@ namespace PoS.Presentation
             order.RemoveFromOrder(item);
             fillLists();
         }
-        // select that customer for the order
-        private void btnSelect_Click(object sender, EventArgs e)
-        {
-            String[] text = lstOrderCustList.Text.Split();
-            aCust = customerDB.FindCustomerObject(text[text.Length]);
-            grpOrderSelect.Hide();
-            grpOrderManagement.Show();
-            lblOrderCustName.Text = aCust.Name;
-            order = new Order(aCust);
-        }
-
         #endregion
 
         #region Create a new Customer
