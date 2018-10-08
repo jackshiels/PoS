@@ -32,18 +32,24 @@ namespace PoS.Controllers
         #endregion
 
         #region Methods
-        public bool UpdateOrder(Order ord, Customer cust, Collection<OrderItem> items)
+        public bool UpdateOrder(Order ord, Collection<OrderItem> items)
         {
             bool success = false;
 
             // Delete the order
             ordDb.Delete(ord);
 
+            // Remove reservations
+            foreach(OrderItem item in ord.ItemList)
+            {
+                prodDb.DereserveProducts(item.ItemProduct.Name, item.Quantity);
+            }
+
             // Retain the orderid
             string orderId = ord.OrderID;
 
             // Create a new order with the same orderid
-            CreateAnOrder inserted = new CreateAnOrder(cust);
+            CreateAnOrder inserted = new CreateAnOrder(ord.Owner);
             inserted.AnOrd.OrderID = orderId;
 
             // Insert
