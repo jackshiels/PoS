@@ -23,6 +23,7 @@ namespace PoS.Presentation
         private CreateAnOrder createOrder = new CreateAnOrder();
         private CreateACustomer createCust = new CreateACustomer();
         private GeneratePickingList genPicking = new GeneratePickingList();
+        private CancelAnItem cancel = new CancelAnItem();
         private OrderDB orderDB = new OrderDB();
         private Order order;
         private Customer aCust;
@@ -69,18 +70,18 @@ namespace PoS.Presentation
         #region Picking List
         private void btnPickingSelect_Click(object sender, EventArgs e)
         {
-            fillLists();
+            //fillLists();
             string orderID = lstOrderCustList.Text.Split()[2];
 
             order = null;
-            order = createOrder.AnOrd.FindOrder(orderID); //fill in
+            order = createOrder.OrdDb.FindOrder(orderID);
             grpPickingSelect.Hide();
             grpPickingList.Show();
+            populatePickingList(order);
         }
 
         private void btnPickingBack_Click(object sender, EventArgs e)
         {
-            populatePickingList(order);
             grpPickingList.Hide();
             grpPickingSelect.Show();
         }
@@ -89,7 +90,11 @@ namespace PoS.Presentation
         #region Update Order
         private void btnUpdateSelect_Click(object sender, EventArgs e)
         {
-
+            string orderID = lstOrderItems.Text.Split()[2];
+            order = null;
+            order = createOrder.OrdDb.FindOrder(orderID);
+            grpUpdateOrder.Hide();
+            grpOrderManagement.Show();
         }
         #endregion
 
@@ -196,7 +201,7 @@ namespace PoS.Presentation
             grpSuccessfulCustomer.Show();
             Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
             grpSuccessfulCustomer.Hide();
-            grpFunction.Show();s
+            grpFunction.Show();
         }
 
         private void cmbCustPayment_SelectedIndexChanged(object sender, EventArgs e)
@@ -226,6 +231,7 @@ namespace PoS.Presentation
             Collection<Product> products = createOrder.ProdDB.ProdList;
             Collection<String> seen = new Collection<string>();
             Collection<Order> orders = createOrder.OrdDb.OrdList;
+
             foreach (Customer customer in customers)
             {
                 lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
@@ -244,9 +250,8 @@ namespace PoS.Presentation
             foreach (Order x in orders)
             {
                 lstOrderCustList.Items.Add("Order ID: "+x.OrderID +" Customer: "+x.Owner);
+                lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner);
             }
-            //lstOrderCustList
-            //lstOrderItems;
             //lstUpdateList;
         }
 

@@ -35,12 +35,11 @@ namespace PoS.Controllers
         public bool UpdateOrder(Order ord, Collection<OrderItem> items)
         {
             bool success = false;
-
             // Delete the order
             ordDb.Delete(ord);
 
             // Remove reservations
-            foreach(OrderItem item in ord.ItemList)
+            foreach (OrderItem item in ord.ItemList)
             {
                 prodDb.DereserveProducts(item.ItemProduct.Name, item.Quantity);
             }
@@ -53,8 +52,7 @@ namespace PoS.Controllers
             inserted.AnOrd.OrderID = orderId;
 
             // Insert
-            success = inserted.InsertIntoOrderDB(items);
-
+            success = inserted.InsertIntoOrderDB(ord);
             return success;
         }
         #endregion
