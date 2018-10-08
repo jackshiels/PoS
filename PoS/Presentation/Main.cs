@@ -21,6 +21,8 @@ namespace PoS.Presentation
         private CustomerDB customerDB = new CustomerDB();
         private ProductDB productDB = new ProductDB();
         private CreateAnOrder createOrder = new CreateAnOrder();
+        private CreateACustomer createCust = new CreateACustomer();
+        private 
         private OrderDB orderDB = new OrderDB();
         private Order order;
         private Customer aCust;
@@ -67,9 +69,15 @@ namespace PoS.Presentation
         #region Picking List
         private void btnPickingSelect_Click(object sender, EventArgs e)
         {
-
+            grpPickingSelect.Hide();
+            grpPickingList.Show();
         }
 
+        private void btnPickingBack_Click(object sender, EventArgs e)
+        {
+            grpPickingList.Hide();
+            grpPickingSelect.Show();
+        }
         #endregion
 
         #region Update Order
@@ -84,14 +92,14 @@ namespace PoS.Presentation
         private void btnSelect_Click(object sender, EventArgs e)
         {
             String[] text = lstOrderCustList.Text.Split();
-            aCust = customerDB.FindCustomerObject(text[text.Length]);
+            aCust = createOrder.CustDB.FindCustomerObject(text[text.Length]);
             grpOrderSelect.Hide();
             grpOrderManagement.Show();
             lblOrderCustName.Text = aCust.Name;
             order = new Order(aCust);
         }
 
-        private void btnOrderBack_Click(object sender, EventArgs e) //go backto select customer order is for
+        private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
         {
             grpOrderSelect.Show();
             grpOrderManagement.Show();
@@ -99,14 +107,18 @@ namespace PoS.Presentation
 
         private void btnOrderAddItem_Click(object sender, EventArgs e) // add item to the order
         {
+            int number;
+            Int32.TryParse(txtOrderQuantity.Text, out number);
             if (cmbOrderProducts.Text.Equals("") || txtOrderQuantity.Text.Equals("0")) //invalid input error
             {
                 MessageBox.Show("Please input valid data");
             }
+            else if (number > createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text))
+            {
+                MessageBox.Show("Unfortunately we only have "+ createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text)+" available");
+            }
             else
             {
-                int number;
-                Int32.TryParse(txtOrderQuantity.Text, out number);
                 Product prod = createOrder.ProdDB.FindNonReservedProduct(cmbOrderProducts.Text);
                 OrderItem orderItem = new OrderItem(prod, number);
                 cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+order.SubTotal);
@@ -117,7 +129,7 @@ namespace PoS.Presentation
         // add order to the orderDB
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
-            orderDB.InsertOrder(order);
+            createOrder.OrdDb.InsertOrder(order);
             grpOrderManagement.Hide();
             grpOrderSubmitted.Show();
             Thread.Sleep(5000);
@@ -173,12 +185,12 @@ namespace PoS.Presentation
                 customer = new Customer(name,address,paymentDetails);
             }
 
-            Boolean success = customerDB.InsertCustomer(customer);
+            Boolean success = createCust.CustDB.InsertCustomer(customer);
             grpNewCustomer.Hide();
             grpSuccessfulCustomer.Show();
             Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
             grpSuccessfulCustomer.Hide();
-            grpFunction.Show();
+            grpFunction.Show();s
         }
 
         private void cmbCustPayment_SelectedIndexChanged(object sender, EventArgs e)
@@ -204,8 +216,9 @@ namespace PoS.Presentation
          */
         public void fillLists()
         {
-            Collection<Customer> customers = customerDB.CustList;
-            Collection<Product> products = productDB.ProdList;
+            Collection<Customer> customers = createOrder.CustDB.CustList;
+            Collection<Product> products = createOrder.ProdDB.ProdList;
+            Collection<Orders> orders = 
             Collection<String> seen = new Collection<string>();
             foreach (Customer customer in customers)
             {
@@ -218,10 +231,11 @@ namespace PoS.Presentation
                     continue;
                 else
                 {
-                    cmbOrderProducts.Items.Add(product.Name+" (Available: "+productDB.FindNumProduct(product.Name)+")");
+                    cmbOrderProducts.Items.Add(product.Name+" (Available: "+createOrder.ProdDB.FindNumProduct(product.Name)+")");
                     seen.Add(product.Name);
                 }
             }
+            lstReportOrders
             //lstOrderItems;
             //lstUpdateList;
         }
