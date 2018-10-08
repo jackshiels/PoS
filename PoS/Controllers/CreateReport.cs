@@ -26,5 +26,13 @@ namespace PoS.Controllers
             expiredList = prodDb.ExpiryList();
         }
         #endregion
+
+        #region Property Methods
+        public ExpiryReport Exp
+        {
+            get { return exp; }
+            set { exp = value; }
+        }
+        #endregion
     }
 }
