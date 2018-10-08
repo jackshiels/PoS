@@ -27,6 +27,7 @@ namespace PoS.Presentation
         private OrderDB orderDB = new OrderDB();
         private Order order;
         private Customer aCust;
+        private Employee emp;
         #endregion
 
         #region Constructor
@@ -132,7 +133,7 @@ namespace PoS.Presentation
             {
                 Product prod = createOrder.ProdDB.FindNonReservedProduct(cmbOrderProducts.Text);
                 OrderItem orderItem = new OrderItem(prod, number);
-                cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+order.SubTotal);
+                cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
             }
         }
@@ -268,6 +269,24 @@ namespace PoS.Presentation
         private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
         {
             fillLists();
+        }
+
+        private void PopulateFunctions()
+        {
+            switch (emp.Role)
+            {
+                case (Employee.RoleType.MarketingClerk):
+                    lstFunctions.Items.Add("Create a New Customer");
+                    lstFunctions.Items.Add("Create a New Order");
+                    lstFunctions.Items.Add("Update an Order");
+                    break;
+                case (Employee.RoleType.PickingClerk):
+                    lstFunctions.Items.Add("Generate a Picking List");
+                    break;
+                case (Employee.RoleType.StockControlClerk):
+                    lstFunctions.Items.Add("Generate Stock Report");
+                    break;
+            }
         }
         #endregion
     }
