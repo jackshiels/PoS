@@ -16,6 +16,7 @@ namespace PoS.Controllers
         private ProductDB prodDb;
         private OrderDB ordDb;
         private Order anOrd;
+        private CustomerDB custDb;
         private Collection<string> toBeReserved;
         #endregion
 
@@ -27,6 +28,7 @@ namespace PoS.Controllers
             ordDb = new OrderDB();
             prodDb = new ProductDB();
             anOrd = new Order(aCust);
+            custDb = new CustomerDB();
             toBeReserved = new Collection<string>();
         }
         #endregion
@@ -76,6 +78,44 @@ namespace PoS.Controllers
             }
             return success;
         }
+
+        public Collection<Customer> ValidCustomers()
+        {
+            Collection<Customer> custList = new Collection<Customer>();
+
+            // Iterate
+            foreach(Customer cust in custDb.CustList)
+            {
+                if (cust.BlackListed == 0)
+                {
+                    custList.Add(cust);
+                }
+            }
+
+            return custList;
+        }
+
+        public Collection<string> ProductCount()
+        {
+            Collection<string> prodList = new Collection<string>();
+            Collection<string> seen = new Collection<string>();
+
+            foreach(Product prod in prodDb.ProdList)
+            {
+                if (seen.Contains(prod.Name))
+                {
+                    continue;
+                }
+                else
+                {
+                    string obj = prod.Name + " (Available: " + prodDb.FindNumProduct(prod.Name) + ")";
+                    prodList.Add(obj);
+                    seen.Add(prod.Name);
+                }
+            }
+
+            return prodList;
+        }
         #endregion
 
         #region Properties
@@ -83,6 +123,16 @@ namespace PoS.Controllers
         {
             get { return ord; }
             set { ord = value; }
+        }
+        public ProductDB ProdDB
+        {
+            get { return prodDb; }
+            set { prodDb = value; }
+        }
+        public CustomerDB CustDB
+        {
+            get { return custDb; }
+            set { custDb = value; }
         }
         #endregion
     }
