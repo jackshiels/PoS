@@ -90,7 +90,7 @@ namespace PoS.Presentation
             {
                 int number;
                 Int32.TryParse(txtOrderQuantity.Text, out number);
-                Product prod = productDB.FindNonResrvedProduct(cmbOrderProducts.Text);
+                Product prod = productDB.FindNonReservedProduct(cmbOrderProducts.Text);
                 OrderItem orderItem = new OrderItem(prod, number);
                 cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+order.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
@@ -163,7 +163,7 @@ namespace PoS.Presentation
             }
             else
             {
-                string paymentDetails = txtCustCardNum.Text+txtCustCVV+txtCustCardName;
+                string[] paymentDetails = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
                 customer = new Customer(name,address,paymentDetails);
             }
 
