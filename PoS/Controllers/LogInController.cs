@@ -10,15 +10,16 @@ using System.Windows.Forms;
 
 namespace PoS.Controllers
 {
-    public class LogIn
+    public class LogInController
     {
         #region Members
         private EmployeeDB empDB;
         private IDGen generator;
+
         #endregion
 
         #region Constructors
-        public LogIn()
+        public LogInController()
         {
             empDB = new EmployeeDB();
         }

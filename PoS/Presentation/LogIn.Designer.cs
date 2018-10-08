@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogIn));
             this.btnLogIn = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtLoginPass = new System.Windows.Forms.TextBox();
+            this.txtLoginEmpId = new System.Windows.Forms.TextBox();
             this.lblLogInWelcome = new System.Windows.Forms.Label();
             this.lblLogInName = new System.Windows.Forms.Label();
             this.lblLogInPassword = new System.Windows.Forms.Label();
@@ -52,21 +52,21 @@
             this.btnLogIn.UseVisualStyleBackColor = true;
             this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
             // 
-            // textBox1
+            // txtLoginPass
             // 
-            this.textBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(300, 213);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(219, 27);
-            this.textBox1.TabIndex = 1;
+            this.txtLoginPass.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLoginPass.Location = new System.Drawing.Point(300, 213);
+            this.txtLoginPass.Name = "txtLoginPass";
+            this.txtLoginPass.Size = new System.Drawing.Size(219, 27);
+            this.txtLoginPass.TabIndex = 1;
             // 
-            // textBox2
+            // txtLoginEmpId
             // 
-            this.textBox2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(300, 180);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(219, 27);
-            this.textBox2.TabIndex = 2;
+            this.txtLoginEmpId.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLoginEmpId.Location = new System.Drawing.Point(300, 180);
+            this.txtLoginEmpId.Name = "txtLoginEmpId";
+            this.txtLoginEmpId.Size = new System.Drawing.Size(219, 27);
+            this.txtLoginEmpId.TabIndex = 2;
             // 
             // lblLogInWelcome
             // 
@@ -130,8 +130,8 @@
             this.Controls.Add(this.lblLogInPassword);
             this.Controls.Add(this.lblLogInName);
             this.Controls.Add(this.lblLogInWelcome);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtLoginEmpId);
+            this.Controls.Add(this.txtLoginPass);
             this.Controls.Add(this.btnLogIn);
             this.DoubleBuffered = true;
             this.Name = "LogIn";
@@ -146,8 +146,8 @@
         #endregion
 
         private System.Windows.Forms.Button btnLogIn;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtLoginPass;
+        private System.Windows.Forms.TextBox txtLoginEmpId;
         private System.Windows.Forms.Label lblLogInWelcome;
         private System.Windows.Forms.Label lblLogInName;
         private System.Windows.Forms.Label lblLogInPassword;

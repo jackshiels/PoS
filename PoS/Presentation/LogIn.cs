@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PoS.Controllers;
 using PoS.Presentation;
 
 namespace PoS
 {
     public partial class LogIn : Form
     {
+        private LogInController login = new LogInController();
+
         public LogIn()
         {
             InitializeComponent();
@@ -21,9 +24,15 @@ namespace PoS
         private void btnLogIn_Click(object sender, EventArgs e)
         {
             // only if password matches user name
-            Main main = new Main();
-            main.Show();
-            Hide();
+            if (login.LogInCheck(txtLoginEmpId.Text, txtLoginPass.Text))
+            {
+                Main main = new Main();
+                main.Show();
+                Hide();
+            }
+            else
+                MessageBox.Show("Invalid Login Credentials");
+            
         }
     }
 }

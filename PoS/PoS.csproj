@@ -75,7 +75,7 @@
     <Compile Include="Controllers\CreateAnOrder.cs" />
     <Compile Include="Controllers\CreateReport.cs" />
     <Compile Include="Controllers\GeneratePickingList.cs" />
-    <Compile Include="Controllers\LogIn.cs" />
+    <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="DBMainDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
