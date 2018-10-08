@@ -216,7 +216,7 @@ namespace PoS.Presentation
                     continue;
                 else
                 {
-                    cmbOrderProducts.Items.Add(product.Name+"Available: "+);
+                    cmbOrderProducts.Items.Add(product.Name+" (Available: "+productDB.FindNumProduct(product.Name)+")");
                     seen.Add(product.Name);
                 }
             }
