@@ -338,6 +338,22 @@ namespace PoS.DB
 
             return returnValue;
         }
+
+        public Order FindOrder(string orderId)
+        {
+            Order ord = new Order();
+
+            // Iterate
+            foreach(Order orda in ordList)
+            {
+                if (ord.OrderID == orderId)
+                {
+                    ord = orda;
+                }
+            }
+
+            return ord;
+        }
         #endregion
 
         #region Property Methods
