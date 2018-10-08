@@ -16,12 +16,15 @@ namespace PoS.Presentation
 {
     public partial class Main : Form
     {
+        #region Members
         private CustomerDB customerDB = new CustomerDB();
         private ProductDB productDB = new ProductDB();
         private OrderDB orderDB = new OrderDB();
         private Order order;
         private Customer aCust;
+        #endregion
 
+        #region Constructor
         public Main()
         {
             InitializeComponent();
@@ -42,6 +45,7 @@ namespace PoS.Presentation
             grpPickingList.Hide();
             grpPickingSelect.Hide();
         }
+        #endregion
 
         #region Constant Buttons
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -212,7 +216,7 @@ namespace PoS.Presentation
                     continue;
                 else
                 {
-                    cmbOrderProducts.Items.Add(product.Name);
+                    cmbOrderProducts.Items.Add(product.Name+"Available: "+);
                     seen.Add(product.Name);
                 }
             }
@@ -220,7 +224,7 @@ namespace PoS.Presentation
             //lstUpdateList;
         }
        
-
+        // make it open screens
         private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
         {
             fillLists();

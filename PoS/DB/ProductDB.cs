@@ -146,6 +146,19 @@ namespace PoS.DB
             }
             return aProd;
         }
+
+        public int FindNumProduct(string name)
+        {
+            int count = 0;
+            foreach (Product product in prodList)
+            {
+                if (name.Equals(product.Name) && product.Reserved == 0)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
         #endregion
 
         #region Methods - UPDATE
