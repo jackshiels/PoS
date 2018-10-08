@@ -106,7 +106,6 @@ namespace PoS.DB
             {
                 MessageBox.Show("An error of type " + ex);
             }
-
         }
 
         private double[] DimensionParser(string input)
@@ -233,14 +232,7 @@ namespace PoS.DB
         }
         #endregion
 
-        #region Property Methods
-        public Collection<Product> ProdList
-        {
-            get { return prodList; }
-        }
-        #endregion
-
-        #region Methods - Generalized
+        #region Methods - Generalised
         private int FindRowIndex(Product aProd, string table)
         {
             int rowIndex = 0;
@@ -264,6 +256,13 @@ namespace PoS.DB
         public void FillRow(DataRow row, Product aProd)
         {
             row["Reserved"] = aProd.Reserved;
+        }
+        #endregion
+
+        #region Property Methods
+        public Collection<Product> ProdList
+        {
+            get { return prodList; }
         }
         #endregion
     }
