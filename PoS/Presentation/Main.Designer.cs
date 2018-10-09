@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -67,14 +67,11 @@
             this.pbSelect = new System.Windows.Forms.PictureBox();
             this.grpUpdateOrder = new System.Windows.Forms.GroupBox();
             this.lstUpdateList = new System.Windows.Forms.ListBox();
-            this.btnUpdateSelect = new System.Windows.Forms.Button();
-            this.grpOrderManagement = new System.Windows.Forms.GroupBox();
-            this.grpOrderSelect = new System.Windows.Forms.GroupBox();
-            this.lstOrderCustList = new System.Windows.Forms.ListBox();
-            this.btnSelect = new System.Windows.Forms.Button();
-            this.lblOrderQuantity = new System.Windows.Forms.Label();
             this.grpSuccessfulCustomer = new System.Windows.Forms.GroupBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.btnUpdateSelect = new System.Windows.Forms.Button();
+            this.grpOrderManagement = new System.Windows.Forms.GroupBox();
+            this.lblOrderQuantity = new System.Windows.Forms.Label();
             this.btnOrderAddItem = new System.Windows.Forms.Button();
             this.txtOrderQuantity = new System.Windows.Forms.TextBox();
             this.cmbOrderProducts = new System.Windows.Forms.ComboBox();
@@ -84,6 +81,9 @@
             this.lblOrderCustName = new System.Windows.Forms.Label();
             this.btnOrderBack = new System.Windows.Forms.Button();
             this.lstOrderItems = new System.Windows.Forms.ListBox();
+            this.grpOrderSelect = new System.Windows.Forms.GroupBox();
+            this.lstOrderCustList = new System.Windows.Forms.ListBox();
+            this.btnSelect = new System.Windows.Forms.Button();
             this.grpOrderSubmitted = new System.Windows.Forms.GroupBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.grpPickingList = new System.Windows.Forms.GroupBox();
@@ -112,10 +112,10 @@
             this.grpNewCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).BeginInit();
             this.grpUpdateOrder.SuspendLayout();
-            this.grpOrderManagement.SuspendLayout();
-            this.grpOrderSelect.SuspendLayout();
             this.grpSuccessfulCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.grpOrderManagement.SuspendLayout();
+            this.grpOrderSelect.SuspendLayout();
             this.grpOrderSubmitted.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.grpPickingList.SuspendLayout();
@@ -434,10 +434,9 @@
             // grpUpdateOrder
             // 
             this.grpUpdateOrder.Controls.Add(this.lstUpdateList);
-            this.grpUpdateOrder.Controls.Add(this.grpSuccessfulCustomer);
             this.grpUpdateOrder.Controls.Add(this.btnUpdateSelect);
             this.grpUpdateOrder.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpUpdateOrder.Location = new System.Drawing.Point(0, 0);
+            this.grpUpdateOrder.Location = new System.Drawing.Point(257, 106);
             this.grpUpdateOrder.Name = "grpUpdateOrder";
             this.grpUpdateOrder.Size = new System.Drawing.Size(746, 367);
             this.grpUpdateOrder.TabIndex = 41;
@@ -452,6 +451,28 @@
             this.lstUpdateList.Name = "lstUpdateList";
             this.lstUpdateList.Size = new System.Drawing.Size(734, 232);
             this.lstUpdateList.TabIndex = 0;
+            // 
+            // grpSuccessfulCustomer
+            // 
+            this.grpSuccessfulCustomer.Controls.Add(this.pictureBox2);
+            this.grpSuccessfulCustomer.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpSuccessfulCustomer.Location = new System.Drawing.Point(257, 107);
+            this.grpSuccessfulCustomer.Name = "grpSuccessfulCustomer";
+            this.grpSuccessfulCustomer.Size = new System.Drawing.Size(746, 365);
+            this.grpSuccessfulCustomer.TabIndex = 30;
+            this.grpSuccessfulCustomer.TabStop = false;
+            this.grpSuccessfulCustomer.Text = "Saved";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(10, 26);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(396, 212);
+            this.pictureBox2.TabIndex = 15;
+            this.pictureBox2.TabStop = false;
             // 
             // btnUpdateSelect
             // 
@@ -469,6 +490,7 @@
             this.grpOrderManagement.Controls.Add(this.lblOrderQuantity);
             this.grpOrderManagement.Controls.Add(this.btnOrderAddItem);
             this.grpOrderManagement.Controls.Add(this.txtOrderQuantity);
+            this.grpOrderManagement.Controls.Add(this.grpOrderSubmitted);
             this.grpOrderManagement.Controls.Add(this.cmbOrderProducts);
             this.grpOrderManagement.Controls.Add(this.btnOrderRemoveItem);
             this.grpOrderManagement.Controls.Add(this.btnOrderCancel);
@@ -478,45 +500,12 @@
             this.grpOrderManagement.Controls.Add(this.lstOrderItems);
             this.grpOrderManagement.Controls.Add(this.grpUpdateOrder);
             this.grpOrderManagement.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpOrderManagement.Location = new System.Drawing.Point(0, 1);
+            this.grpOrderManagement.Location = new System.Drawing.Point(257, 107);
             this.grpOrderManagement.Name = "grpOrderManagement";
             this.grpOrderManagement.Size = new System.Drawing.Size(746, 365);
             this.grpOrderManagement.TabIndex = 32;
             this.grpOrderManagement.TabStop = false;
             this.grpOrderManagement.Text = "Order (2/2)";
-            // 
-            // grpOrderSelect
-            // 
-            this.grpOrderSelect.Controls.Add(this.lstOrderCustList);
-            this.grpOrderSelect.Controls.Add(this.grpOrderManagement);
-            this.grpOrderSelect.Controls.Add(this.btnSelect);
-            this.grpOrderSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpOrderSelect.Location = new System.Drawing.Point(257, 106);
-            this.grpOrderSelect.Name = "grpOrderSelect";
-            this.grpOrderSelect.Size = new System.Drawing.Size(746, 366);
-            this.grpOrderSelect.TabIndex = 31;
-            this.grpOrderSelect.TabStop = false;
-            this.grpOrderSelect.Text = "Create a New Order (1/2)";
-            // 
-            // lstOrderCustList
-            // 
-            this.lstOrderCustList.FormattingEnabled = true;
-            this.lstOrderCustList.ItemHeight = 19;
-            this.lstOrderCustList.Location = new System.Drawing.Point(6, 26);
-            this.lstOrderCustList.Name = "lstOrderCustList";
-            this.lstOrderCustList.Size = new System.Drawing.Size(734, 251);
-            this.lstOrderCustList.TabIndex = 32;
-            // 
-            // btnSelect
-            // 
-            this.btnSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSelect.Location = new System.Drawing.Point(642, 333);
-            this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(98, 27);
-            this.btnSelect.TabIndex = 31;
-            this.btnSelect.Text = "&Select";
-            this.btnSelect.UseVisualStyleBackColor = true;
-            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // lblOrderQuantity
             // 
@@ -526,28 +515,6 @@
             this.lblOrderQuantity.Size = new System.Drawing.Size(69, 19);
             this.lblOrderQuantity.TabIndex = 39;
             this.lblOrderQuantity.Text = "Quantity:";
-            // 
-            // grpSuccessfulCustomer
-            // 
-            this.grpSuccessfulCustomer.Controls.Add(this.pictureBox2);
-            this.grpSuccessfulCustomer.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpSuccessfulCustomer.Location = new System.Drawing.Point(0, 0);
-            this.grpSuccessfulCustomer.Name = "grpSuccessfulCustomer";
-            this.grpSuccessfulCustomer.Size = new System.Drawing.Size(746, 365);
-            this.grpSuccessfulCustomer.TabIndex = 30;
-            this.grpSuccessfulCustomer.TabStop = false;
-            this.grpSuccessfulCustomer.Text = "Saved";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(10, 26);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(396, 212);
-            this.pictureBox2.TabIndex = 15;
-            this.pictureBox2.TabStop = false;
             // 
             // btnOrderAddItem
             // 
@@ -637,12 +604,43 @@
             this.lstOrderItems.Size = new System.Drawing.Size(730, 213);
             this.lstOrderItems.TabIndex = 40;
             // 
+            // grpOrderSelect
+            // 
+            this.grpOrderSelect.Controls.Add(this.lstOrderCustList);
+            this.grpOrderSelect.Controls.Add(this.btnSelect);
+            this.grpOrderSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpOrderSelect.Location = new System.Drawing.Point(257, 106);
+            this.grpOrderSelect.Name = "grpOrderSelect";
+            this.grpOrderSelect.Size = new System.Drawing.Size(746, 366);
+            this.grpOrderSelect.TabIndex = 31;
+            this.grpOrderSelect.TabStop = false;
+            this.grpOrderSelect.Text = "Create a New Order (1/2)";
+            // 
+            // lstOrderCustList
+            // 
+            this.lstOrderCustList.FormattingEnabled = true;
+            this.lstOrderCustList.ItemHeight = 19;
+            this.lstOrderCustList.Location = new System.Drawing.Point(6, 26);
+            this.lstOrderCustList.Name = "lstOrderCustList";
+            this.lstOrderCustList.Size = new System.Drawing.Size(734, 251);
+            this.lstOrderCustList.TabIndex = 32;
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelect.Location = new System.Drawing.Point(642, 333);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(98, 27);
+            this.btnSelect.TabIndex = 31;
+            this.btnSelect.Text = "&Select";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            // 
             // grpOrderSubmitted
             // 
             this.grpOrderSubmitted.Controls.Add(this.pictureBox3);
-            this.grpOrderSubmitted.Controls.Add(this.grpPickingList);
             this.grpOrderSubmitted.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpOrderSubmitted.Location = new System.Drawing.Point(12, 48);
+            this.grpOrderSubmitted.Location = new System.Drawing.Point(0, 0);
             this.grpOrderSubmitted.Name = "grpOrderSubmitted";
             this.grpOrderSubmitted.Size = new System.Drawing.Size(746, 367);
             this.grpOrderSubmitted.TabIndex = 40;
@@ -665,7 +663,7 @@
             this.grpPickingList.Controls.Add(this.btnPickingBack);
             this.grpPickingList.Controls.Add(this.dataGridView1);
             this.grpPickingList.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpPickingList.Location = new System.Drawing.Point(211, 26);
+            this.grpPickingList.Location = new System.Drawing.Point(257, 107);
             this.grpPickingList.Name = "grpPickingList";
             this.grpPickingList.Size = new System.Drawing.Size(746, 367);
             this.grpPickingList.TabIndex = 43;
@@ -714,7 +712,6 @@
             // 
             this.grpPickingSelect.Controls.Add(this.btnPickingSelect);
             this.grpPickingSelect.Controls.Add(this.lstReportOrders);
-            this.grpPickingSelect.Controls.Add(this.grpReport);
             this.grpPickingSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpPickingSelect.Location = new System.Drawing.Point(257, 107);
             this.grpPickingSelect.Name = "grpPickingSelect";
@@ -749,9 +746,8 @@
             this.grpReport.Controls.Add(this.expiredItems);
             this.grpReport.Controls.Add(this.reportTable);
             this.grpReport.Controls.Add(this.dateBox);
-            this.grpReport.Controls.Add(this.grpOrderSubmitted);
             this.grpReport.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpReport.Location = new System.Drawing.Point(444, 364);
+            this.grpReport.Location = new System.Drawing.Point(257, 104);
             this.grpReport.Name = "grpReport";
             this.grpReport.Size = new System.Drawing.Size(746, 367);
             this.grpReport.TabIndex = 43;
@@ -773,9 +769,9 @@
             this.expiredItems.BackColor = System.Drawing.Color.GhostWhite;
             this.expiredItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.expiredItems.BorderSkin.BorderColor = System.Drawing.Color.Blue;
-            chartArea3.Name = "ChartArea1";
-            chartArea3.ShadowColor = System.Drawing.Color.Transparent;
-            this.expiredItems.ChartAreas.Add(chartArea3);
+            chartArea2.Name = "ChartArea1";
+            chartArea2.ShadowColor = System.Drawing.Color.Transparent;
+            this.expiredItems.ChartAreas.Add(chartArea2);
             this.expiredItems.Location = new System.Drawing.Point(521, 27);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -785,21 +781,21 @@
         System.Drawing.Color.Red,
         System.Drawing.Color.Yellow,
         System.Drawing.Color.Fuchsia};
-            series3.BorderColor = System.Drawing.Color.DarkGray;
-            series3.ChartArea = "ChartArea1";
-            series3.Color = System.Drawing.Color.Blue;
-            series3.IsValueShownAsLabel = true;
-            series3.Name = "Series1";
-            series3.Points.Add(dataPoint7);
-            series3.Points.Add(dataPoint8);
-            series3.Points.Add(dataPoint9);
-            this.expiredItems.Series.Add(series3);
+            series2.BorderColor = System.Drawing.Color.DarkGray;
+            series2.ChartArea = "ChartArea1";
+            series2.Color = System.Drawing.Color.Blue;
+            series2.IsValueShownAsLabel = true;
+            series2.Name = "Series1";
+            series2.Points.Add(dataPoint4);
+            series2.Points.Add(dataPoint5);
+            series2.Points.Add(dataPoint6);
+            this.expiredItems.Series.Add(series2);
             this.expiredItems.Size = new System.Drawing.Size(219, 299);
             this.expiredItems.TabIndex = 43;
-            title3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title3.Name = "Bar Graph Representing the Number of Expired Objects";
-            title3.Text = "Bar Graph Representing the Number of Expired Objects";
-            this.expiredItems.Titles.Add(title3);
+            title2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "Bar Graph Representing the Number of Expired Objects";
+            title2.Text = "Bar Graph Representing the Number of Expired Objects";
+            this.expiredItems.Titles.Add(title2);
             // 
             // reportTable
             // 
@@ -901,18 +897,11 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-<<<<<<< HEAD
-<<<<<<< HEAD
-            //this.ClientSize = new System.Drawing.Size(1014, 492);
-            //this.Controls.Add(this.grpOrderSelect);
-=======
-=======
->>>>>>> 0920059c655a39a7ec2c3196e43f7d0c79736be4
-            this.ClientSize = new System.Drawing.Size(1014, 486);
+            this.ClientSize = new System.Drawing.Size(1017, 487);
             this.Controls.Add(this.grpOrderManagement);
+            this.Controls.Add(this.grpPickingList);
             this.Controls.Add(this.grpSuccessfulCustomer);
             this.Controls.Add(this.grpReport);
->>>>>>> 0920059c655a39a7ec2c3196e43f7d0c79736be4
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.grpPickingSelect);
@@ -932,11 +921,11 @@
             this.grpNewCustomer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).EndInit();
             this.grpUpdateOrder.ResumeLayout(false);
+            this.grpSuccessfulCustomer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.grpOrderManagement.ResumeLayout(false);
             this.grpOrderManagement.PerformLayout();
             this.grpOrderSelect.ResumeLayout(false);
-            this.grpSuccessfulCustomer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.grpOrderSubmitted.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.grpPickingList.ResumeLayout(false);
