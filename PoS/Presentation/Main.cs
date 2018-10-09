@@ -23,6 +23,7 @@ namespace PoS.Presentation
         private CreateAnOrder createOrder = new CreateAnOrder();
         private CreateACustomer createCust = new CreateACustomer();
         private GeneratePickingList genPicking = new GeneratePickingList();
+        private CreateReport createRep;
         private CancelAnItem cancel = new CancelAnItem();
         private OrderDB orderDB = new OrderDB();
         private Order order;
@@ -34,22 +35,9 @@ namespace PoS.Presentation
         public Main()
         {
             InitializeComponent();
+            PopulateFunctions();
+            hideAll();
             grpFunction.Show();
-
-            grpUpdateOrder.Hide();            
-            
-            grpOrderManagement.Hide();
-
-            grpOrderSelect.Hide();
-            grpOrderSubmitted.Hide();
-
-            grpReport.Hide();
-
-            grpNewCustomer.Hide();
-            grpSuccessfulCustomer.Hide();
-
-            grpPickingList.Hide();
-            grpPickingSelect.Hide();
         }
 
         public Main(Employee anEmp)
@@ -57,23 +45,9 @@ namespace PoS.Presentation
             lblUserName.Text = anEmp.Name;
             lblUserRole.Text = anEmp.Role.ToString();
             InitializeComponent();
-
+            PopulateFunctions();
+            hideAll();
             grpFunction.Show();
-
-            grpUpdateOrder.Hide();
-
-            grpOrderManagement.Hide();
-
-            grpOrderSelect.Hide();
-            grpOrderSubmitted.Hide();
-
-            grpReport.Hide();
-
-            grpNewCustomer.Hide();
-            grpSuccessfulCustomer.Hide();
-
-            grpPickingList.Hide();
-            grpPickingSelect.Hide();
         }
         #endregion
 
@@ -124,14 +98,13 @@ namespace PoS.Presentation
             string orderID = lstOrderItems.Text.Split()[2];
             order = null;
             order = createOrder.OrdDb.FindOrder(orderID);
-            lblOrderCustName.Text = order.Owner.Name;
-            grpUpdateOrder.Hide();
+            lblOrderCustName.Text = order.Owner.Name          
             foreach (OrderItem orderitem in order.ItemList)
             {
                 cmbOrderProducts.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Item Name: " + orderitem.ItemProduct.Name + " Quantity: " + orderitem.Quantity + " Sub-total: " + orderitem.SubTotal);
             }
-            grpOrderManagement.Show();
-            
+            grpUpdateOrder.Hide();
+            grpOrderManagement.Show();           
         }
         #endregion
 
@@ -179,6 +152,7 @@ namespace PoS.Presentation
         {
             createOrder.OrdDb.InsertOrder(order);
             grpOrderManagement.Hide();
+            fillLists();
             grpOrderSubmitted.Show();
             Thread.Sleep(5000);
             grpOrderSubmitted.Hide();
@@ -234,6 +208,7 @@ namespace PoS.Presentation
             }
 
             Boolean success = createCust.CustDB.InsertCustomer(customer);
+            fillLists();
             grpNewCustomer.Hide();
             grpSuccessfulCustomer.Show();
             Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
@@ -267,7 +242,7 @@ namespace PoS.Presentation
         {
             Collection<Customer> customers = createOrder.CustDB.CustList;
             Collection<Product> products = createOrder.ProdDB.ProdList;
-            Collection<String> seen = new Collection<string>();
+            Collection<string> seen = new Collection<string>();
             Collection<Order> orders = createOrder.OrdDb.OrdList;
 
             foreach (Customer customer in customers)
@@ -307,6 +282,56 @@ namespace PoS.Presentation
         private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
         {
             fillLists();
+            switch (lstFunctions.Text)
+            {
+                case ("Create a New Customer"):
+                    hideAll();
+                    fillLists();
+                    grpNewCustomer.Show();
+                    break;
+                case ("Create a New Order"):
+                    hideAll();
+                    fillLists();
+                    grpOrderSelect.Show();
+                    break;
+                case ("Update an Order"):
+                    hideAll();
+                    fillLists();
+                    grpUpdateOrder.Show();
+                    break;
+                case ("Generate a Picking List"):
+                    hideAll();
+                    fillLists();
+                    grpPickingSelect.Show();
+                    break;
+                case ("Generate a Stock Report"):
+                    createRep = new CreateReport();
+                    lblReportNum.Text = createRep.Exp.ReportID;
+                    reportTable = createRep.Exp.DataGrid; //table
+                    expiredItems = createRep.Exp.Chart; //chart
+                    hideAll();
+                    grpReport.Show();
+                    break;
+                default:
+                    MessageBox.Show("Invalid Entry, please try again");
+                    fillLists();
+                    break;
+            }
+        }
+
+        private void hideAll()
+        {
+
+            grpFunction.Hide();
+            grpUpdateOrder.Hide();
+            grpOrderManagement.Hide();
+            grpOrderSelect.Hide();
+            grpOrderSubmitted.Hide();
+            grpReport.Hide();
+            grpNewCustomer.Hide();
+            grpSuccessfulCustomer.Hide();
+            grpPickingList.Hide();
+            grpPickingSelect.Hide();
         }
 
         private void PopulateFunctions()

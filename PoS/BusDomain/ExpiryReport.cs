@@ -17,7 +17,7 @@ namespace PoS.BusDomain
     public class ExpiryReport
     {
         #region Members
-        private int reportId;
+        private string reportId;
         ProductDB prodConnect;
         Collection<OrderItem> expiredAndExpiring;
         private IDGen generator;
@@ -29,10 +29,12 @@ namespace PoS.BusDomain
         public ExpiryReport()
         {
             generator = new IDGen();
-            reportId = generator.CreateID();
+            reportId = "REP"+generator.CreateID();
             expiredAndExpiring = new Collection<OrderItem>();
             prodConnect = new ProductDB();
             expiredAndExpiring = prodConnect.ExpiryList();
+            populateChart(expiredAndExpiring);
+            populateTable(expiredAndExpiring);
         }
         #endregion
 
@@ -42,7 +44,7 @@ namespace PoS.BusDomain
             report expiryReport = new report();
             expiryReport.populateChart(expiredAndExpiring);
             expiryReport.populateTable(expiredAndExpiring); 
-            expiryReport.load();
+            //expiryReport.load();
         }
 
         public void populateChart(Collection<OrderItem> items)
@@ -82,7 +84,7 @@ namespace PoS.BusDomain
         #endregion
 
         #region Property Methods
-        public int ReportID
+        public string ReportID
         {
             get { return reportId; }
             set { reportId = value; }
