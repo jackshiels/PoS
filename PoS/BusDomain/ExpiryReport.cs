@@ -18,8 +18,8 @@ namespace PoS.BusDomain
     {
         #region Members
         private string reportId;
-        ProductDB prodConnect;
-        Collection<OrderItem> expiredAndExpiring;
+        private ProductDB prodConnect;
+        private Collection<OrderItem> expiredAndExpiring;
         private IDGen generator;
         private DataGridView dataGrid;
         private Chart chart;

@@ -13,8 +13,7 @@ namespace PoS.BusDomain
         private float subTotal;
         private int quantity;
         private Product itemProduct;
-
-        IDGen generator = new IDGen();
+        private IDGen generator = new IDGen();
         #endregion
 
         #region Constructors

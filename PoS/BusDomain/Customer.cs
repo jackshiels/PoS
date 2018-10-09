@@ -31,25 +31,21 @@ namespace PoS.BusDomain
             customerId = "CUS" + generator.CreateID();
         }
 
-        public Customer(string name, string address) : base()
+        public Customer(string name, string address) : base(name,address)
         {
             // Creates a Customer and fills the Person superclass with values
             generator = new IDGen();
             customerId = "CUS" + generator.CreateID();
             this.blackListed = 0;
-            base.Name = name;
-            base.Address = address;
             payment = PaymentMethod.CreditCard;
         }
 
-        public Customer(string name, string address, string[] paymentDetails) : base()
+        public Customer(string name, string address, string[] paymentDetails) : base(name,address)
         {
             // Creates a Customer and fills the Person superclass with values
             generator = new IDGen();
             customerId = "CUS" + generator.CreateID();
             this.blackListed = 0;
-            base.Name = name;
-            base.Address = address;
             cardholderDetails = paymentDetails;
             payment = PaymentMethod.CreditCard;
         }
