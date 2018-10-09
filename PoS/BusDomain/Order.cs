@@ -50,6 +50,20 @@ namespace PoS.BusDomain
             return added;
         }
 
+        public OrderItem FindOrderItem(string itemID)
+        {
+            OrderItem item = null;
+            foreach (OrderItem x in ItemList)
+            {
+                if (itemID.Equals(x.OrderItemID))
+                {
+                    item = x;
+                    break;
+                }
+            }
+            return item;
+        }
+
         public bool RemoveFromOrder(string itemId)
         {
             // Checks if the item exists. Removes if it does.

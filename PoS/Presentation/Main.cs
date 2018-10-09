@@ -29,6 +29,7 @@ namespace PoS.Presentation
         private Order order;
         private Customer aCust;
         private Employee emp;
+        private Collection<OrderItem> ordItems; //
         #endregion
 
         #region Constructor
@@ -98,10 +99,13 @@ namespace PoS.Presentation
             string orderID = lstOrderItems.Text.Split()[2];
             order = null;
             order = createOrder.OrdDb.FindOrder(orderID);
-            lblOrderCustName.Text = order.Owner.Name          
+            lblOrderCustName.Text = order.Owner.Name;
+            cmbOrderProducts.Text = "";
+            ordItems = new Collection<OrderItem>(); //
             foreach (OrderItem orderitem in order.ItemList)
             {
                 cmbOrderProducts.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Item Name: " + orderitem.ItemProduct.Name + " Quantity: " + orderitem.Quantity + " Sub-total: " + orderitem.SubTotal);
+                ordItems.Add(orderitem);
             }
             grpUpdateOrder.Hide();
             grpOrderManagement.Show();           
@@ -118,6 +122,7 @@ namespace PoS.Presentation
             grpOrderManagement.Show();
             lblOrderCustName.Text = aCust.Name;
             order = new Order(aCust);
+            //ordItems = new Collection<OrderItem>();
         }
 
         private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
@@ -142,6 +147,7 @@ namespace PoS.Presentation
             {
                 Product prod = createOrder.ProdDB.FindNonReservedProduct(cmbOrderProducts.Text);
                 OrderItem orderItem = new OrderItem(prod, number);
+                ordItems.Add(orderItem); //
                 cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
             }
@@ -150,7 +156,7 @@ namespace PoS.Presentation
         // add order to the orderDB
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
-            createOrder.OrdDb.InsertOrder(order);
+            createOrder.InsertIntoOrderDB(order);
             grpOrderManagement.Hide();
             fillLists();
             grpOrderSubmitted.Show();
@@ -169,6 +175,8 @@ namespace PoS.Presentation
         private void btnOrderRemoveItem_Click(object sender, EventArgs e)
         {
             string item = cmbOrderProducts.Text.Split()[3];
+            //OrderItem x = order.FindOrderItem(item);
+            //ordItems.Remove(x);
             order.RemoveFromOrder(item);
             fillLists();
         }
@@ -196,15 +204,17 @@ namespace PoS.Presentation
             String address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " + 
                 txtCustCity.Text + " " + txtCustProvince.Text;
             Customer customer;
-
+            string[] payment = null;
             if (cmbCustPayment.Text.Equals("EFT"))
             {
                 customer = new Customer(name,address);
+                createCust = new CreateACustomer(name,address,payment);
             }
             else
             {
                 string[] paymentDetails = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
                 customer = new Customer(name,address,paymentDetails);
+                createCust = new CreateACustomer(name, address, paymentDetails);
             }
 
             Boolean success = createCust.CustDB.InsertCustomer(customer);
@@ -240,7 +250,7 @@ namespace PoS.Presentation
          */
         public void fillLists()
         {
-            Collection<Customer> customers = createOrder.CustDB.CustList;
+            Collection<Customer> customers = createOrder.ValidCustomers();
             Collection<Product> products = createOrder.ProdDB.ProdList;
             Collection<string> seen = new Collection<string>();
             Collection<Order> orders = createOrder.OrdDb.OrdList;
