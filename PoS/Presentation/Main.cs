@@ -53,7 +53,7 @@ namespace PoS.Presentation
         #endregion
 
         #region Constant Buttons
-        // COnstant Logout Button top of display back to login screen
+        // Constant Logout Button top of display back to login screen
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             LogIn logIn = new LogIn();
