@@ -10,17 +10,23 @@ namespace PoS.BusDomain
     {
         // Superclass for customer and employee objects
         #region Members
-        protected int personId;
+        protected string personId;
         protected string name;
         protected string address;
+        private IDGen generator;
         #endregion
 
         #region Constructors
-        public Person() { }
-
-        public Person(int PersonID, string nameVal, string addressVal)
+        public Person()
         {
-            this.personId = PersonID;
+            generator = new IDGen();
+            personId = "PER" + generator.CreateID();
+        }
+
+        public Person(string nameVal, string addressVal)
+        {
+            generator = new IDGen();
+            personId = "PER" + generator.CreateID();
             this.name = nameVal;
             this.address = addressVal;
         }

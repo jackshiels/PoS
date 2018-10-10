@@ -88,6 +88,7 @@ namespace PoS.DB
 
             return successful;
         }
+
         public void CreateInsertParameters()
         {
             SqlParameter param = default(SqlParameter);
@@ -415,6 +416,7 @@ namespace PoS.DB
                 if (custList[i].CustomerID == custId)
                 {
                     foundCust = custList[i];
+                    break;
                 }
             }
 

@@ -16,10 +16,14 @@ namespace PoS.BusDomain
         private RoleType role;
         private string empId;
         private int hash;
+        private IDGen generator;
         #endregion
 
         #region Constructors
-        public Employee() : base() { }
+        public Employee() : base()
+        {
+            empId = "EMP" + generator.CreateID();
+        }
 
         public Employee(string name, string address, RoleType roleVal) : base()
         {
@@ -27,6 +31,7 @@ namespace PoS.BusDomain
             this.role = roleVal;
             base.Name = name;
             base.Address = address;
+            empId = "EMP" + generator.CreateID();
         }
         #endregion
 

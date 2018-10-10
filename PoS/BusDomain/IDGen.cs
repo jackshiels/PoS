@@ -14,14 +14,12 @@ namespace PoS.BusDomain
         #region Members
         private int hashVal; //int value that will be returned by the CreateID method
         private Guid hashKey; //GUID object used to generate the random string used as input for the Hash method
-        private Collection<int> values;
         #endregion
         
         #region Constructors
         public IDGen()
         {
             hashVal = 0; //setting the hashVal variable to 0
-            values = new Collection<int>();
         }
         #endregion
         
