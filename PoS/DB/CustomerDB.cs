@@ -143,7 +143,17 @@ namespace PoS.DB
 
                         // Creates a row from the customer table that shares the same key from CustomerRegister
                         DataRow temp = dsMain.Tables["Table1"].Rows.Find(Convert.ToString(dRow["CustomerID"]));
-                        aCust.CardHolderDetails = CreatePaymentArray(Convert.ToString(temp["Payment"]));
+
+                        if (Convert.ToString(temp["Payment"]) == "EFT")
+                        {
+                            aCust.Payment = Customer.PaymentMethod.EFT;
+                        }
+                        else
+                        {
+                            aCust.Payment = Customer.PaymentMethod.CreditCard;
+                            aCust.CardHolderDetails = CreatePaymentArray(Convert.ToString(temp["Payment"]));
+                        }
+
                         aCust.Debt = (float)Convert.ToDouble(temp["Debt"]);
                         aCust.BlackListed = Convert.ToInt32(temp["BlackListed"]);
 
@@ -154,6 +164,8 @@ namespace PoS.DB
 
                         // Add to the list
                         custList.Add(aCust);
+
+                        aCust = new Customer();
                     }
                 }
             }

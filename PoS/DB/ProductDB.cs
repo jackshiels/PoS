@@ -16,7 +16,7 @@ namespace PoS.DB
         #region Members
         private Collection<Product> prodList;
         private string sqlProd = "SELECT * FROM Product";
-        private string tableProd = "Product";
+        private string tableProd = "Table";
         #endregion
 
         #region Constructors
@@ -78,13 +78,17 @@ namespace PoS.DB
         private void ReadProducts()
         {
             DataRow myRow = null;
-            Product aProd;
+            Product aProd =  new Product();
+
+            // Sets the PK manually to allow .Find() to function
+            DataColumn[] pk1 = new DataColumn[1];
+            pk1[0] = dsMain.Tables["Table"].Columns[0];
+            dsMain.Tables["Table"].PrimaryKey = pk1;
 
             try
             {
                 foreach (DataRow dRow in dsMain.Tables[tableProd].Rows)
                 {
-                    aProd = new Product();
                     myRow = dRow;
                     if (!(myRow.RowState == DataRowState.Deleted))
                     {
@@ -99,6 +103,8 @@ namespace PoS.DB
                         aProd.Reserved = Convert.ToInt32(myRow["Reserved"]);
                         // Add to the list
                         prodList.Add(aProd);
+
+                        aProd = new Product();
                     }
                 }
             }
@@ -131,8 +137,6 @@ namespace PoS.DB
             // Finally, return this guy
             return dimArr;
         }
-
-
 
         public int FindNumProduct(string name)
         {
