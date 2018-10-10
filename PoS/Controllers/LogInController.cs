@@ -15,12 +15,14 @@ namespace PoS.Controllers
         #region Members
         private EmployeeDB empDB;
         private IDGen generator;
-
+        //private IDGen gen = new IDGen();
         #endregion
 
         #region Constructors
         public LogInController()
         {
+            //MessageBox.Show("key: " + gen.Hash("france442"));
+
             EmpDB = new EmployeeDB();
         }
 

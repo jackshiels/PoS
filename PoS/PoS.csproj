@@ -80,6 +80,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBMainDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="DB\CustomerDB.cs" />
     <Compile Include="DB\DB.cs" />
@@ -122,14 +123,17 @@
     </EmbeddedResource>
     <None Include="DBMainDataSet.xsc">
       <DependentUpon>DBMainDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DBMainDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DBMainDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DBMainDataSet.xss">
       <DependentUpon>DBMainDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

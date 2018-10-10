@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint25 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
+            System.Windows.Forms.DataVisualization.Charting.Title title9 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -114,10 +114,8 @@
             this.txtUpdateQuantity = new System.Windows.Forms.TextBox();
             this.cmbUpdateProducts = new System.Windows.Forms.ComboBox();
             this.btnUpdateRemoveButton = new System.Windows.Forms.Button();
-            this.btnUpdateCancelOrder = new System.Windows.Forms.Button();
             this.btnUpdateCreateOrder = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnUpdateBack = new System.Windows.Forms.Button();
+            this.lblUpdateName = new System.Windows.Forms.Label();
             this.lstUpdateOrderItems = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
@@ -787,9 +785,9 @@
             this.expiredItems.BackColor = System.Drawing.Color.GhostWhite;
             this.expiredItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.expiredItems.BorderSkin.BorderColor = System.Drawing.Color.Blue;
-            chartArea1.Name = "ChartArea1";
-            chartArea1.ShadowColor = System.Drawing.Color.Transparent;
-            this.expiredItems.ChartAreas.Add(chartArea1);
+            chartArea9.Name = "ChartArea1";
+            chartArea9.ShadowColor = System.Drawing.Color.Transparent;
+            this.expiredItems.ChartAreas.Add(chartArea9);
             this.expiredItems.Location = new System.Drawing.Point(521, 27);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -799,21 +797,21 @@
         System.Drawing.Color.Red,
         System.Drawing.Color.Yellow,
         System.Drawing.Color.Fuchsia};
-            series1.BorderColor = System.Drawing.Color.DarkGray;
-            series1.ChartArea = "ChartArea1";
-            series1.Color = System.Drawing.Color.Blue;
-            series1.IsValueShownAsLabel = true;
-            series1.Name = "Series1";
-            series1.Points.Add(dataPoint1);
-            series1.Points.Add(dataPoint2);
-            series1.Points.Add(dataPoint3);
-            this.expiredItems.Series.Add(series1);
+            series9.BorderColor = System.Drawing.Color.DarkGray;
+            series9.ChartArea = "ChartArea1";
+            series9.Color = System.Drawing.Color.Blue;
+            series9.IsValueShownAsLabel = true;
+            series9.Name = "Series1";
+            series9.Points.Add(dataPoint25);
+            series9.Points.Add(dataPoint26);
+            series9.Points.Add(dataPoint27);
+            this.expiredItems.Series.Add(series9);
             this.expiredItems.Size = new System.Drawing.Size(219, 299);
             this.expiredItems.TabIndex = 43;
-            title1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "Bar Graph Representing the Number of Expired Objects";
-            title1.Text = "Bar Graph Representing the Number of Expired Objects";
-            this.expiredItems.Titles.Add(title1);
+            title9.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title9.Name = "Bar Graph Representing the Number of Expired Objects";
+            title9.Text = "Bar Graph Representing the Number of Expired Objects";
+            this.expiredItems.Titles.Add(title9);
             // 
             // reportTable
             // 
@@ -918,10 +916,8 @@
             this.grpUpdateOrder2.Controls.Add(this.txtUpdateQuantity);
             this.grpUpdateOrder2.Controls.Add(this.cmbUpdateProducts);
             this.grpUpdateOrder2.Controls.Add(this.btnUpdateRemoveButton);
-            this.grpUpdateOrder2.Controls.Add(this.btnUpdateCancelOrder);
             this.grpUpdateOrder2.Controls.Add(this.btnUpdateCreateOrder);
-            this.grpUpdateOrder2.Controls.Add(this.label2);
-            this.grpUpdateOrder2.Controls.Add(this.btnUpdateBack);
+            this.grpUpdateOrder2.Controls.Add(this.lblUpdateName);
             this.grpUpdateOrder2.Controls.Add(this.lstUpdateOrderItems);
             this.grpUpdateOrder2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpUpdateOrder2.Location = new System.Drawing.Point(257, 106);
@@ -949,6 +945,7 @@
             this.btnUpdateAddToOrder.TabIndex = 38;
             this.btnUpdateAddToOrder.Text = "&Add to Order";
             this.btnUpdateAddToOrder.UseVisualStyleBackColor = true;
+            this.btnUpdateAddToOrder.Click += new System.EventHandler(this.btnUpdateAddToOrder_Click);
             // 
             // txtUpdateQuantity
             // 
@@ -974,16 +971,7 @@
             this.btnUpdateRemoveButton.TabIndex = 35;
             this.btnUpdateRemoveButton.Text = "Remove Item";
             this.btnUpdateRemoveButton.UseVisualStyleBackColor = true;
-            // 
-            // btnUpdateCancelOrder
-            // 
-            this.btnUpdateCancelOrder.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateCancelOrder.Location = new System.Drawing.Point(500, 332);
-            this.btnUpdateCancelOrder.Name = "btnUpdateCancelOrder";
-            this.btnUpdateCancelOrder.Size = new System.Drawing.Size(117, 27);
-            this.btnUpdateCancelOrder.TabIndex = 34;
-            this.btnUpdateCancelOrder.Text = "Cancel Order";
-            this.btnUpdateCancelOrder.UseVisualStyleBackColor = true;
+            this.btnUpdateRemoveButton.Click += new System.EventHandler(this.btnUpdateRemoveButton_Click);
             // 
             // btnUpdateCreateOrder
             // 
@@ -992,27 +980,18 @@
             this.btnUpdateCreateOrder.Name = "btnUpdateCreateOrder";
             this.btnUpdateCreateOrder.Size = new System.Drawing.Size(117, 27);
             this.btnUpdateCreateOrder.TabIndex = 33;
-            this.btnUpdateCreateOrder.Text = "Create Order";
+            this.btnUpdateCreateOrder.Text = "Update Order";
             this.btnUpdateCreateOrder.UseVisualStyleBackColor = true;
+            this.btnUpdateCreateOrder.Click += new System.EventHandler(this.btnUpdateCreateOrder_Click);
             // 
-            // label2
+            // lblUpdateName
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(148, 19);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Customer: John Smith";
-            // 
-            // btnUpdateBack
-            // 
-            this.btnUpdateBack.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateBack.Location = new System.Drawing.Point(623, 19);
-            this.btnUpdateBack.Name = "btnUpdateBack";
-            this.btnUpdateBack.Size = new System.Drawing.Size(117, 27);
-            this.btnUpdateBack.TabIndex = 31;
-            this.btnUpdateBack.Text = "Back";
-            this.btnUpdateBack.UseVisualStyleBackColor = true;
+            this.lblUpdateName.AutoSize = true;
+            this.lblUpdateName.Location = new System.Drawing.Point(8, 23);
+            this.lblUpdateName.Name = "lblUpdateName";
+            this.lblUpdateName.Size = new System.Drawing.Size(148, 19);
+            this.lblUpdateName.TabIndex = 32;
+            this.lblUpdateName.Text = "Customer: John Smith";
             // 
             // lstUpdateOrderItems
             // 
@@ -1190,10 +1169,8 @@
         private System.Windows.Forms.TextBox txtUpdateQuantity;
         private System.Windows.Forms.ComboBox cmbUpdateProducts;
         private System.Windows.Forms.Button btnUpdateRemoveButton;
-        private System.Windows.Forms.Button btnUpdateCancelOrder;
         private System.Windows.Forms.Button btnUpdateCreateOrder;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnUpdateBack;
+        private System.Windows.Forms.Label lblUpdateName;
         private System.Windows.Forms.ListBox lstUpdateOrderItems;
     }
 }

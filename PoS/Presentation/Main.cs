@@ -29,7 +29,7 @@ namespace PoS.Presentation
         private Order order;
         private Customer aCust;
         private Employee emp;
-        private Collection<OrderItem> ordItems; //
+        private Collection<OrderItem> ordItems;
         #endregion
 
         #region Constructor
@@ -98,17 +98,53 @@ namespace PoS.Presentation
         {
             string orderID = lstOrderItems.Text.Split()[2];
             order = null;
-            order = createOrder.OrdDb.FindOrder(orderID);
-            lblOrderCustName.Text = order.Owner.Name;
-            cmbOrderProducts.Text = "";
-            ordItems = new Collection<OrderItem>(); //
-            foreach (OrderItem orderitem in order.ItemList)
+            order = cancel.OrdDB.FindOrder(orderID);
+            lblUpdateName.Text = order.Owner.Name;
+            cmbUpdateProducts.Text = "";
+            ordItems = new Collection<OrderItem>();
+            ordItems = order.ItemList;
+            foreach (OrderItem orderitem in ordItems)
             {
-                cmbOrderProducts.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Item Name: " + orderitem.ItemProduct.Name + " Quantity: " + orderitem.Quantity + " Sub-total: " + orderitem.SubTotal);
-                ordItems.Add(orderitem);
+                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
             }
             grpUpdateOrder.Hide();
-            grpOrderManagement.Show();           
+            grpUpdateOrder2.Show();
+        }
+
+        private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
+        {
+            OrderItem item = new OrderItem(cancel.ProdDB.FindNonReservedProduct(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
+            ordItems.Add(item);
+            foreach (OrderItem orderitem in ordItems)
+            {
+                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+            }
+        }
+
+        private void btnUpdateRemoveButton_Click(object sender, EventArgs e)
+        {
+            string id = lstUpdateList.Text.Split()[3].TrimEnd();
+
+            for (int i = 0; i < ordItems.Count(); i++)
+            {
+                if (ordItems[i].OrderItemID.Equals(id))
+                {
+                    ordItems.RemoveAt(i);
+                    break;
+                }
+            }
+
+            foreach (OrderItem orderitem in ordItems)
+            {
+                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+            }
+        }
+
+        private void btnUpdateCreateOrder_Click(object sender, EventArgs e)
+        {
+            cancel.UpdateOrder(order, ordItems);
+            grpFunction.Show();
+            grpUpdateOrder2.Hide();
         }
         #endregion
 
@@ -268,6 +304,8 @@ namespace PoS.Presentation
                 {
                     cmbOrderProducts.Items.Add(product.Name+" (Available: "+createOrder.ProdDB.FindNumProduct(product.Name)+")");
                     seen.Add(product.Name);
+                    cmbUpdateProducts.Items.Add(product.Name + " (Available: " + createOrder.ProdDB.FindNumProduct(product.Name) + ")");
+                    seen.Add(product.Name);
                 }
             }
             foreach (Order x in orders)
@@ -362,5 +400,6 @@ namespace PoS.Presentation
             }
         }
         #endregion
+
     }
 }
