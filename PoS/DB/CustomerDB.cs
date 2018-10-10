@@ -121,27 +121,51 @@ namespace PoS.DB
         {
             Customer aCust = new Customer();
 
+            // Sets the PK manually to allow .Find() to function
+            DataColumn[] pk1 = new DataColumn[1];
+            pk1[0] = dsMain.Tables["Table1"].Columns[0];
+            dsMain.Tables["Table1"].PrimaryKey = pk1;
+
+            // Sets the PK manually to allow .Find() to function
+            DataColumn[] pk2 = new DataColumn[1];
+            pk2[0] = dsMain.Tables["Table2"].Columns[0];
+            dsMain.Tables["Table2"].PrimaryKey = pk2;
+
             try
             {
                 // Parses the table to get data for each customer
-                foreach (DataRow dRow in dsMain.Tables["CustomerRegister"].Rows)
+                foreach (DataRow dRow in dsMain.Tables["Table"].Rows)
                 {
                     if (!(dRow.RowState == DataRowState.Deleted))
                     {
                         // Do the conversion stuff here.
                         aCust.CustomerID = Convert.ToString(dRow["CustomerID"]).TrimEnd();
+
                         // Creates a row from the customer table that shares the same key from CustomerRegister
-                        DataRow temp = dsMain.Tables["Customer"].Rows.Find(Convert.ToInt32(dRow["CustomerID"]));
-                        aCust.CardHolderDetails = CreatePaymentArray(Convert.ToString(temp["Payment"]));
+                        DataRow temp = dsMain.Tables["Table1"].Rows.Find(Convert.ToString(dRow["CustomerID"]));
+
+                        if (Convert.ToString(temp["Payment"]) == "EFT")
+                        {
+                            aCust.Payment = Customer.PaymentMethod.EFT;
+                        }
+                        else
+                        {
+                            aCust.Payment = Customer.PaymentMethod.CreditCard;
+                            aCust.CardHolderDetails = CreatePaymentArray(Convert.ToString(temp["Payment"]));
+                        }
+
                         aCust.Debt = (float)Convert.ToDouble(temp["Debt"]);
                         aCust.BlackListed = Convert.ToInt32(temp["BlackListed"]);
+
                         // Creates a row from the person table that shares the same key from CustomerRegister
-                        temp = dsMain.Tables["Person"].Rows.Find(Convert.ToInt32(dRow["PersonID"]));
+                        temp = dsMain.Tables["Table2"].Rows.Find(Convert.ToString(dRow["PersonID"]));
                         aCust.Name = Convert.ToString(temp["Name"]).TrimEnd();
                         aCust.Address = Convert.ToString(temp["Address"]).TrimEnd();
 
                         // Add to the list
                         custList.Add(aCust);
+
+                        aCust = new Customer();
                     }
                 }
             }

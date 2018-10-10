@@ -47,7 +47,7 @@
             this.btnLogIn.Location = new System.Drawing.Point(421, 246);
             this.btnLogIn.Name = "btnLogIn";
             this.btnLogIn.Size = new System.Drawing.Size(98, 27);
-            this.btnLogIn.TabIndex = 0;
+            this.btnLogIn.TabIndex = 2;
             this.btnLogIn.Text = "&Log In";
             this.btnLogIn.UseVisualStyleBackColor = true;
             this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
@@ -66,7 +66,7 @@
             this.txtLoginEmpId.Location = new System.Drawing.Point(300, 180);
             this.txtLoginEmpId.Name = "txtLoginEmpId";
             this.txtLoginEmpId.Size = new System.Drawing.Size(219, 27);
-            this.txtLoginEmpId.TabIndex = 2;
+            this.txtLoginEmpId.TabIndex = 0;
             // 
             // lblLogInWelcome
             // 
@@ -122,6 +122,7 @@
             // 
             // LogIn
             // 
+            this.AcceptButton = this.btnLogIn;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(794, 338);

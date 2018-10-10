@@ -63,6 +63,11 @@ namespace PoS.Controllers
             get { return ordDb; }
             set { ordDb = value; }
         }
+        public ProductDB ProdDB
+        {
+            get { return prodDb; }
+            set { prodDb = value; }
+        }
         #endregion
     }
 }

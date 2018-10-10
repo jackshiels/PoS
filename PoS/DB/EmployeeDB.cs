@@ -30,12 +30,22 @@ namespace PoS.DB
         #region Methods - READ
         public void ReadEmployees()
         {
-            Employee anEmp = new Employee();
+            Employee anEmp;
+
+            // Sets the PK manually to allow .Find() to function
+            DataColumn[] pk1 = new DataColumn[1];
+            pk1[0] = dsMain.Tables["Table1"].Columns[0];
+            dsMain.Tables["Table1"].PrimaryKey = pk1;
+
+            // Sets the PK manually to allow .Find() to function
+            DataColumn[] pk2 = new DataColumn[1];
+            pk2[0] = dsMain.Tables["Table2"].Columns[0];
+            anEmp = new Employee();
 
             try
             {
                 // Parses the table to get data for each customer
-                foreach (DataRow dRow in dsMain.Tables["EmployeeRegister"].Rows)
+                foreach (DataRow dRow in dsMain.Tables["Table"].Rows)
                 {
                     if (!(dRow.RowState == DataRowState.Deleted))
                     {
@@ -44,7 +54,7 @@ namespace PoS.DB
                         anEmp.PersonID = Convert.ToString(dRow["PersonID"]).TrimEnd();
 
                         // Creates a row from the Employee table that shares the same key from EmployeeRegister
-                        DataRow tempEmpRow = dsMain.Tables["Employee"].Rows.Find(Convert.ToString(dRow["EmployeeID"]));
+                        DataRow tempEmpRow = dsMain.Tables["Table1"].Rows.Find(Convert.ToString(dRow["EmployeeID"]));
 
                         // Sets role
                         switch (Convert.ToString(tempEmpRow["Role"]))
@@ -65,12 +75,16 @@ namespace PoS.DB
 
                         // Creates a row from the person table that shares the same key from CustomerRegister
                         // May fail without .TrimEnd()
-                        DataRow temp = dsMain.Tables["Person"].Rows.Find(Convert.ToString(dRow["PersonID"]));
+                        dsMain.Tables["Table2"].PrimaryKey = pk2;
+
+                        DataRow temp = dsMain.Tables["Table2"].Rows.Find(Convert.ToString(dRow["PersonID"]));
                         anEmp.Name = Convert.ToString(temp["Name"]).TrimEnd();
                         anEmp.Address = Convert.ToString(temp["Address"]).TrimEnd();
 
                         // Add to the list
                         empList.Add(anEmp);
+                        anEmp = new Employee();
+
                     }
                 }
             }

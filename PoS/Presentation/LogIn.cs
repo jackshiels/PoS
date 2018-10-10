@@ -15,6 +15,8 @@ namespace PoS
 {
     public partial class LogIn : Form
     {
+        private IDGen gen = new IDGen();
+
         private LogInController login = new LogInController();
 
         public LogIn()

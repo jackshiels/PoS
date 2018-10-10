@@ -22,6 +22,7 @@ namespace PoS.BusDomain
         #region Constructors
         public Employee() : base()
         {
+            generator = new IDGen();
             empId = "EMP" + generator.CreateID();
         }
 

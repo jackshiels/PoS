@@ -15,8 +15,8 @@ namespace PoS.DB
     {
         #region Members
         private Collection<Order> ordList;
-        private string sqlOrd = "SELECT * FROM Order; SELECT * FROM OrderItem SELECT * FROM OrderItemRegister; SELECT * FROM OrderRegister;";
-        private string tableOrd = "Order";
+        private string sqlOrd = "SELECT * FROM Order; SELECT * FROM OrderItem; SELECT * FROM OrderItemRegister; SELECT * FROM OrderRegister;";
+        private string tableOrd = "Table";
         #endregion
 
         #region Constructors
