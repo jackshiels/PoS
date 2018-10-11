@@ -168,6 +168,7 @@ namespace PoS.Presentation
         // select that customer for the order
         private void btnSelect_Click(object sender, EventArgs e)
         {
+            createOrder = new CreateAnOrder();
             String[] text = lstOrderCustList.Text.Split();
             aCust = createOrder.CustDB.FindCustomerObject(text[text.Length]);
             hideAll();
@@ -315,7 +316,7 @@ namespace PoS.Presentation
          */
         public void fillLists()
         {
-            
+            createOrder = new CreateAnOrder();
             Collection<Customer> customers = createOrder.ValidCustomers();
             Collection<Product> products = createOrder.ProdDB.ProdList;
             Collection<string> seen = new Collection<string>();
@@ -365,6 +366,7 @@ namespace PoS.Presentation
             {
                 case ("Create a New Customer"):
                     hideAll();
+<<<<<<< HEAD
                     grpNewCustomer.Show();
                     break;
                 case ("Create a New Order"):
@@ -378,6 +380,22 @@ namespace PoS.Presentation
                 case ("Generate a Picking List"):
                     hideAll();
                     grpPickingSelect.Show();
+=======
+                    fillLists();
+                    grpNewCustomer.Location = showLocation;
+                    break;
+                case ("Create a New Order"):
+                    hideAll();
+                    grpOrderSelect.Location = showLocation;
+                    break;
+                case ("Update an Order"):
+                    hideAll();
+                    grpUpdateOrder.Location = showLocation;
+                    break;
+                case ("Generate a Picking List"):
+                    hideAll();
+                    grpPickingSelect.Location = showLocation;
+>>>>>>> f89754b5fa95c5235278abd0a7f7f2fb9d612bc6
                     break;
                 case ("Generate a Stock Report"):
                     createRep = new CreateReport();
@@ -385,11 +403,10 @@ namespace PoS.Presentation
                     reportTable = createRep.Exp.DataGrid; //table
                     expiredItems = createRep.Exp.Chart; //chart
                     hideAll();
-                    grpReport.Show();
+                    grpReport.Location = showLocation;
                     break;
                 default:
                     MessageBox.Show("Invalid Entry, please try again");
-                    fillLists();
                     break;
             }
         }
