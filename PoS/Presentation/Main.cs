@@ -396,6 +396,7 @@ namespace PoS.Presentation
         {
             foreach (OrderItem item in ord.ItemList)
             {
+
                 string temp = "Name: "+item.ItemProduct.Name+" Quantity: "+item.Quantity+" Location: "+item.ItemProduct.Location;
                 lstPickingList.Items.Add(temp);
             }
