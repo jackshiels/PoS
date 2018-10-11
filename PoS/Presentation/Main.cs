@@ -166,6 +166,7 @@ namespace PoS.Presentation
         // select that customer for the order
         private void btnSelect_Click(object sender, EventArgs e)
         {
+            createOrder = new CreateAnOrder();
             String[] text = lstOrderCustList.Text.Split();
             aCust = createOrder.CustDB.FindCustomerObject(text[text.Length]);
             grpOrderSelect.Hide();
@@ -313,7 +314,7 @@ namespace PoS.Presentation
          */
         public void fillLists()
         {
-            
+            createOrder = new CreateAnOrder();
             Collection<Customer> customers = createOrder.ValidCustomers();
             Collection<Product> products = createOrder.ProdDB.ProdList;
             Collection<string> seen = new Collection<string>();

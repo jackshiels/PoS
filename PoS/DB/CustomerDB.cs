@@ -209,12 +209,22 @@ namespace PoS.DB
 
         public string[] CreatePaymentArray(string value)
         {
-            string passed = value;
             string[] newArr = new string[3];
 
-            newArr[0] = passed.Substring(0,16);
-            newArr[1] = passed.Substring(16,3);
-            newArr[2] = passed.Substring(19, (passed.Length - 19));
+            if (value == "000")
+            {
+                newArr[0] = "0";
+                newArr[1] = "0";
+                newArr[2] = "0";
+            }
+            else
+            {
+                string passed = value;
+
+                newArr[0] = passed.Substring(0, 16);
+                newArr[1] = passed.Substring(16, 3);
+                newArr[2] = passed.Substring(19, (passed.Length - 19));
+            }
 
             return newArr;
         }
