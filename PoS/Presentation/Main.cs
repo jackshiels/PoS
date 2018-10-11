@@ -283,9 +283,7 @@ namespace PoS.Presentation
                 bool success = createCust.SubmitCustomer(customer.Name, customer.Address, customer.CardHolderDetails);
 
                 fillLists();
-                hideAll();
-                grpSuccessfulCustomer.Location = showLocation;
-                Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
+                MessageBox.Show("Customer Saved");
                 hideAll();
                 grpFunction.Location = showLocation;
             }           

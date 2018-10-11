@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -398,7 +398,7 @@
             this.grpNewCustomer.Controls.Add(this.btnClear);
             this.grpNewCustomer.Controls.Add(this.btnSubmit);
             this.grpNewCustomer.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpNewCustomer.Location = new System.Drawing.Point(928, 2238);
+            this.grpNewCustomer.Location = new System.Drawing.Point(843, 2245);
             this.grpNewCustomer.Name = "grpNewCustomer";
             this.grpNewCustomer.Size = new System.Drawing.Size(746, 365);
             this.grpNewCustomer.TabIndex = 15;
@@ -417,9 +417,10 @@
             // txtCustProvince
             // 
             this.txtCustProvince.Location = new System.Drawing.Point(146, 158);
+            this.txtCustProvince.MaxLength = 20;
             this.txtCustProvince.Name = "txtCustProvince";
             this.txtCustProvince.Size = new System.Drawing.Size(593, 27);
-            this.txtCustProvince.TabIndex = 34;
+            this.txtCustProvince.TabIndex = 21;
             // 
             // lblCustCVV
             // 
@@ -433,6 +434,7 @@
             // txtCustCVV
             // 
             this.txtCustCVV.Location = new System.Drawing.Point(642, 289);
+            this.txtCustCVV.MaxLength = 3;
             this.txtCustCVV.Name = "txtCustCVV";
             this.txtCustCVV.Size = new System.Drawing.Size(98, 27);
             this.txtCustCVV.TabIndex = 32;
@@ -449,6 +451,7 @@
             // txtCustCardNum
             // 
             this.txtCustCardNum.Location = new System.Drawing.Point(146, 289);
+            this.txtCustCardNum.MaxLength = 16;
             this.txtCustCardNum.Name = "txtCustCardNum";
             this.txtCustCardNum.Size = new System.Drawing.Size(335, 27);
             this.txtCustCardNum.TabIndex = 30;
@@ -465,6 +468,7 @@
             // txtCustCardName
             // 
             this.txtCustCardName.Location = new System.Drawing.Point(146, 256);
+            this.txtCustCardName.MaxLength = 30;
             this.txtCustCardName.Name = "txtCustCardName";
             this.txtCustCardName.Size = new System.Drawing.Size(594, 27);
             this.txtCustCardName.TabIndex = 28;
@@ -529,13 +533,15 @@
             // txtCustPostal
             // 
             this.txtCustPostal.Location = new System.Drawing.Point(146, 191);
+            this.txtCustPostal.MaxLength = 4;
             this.txtCustPostal.Name = "txtCustPostal";
             this.txtCustPostal.Size = new System.Drawing.Size(103, 27);
-            this.txtCustPostal.TabIndex = 21;
+            this.txtCustPostal.TabIndex = 22;
             // 
             // txtCustCity
             // 
             this.txtCustCity.Location = new System.Drawing.Point(146, 125);
+            this.txtCustCity.MaxLength = 20;
             this.txtCustCity.Name = "txtCustCity";
             this.txtCustCity.Size = new System.Drawing.Size(594, 27);
             this.txtCustCity.TabIndex = 20;
@@ -543,6 +549,7 @@
             // txtCustSuburb
             // 
             this.txtCustSuburb.Location = new System.Drawing.Point(146, 92);
+            this.txtCustSuburb.MaxLength = 20;
             this.txtCustSuburb.Name = "txtCustSuburb";
             this.txtCustSuburb.Size = new System.Drawing.Size(594, 27);
             this.txtCustSuburb.TabIndex = 19;
@@ -550,6 +557,7 @@
             // txtCustStreet
             // 
             this.txtCustStreet.Location = new System.Drawing.Point(146, 59);
+            this.txtCustStreet.MaxLength = 30;
             this.txtCustStreet.Name = "txtCustStreet";
             this.txtCustStreet.Size = new System.Drawing.Size(594, 27);
             this.txtCustStreet.TabIndex = 18;
@@ -557,6 +565,7 @@
             // txtCustName
             // 
             this.txtCustName.Location = new System.Drawing.Point(146, 26);
+            this.txtCustName.MaxLength = 50;
             this.txtCustName.Name = "txtCustName";
             this.txtCustName.Size = new System.Drawing.Size(594, 27);
             this.txtCustName.TabIndex = 17;
@@ -804,9 +813,9 @@
             this.expiredItems.BackColor = System.Drawing.Color.GhostWhite;
             this.expiredItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.expiredItems.BorderSkin.BorderColor = System.Drawing.Color.Blue;
-            chartArea1.Name = "ChartArea1";
-            chartArea1.ShadowColor = System.Drawing.Color.Transparent;
-            this.expiredItems.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            chartArea2.ShadowColor = System.Drawing.Color.Transparent;
+            this.expiredItems.ChartAreas.Add(chartArea2);
             this.expiredItems.Location = new System.Drawing.Point(521, 27);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -816,21 +825,21 @@
         System.Drawing.Color.Red,
         System.Drawing.Color.Yellow,
         System.Drawing.Color.Fuchsia};
-            series1.BorderColor = System.Drawing.Color.DarkGray;
-            series1.ChartArea = "ChartArea1";
-            series1.Color = System.Drawing.Color.Blue;
-            series1.IsValueShownAsLabel = true;
-            series1.Name = "Series1";
-            series1.Points.Add(dataPoint1);
-            series1.Points.Add(dataPoint2);
-            series1.Points.Add(dataPoint3);
-            this.expiredItems.Series.Add(series1);
+            series2.BorderColor = System.Drawing.Color.DarkGray;
+            series2.ChartArea = "ChartArea1";
+            series2.Color = System.Drawing.Color.Blue;
+            series2.IsValueShownAsLabel = true;
+            series2.Name = "Series1";
+            series2.Points.Add(dataPoint4);
+            series2.Points.Add(dataPoint5);
+            series2.Points.Add(dataPoint6);
+            this.expiredItems.Series.Add(series2);
             this.expiredItems.Size = new System.Drawing.Size(219, 299);
             this.expiredItems.TabIndex = 43;
-            title1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "Bar Graph Representing the Number of Expired Objects";
-            title1.Text = "Bar Graph Representing the Number of Expired Objects";
-            this.expiredItems.Titles.Add(title1);
+            title2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "Bar Graph Representing the Number of Expired Objects";
+            title2.Text = "Bar Graph Representing the Number of Expired Objects";
+            this.expiredItems.Titles.Add(title2);
             // 
             // reportTable
             // 
@@ -1036,12 +1045,8 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-
-            this.ClientSize = new System.Drawing.Size(1018, 485);
+            this.ClientSize = new System.Drawing.Size(1012, 483);
             this.Controls.Add(this.grpNewOrderCust);
-
-            this.ClientSize = new System.Drawing.Size(1370, 551);
-
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpOrderManagement);
             this.Controls.Add(this.grpSuccessfulCustomer);
