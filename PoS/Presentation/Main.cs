@@ -361,28 +361,25 @@ namespace PoS.Presentation
         private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
         {
             // no need to fill twice. It's a big operation
-            // fillLists();
+            fillLists();
             switch (lstFunctions.Text)
             {
                 case ("Create a New Customer"):
                     hideAll();
                     fillLists();
-                    grpNewCustomer.Show();
+                    grpNewCustomer.Location = showLocation;
                     break;
                 case ("Create a New Order"):
                     hideAll();
-                    fillLists();
-                    grpOrderSelect.Show();
+                    grpOrderSelect.Location = showLocation;
                     break;
                 case ("Update an Order"):
                     hideAll();
-                    fillLists();
-                    grpUpdateOrder.Show();
+                    grpUpdateOrder.Location = showLocation;
                     break;
                 case ("Generate a Picking List"):
                     hideAll();
-                    fillLists();
-                    grpPickingSelect.Show();
+                    grpPickingSelect.Location = showLocation;
                     break;
                 case ("Generate a Stock Report"):
                     createRep = new CreateReport();
@@ -390,11 +387,10 @@ namespace PoS.Presentation
                     reportTable = createRep.Exp.DataGrid; //table
                     expiredItems = createRep.Exp.Chart; //chart
                     hideAll();
-                    grpReport.Show();
+                    grpReport.Location = showLocation;
                     break;
                 default:
                     MessageBox.Show("Invalid Entry, please try again");
-                    fillLists();
                     break;
             }
         }
