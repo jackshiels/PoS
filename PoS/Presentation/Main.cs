@@ -30,7 +30,7 @@ namespace PoS.Presentation
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
-        private Point showLocation = new Point(259,110);
+        private Point showLocation = new Point(259,107);
         #endregion
 
         #region Constructor
@@ -39,6 +39,7 @@ namespace PoS.Presentation
             InitializeComponent();
             PopulateFunctions();
             hideAll();
+            moveForward();
             grpFunction.Location = showLocation; ;
         }
 
@@ -49,6 +50,7 @@ namespace PoS.Presentation
             lblUserRole.Text = anEmp.Role.ToString();
             emp = anEmp;
             PopulateFunctions();
+            moveForward();
             hideAll();
             grpFunction.Location = showLocation;
         }
@@ -366,20 +368,19 @@ namespace PoS.Presentation
             {
                 case ("Create a New Customer"):
                     hideAll();
-                    fillLists();
-                    grpNewCustomer.Location = showLocation;
+                    grpNewCustomer.Show();
                     break;
                 case ("Create a New Order"):
                     hideAll();
-                    grpOrderSelect.Location = showLocation;
+                    grpOrderSelect.Show();
                     break;
                 case ("Update an Order"):
                     hideAll();
-                    grpUpdateOrder.Location = showLocation;
+                    grpUpdate.Location = showLocation;
                     break;
                 case ("Generate a Picking List"):
                     hideAll();
-                    grpPickingSelect.Location = showLocation;
+                    grpPickingSelect.Show();
                     break;
                 case ("Generate a Stock Report"):
                     createRep = new CreateReport();
@@ -397,7 +398,7 @@ namespace PoS.Presentation
 
         private void hideAll()
         {
-            Point hiddenLocation = new Point(125,110);
+            Point hiddenLocation = new Point(257,524);
 
             grpFunction.Location = hiddenLocation;
 
@@ -419,6 +420,28 @@ namespace PoS.Presentation
             grpPickingSelect.Location = hiddenLocation;
         }
 
+        private void moveForward()
+        {
+            grpFunction.BringToFront();
+
+            grpSuccessfulCustomer.BringToFront();
+            grpOrderSubmitted.BringToFront();
+
+            grpUpdateOrder.BringToFront(); //ghost in the shell
+            grpUpdate.BringToFront();
+            grpUpdateOrder2.BringToFront();
+
+            grpNewCustomer.BringToFront();
+
+            grpOrderSelect.BringToFront();
+            grpOrderManagement.BringToFront();
+
+            grpReport.BringToFront();
+
+            grpPickingList.BringToFront();
+            grpPickingSelect.BringToFront();
+        }
+
         private void PopulateFunctions()
         {
             switch (emp.Role)
@@ -437,6 +460,5 @@ namespace PoS.Presentation
             }
         }
         #endregion
-
     }
 }
