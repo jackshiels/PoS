@@ -267,10 +267,13 @@ namespace PoS.Presentation
             {
                 MessageBox.Show("Invalid Postal Code\nPlease try again");
             }
-            else if ( cmbCustPayment.Text.Equals("Credit Card") && (txtCustCardNum.Text.Length != 16 || txtCustCVV.Text.Length != 3 
-                || !(Int32.TryParse(txtCustCardNum.Text, out cardNum)) || !(Int32.TryParse(txtCustCVV.Text, out CVV))) )
+            else if ( cmbCustPayment.Text.Equals("Credit Card") && (txtCustCardNum.Text.Length != 16 || txtCustCVV.Text.Length != 3 ))
             {
-                MessageBox.Show("Invalid Creddit Card Data\nPlease try again");
+                MessageBox.Show("Invalid Credit Card Data Lenght\nPlease try again");
+            }
+            else if ( cmbCustPayment.Text.Equals("Credit Card") && (!(Int32.TryParse(txtCustCardNum.Text, out cardNum)) || !(Int32.TryParse(txtCustCVV.Text, out CVV))) )
+            {
+                MessageBox.Show("Invalid Credit Card Data\nPlease try again");
             }
             else
             {
