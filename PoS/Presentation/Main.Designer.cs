@@ -1036,12 +1036,12 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-<<<<<<< HEAD
+
             this.ClientSize = new System.Drawing.Size(1018, 485);
             this.Controls.Add(this.grpNewOrderCust);
-=======
+
             this.ClientSize = new System.Drawing.Size(1370, 551);
->>>>>>> a239765226edcdf8535dcf4405cfd74b22b860d8
+
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpOrderManagement);
             this.Controls.Add(this.grpSuccessfulCustomer);
