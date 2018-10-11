@@ -368,11 +368,11 @@ namespace PoS.Presentation
             {
                 case ("Create a New Customer"):
                     hideAll();
-                    grpNewCustomer.Show();
+                    grpNewCustomer.Location = showLocation;
                     break;
                 case ("Create a New Order"):
                     hideAll();
-                    grpOrderSelect.Show();
+                    grpOrderSelect.Location = showLocation;
                     break;
                 case ("Update an Order"):
                     hideAll();
@@ -380,7 +380,7 @@ namespace PoS.Presentation
                     break;
                 case ("Generate a Picking List"):
                     hideAll();
-                    grpPickingSelect.Show();
+                    grpPickingSelect.Location = showLocation;
                     break;
                 case ("Generate a Stock Report"):
                     createRep = new CreateReport();
