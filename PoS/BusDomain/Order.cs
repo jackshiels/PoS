@@ -27,6 +27,8 @@ namespace PoS.BusDomain
 
         public Order(Customer Cust)
         {
+            generator = new IDGen();
+
             // This constructor takes the address field from the customer
             Collection<OrderItem> itemList = new Collection<OrderItem>();
             this.owner = Cust;

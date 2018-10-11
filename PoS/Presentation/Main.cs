@@ -172,7 +172,7 @@ namespace PoS.Presentation
         {
             createOrder = new CreateAnOrder();
             String[] text = lstOrderCustList.Text.Split();
-            aCust = createOrder.CustDB.FindCustomerObject(text[text.Length]);
+            aCust = createOrder.CustDB.FindCustomerObject(text[text.Length-1]);
             hideAll();
             grpOrderManagement.Location = showLocation;
             lblOrderCustName.Text = aCust.Name;
@@ -182,7 +182,8 @@ namespace PoS.Presentation
         private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
         {
             hideAll();
-            grpOrderSelect.Location = showLocation;
+            grpNewOrderCust.Location = showLocation;
+            lstOrderItems.Items.Clear();
             clearText();
         }
 
@@ -203,7 +204,7 @@ namespace PoS.Presentation
                 Product prod = createOrder.ProdDB.FindNonReservedProduct(cmbOrderProducts.Text);
                 OrderItem orderItem = new OrderItem(prod, number);
                 ordItems.Add(orderItem); //
-                cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
+                lstOrderItems.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
                 clearText();
             }
@@ -365,7 +366,7 @@ namespace PoS.Presentation
             }
             foreach (Order x in orders)
             {
-                lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
+                //lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
                 lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
             }
             //lstUpdateList;
