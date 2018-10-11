@@ -970,7 +970,7 @@
             // 
             this.grpNewOrderCust.Controls.Add(this.lstOrderCustList);
             this.grpNewOrderCust.Controls.Add(this.btnSelect);
-            this.grpNewOrderCust.Location = new System.Drawing.Point(340, 518);
+            this.grpNewOrderCust.Location = new System.Drawing.Point(251, 581);
             this.grpNewOrderCust.Name = "grpNewOrderCust";
             this.grpNewOrderCust.Size = new System.Drawing.Size(746, 367);
             this.grpNewOrderCust.TabIndex = 44;
@@ -981,7 +981,7 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1013, 483);
+            this.ClientSize = new System.Drawing.Size(1061, 487);
             this.Controls.Add(this.grpNewOrderCust);
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpReport);

@@ -101,11 +101,11 @@ namespace PoS.Presentation
         //choose order to update
         private void btnUpdateSelect_Click(object sender, EventArgs e)
         {
-            string orderID = lstOrderItems.Text.Split()[2];
+            string orderID = listBox2.Text.Split()[2];
             order = null;
             order = cancel.OrdDB.FindOrder(orderID);
             lblUpdateName.Text = order.Owner.Name;
-            cmbUpdateProducts.Text = "";
+            //cmbUpdateProducts.Text = "";
             ordItems = new Collection<OrderItem>();
             ordItems = order.ItemList;
             foreach (OrderItem orderitem in ordItems)
@@ -113,7 +113,9 @@ namespace PoS.Presentation
                 lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
             }
             hideAll();
-            grpUpdateOrder2.Location = showLocation; ;
+            //grpUpdateOrder2.Location = showLocation;
+            grpUpdateOrder.Location = showLocation;
+
         }
 
         private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
@@ -372,6 +374,7 @@ namespace PoS.Presentation
             cmbOrderProducts.Items.Clear();
             cmbUpdateProducts.Items.Clear();
             lstPickingList.Items.Clear();
+            listBox2.Items.Clear();
 
             foreach (Customer customer in customers)
             {
@@ -386,9 +389,10 @@ namespace PoS.Presentation
 
             foreach (Order x in orders)
             {
-                lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
-                lstUpdateOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
-                lstReportOrders.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
+                string txt = "Order ID: " + x.OrderID + " Customer: " + x.Owner.Name;
+                listBox2.Items.Add(txt);
+                //lstUpdateOrderItems.Items.Add(txt);
+                lstReportOrders.Items.Add(txt);
             }
 
             foreach (Product prod in expired)
