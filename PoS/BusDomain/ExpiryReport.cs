@@ -35,7 +35,7 @@ namespace PoS.BusDomain
             chart = new Chart();
             dataGrid = new DataGridView();
             expiredAndExpiring = prodConnect.ExpiryList();
-            populateChart(expiredAndExpiring);
+            //populateChart(expiredAndExpiring);
         }
         #endregion
 

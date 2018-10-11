@@ -363,7 +363,7 @@ namespace PoS.Presentation
             Collection<Order> orders = createOrder.OrdDb.OrdList;
             Collection<Product> expired = createOrder.ProdDB.ExpiryList();
 
-            lstExpiredItems.Items.Clear();
+            lstExpiredProd.Items.Clear();
             lstOrderCustList.Items.Clear();
             lstOrderItems.Items.Clear();
             lstUpdateList.Items.Clear();
@@ -395,8 +395,8 @@ namespace PoS.Presentation
 
             foreach (Product prod in expired)
             {
-                lstExpiredItems.Items.Add("Product:"+prod.Name+ "Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
-                    " Location: "+prod.Location+"Write-Off: "+ (prod.Price*prod.Stock) );
+                lstExpiredProd.Items.Add("Product:"+prod.Name+ " Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
+                    " Location: "+prod.Location+" Write-Off: "+ (prod.Price*prod.Stock) );
             }
         }
 
@@ -441,7 +441,7 @@ namespace PoS.Presentation
                     createRep = new CreateReport();
                     lblReportNum.Text = createRep.Exp.ReportID;
                     dateBox.Text = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    expiredItems = createRep.Exp.Chart; //chart
+                    //expiredItems = createRep.Exp.Chart; //chart
                     grpReport.Show();
                     grpReport.Location = showLocation;
                     break;

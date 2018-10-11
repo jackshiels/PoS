@@ -112,7 +112,7 @@
             this.lblUpdateName = new System.Windows.Forms.Label();
             this.lstUpdateOrderItems = new System.Windows.Forms.ListBox();
             this.grpNewOrderCust = new System.Windows.Forms.GroupBox();
-            this.lstExpiredItems = new System.Windows.Forms.ListView();
+            this.lstExpiredProd = new System.Windows.Forms.ListBox();
             this.grpFunction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).BeginInit();
             this.grpOrderManagement.SuspendLayout();
@@ -762,7 +762,7 @@
             // 
             // grpReport
             // 
-            this.grpReport.Controls.Add(this.lstExpiredItems);
+            this.grpReport.Controls.Add(this.lstExpiredProd);
             this.grpReport.Controls.Add(this.lblReportNum);
             this.grpReport.Controls.Add(this.expiredItems);
             this.grpReport.Controls.Add(this.dateBox);
@@ -968,13 +968,14 @@
             this.grpNewOrderCust.TabStop = false;
             this.grpNewOrderCust.Text = "Order (1/2)";
             // 
-            // lstExpiredItems
+            // lstExpiredProd
             // 
-            this.lstExpiredItems.Location = new System.Drawing.Point(6, 26);
-            this.lstExpiredItems.Name = "lstExpiredItems";
-            this.lstExpiredItems.Size = new System.Drawing.Size(509, 332);
-            this.lstExpiredItems.TabIndex = 46;
-            this.lstExpiredItems.UseCompatibleStateImageBehavior = false;
+            this.lstExpiredProd.FormattingEnabled = true;
+            this.lstExpiredProd.ItemHeight = 19;
+            this.lstExpiredProd.Location = new System.Drawing.Point(7, 27);
+            this.lstExpiredProd.Name = "lstExpiredProd";
+            this.lstExpiredProd.Size = new System.Drawing.Size(508, 327);
+            this.lstExpiredProd.TabIndex = 46;
             // 
             // Main
             // 
@@ -1111,6 +1112,6 @@
         private System.Windows.Forms.ListBox lstUpdateOrderItems;
         private System.Windows.Forms.GroupBox grpNewOrderCust;
         private System.Windows.Forms.ListBox lstPickingList;
-        private System.Windows.Forms.ListView lstExpiredItems;
+        private System.Windows.Forms.ListBox lstExpiredProd;
     }
 }
