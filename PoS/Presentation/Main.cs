@@ -402,8 +402,10 @@ namespace PoS.Presentation
         {
             foreach (OrderItem item in ord.ItemList)
             {
-                reportTable.Rows.Add();
-                reportTable.Rows.Insert(0, new string[] { item.ItemProduct.Name, Convert.ToString(item.Quantity), item.ItemProduct.Location });
+                BindingSource data = new BindingSource();
+                string[] arr = new string[] { item.ItemProduct.Name, Convert.ToString(item.Quantity), item.ItemProduct.Location };
+                data.Add(arr);
+                reportTable.Rows.Add(data);
             }
         }
        

@@ -45,7 +45,7 @@ namespace PoS.DB
                 // --- Order ------------------------------------------
 
                 // Create the insert command
-                daMain.InsertCommand = new SqlCommand("INSERT INTO Order (OrderID, Total) VALUES (@ORID, @TOTL);", cnMain);
+                daMain.InsertCommand = new SqlCommand("INSERT INTO [Order] (OrderID, Total) VALUES (@ORID, @TOTL);", cnMain);
 
                 // Create the parameters to hide data
                 CreateInsertParameters("Order");
