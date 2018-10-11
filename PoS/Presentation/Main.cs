@@ -30,7 +30,7 @@ namespace PoS.Presentation
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
-        private Point showLocation = new Point(259,110);
+        private Point showLocation = new Point(259,107);
         #endregion
 
         #region Constructor
@@ -366,7 +366,6 @@ namespace PoS.Presentation
             {
                 case ("Create a New Customer"):
                     hideAll();
-<<<<<<< HEAD
                     grpNewCustomer.Show();
                     break;
                 case ("Create a New Order"):
@@ -380,22 +379,6 @@ namespace PoS.Presentation
                 case ("Generate a Picking List"):
                     hideAll();
                     grpPickingSelect.Show();
-=======
-                    fillLists();
-                    grpNewCustomer.Location = showLocation;
-                    break;
-                case ("Create a New Order"):
-                    hideAll();
-                    grpOrderSelect.Location = showLocation;
-                    break;
-                case ("Update an Order"):
-                    hideAll();
-                    grpUpdateOrder.Location = showLocation;
-                    break;
-                case ("Generate a Picking List"):
-                    hideAll();
-                    grpPickingSelect.Location = showLocation;
->>>>>>> f89754b5fa95c5235278abd0a7f7f2fb9d612bc6
                     break;
                 case ("Generate a Stock Report"):
                     createRep = new CreateReport();
@@ -413,7 +396,7 @@ namespace PoS.Presentation
 
         private void hideAll()
         {
-            Point hiddenLocation = new Point(125,110);
+            Point hiddenLocation = new Point(257,524);
 
             grpFunction.Location = hiddenLocation;
 
