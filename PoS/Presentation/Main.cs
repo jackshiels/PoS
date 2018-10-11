@@ -324,6 +324,14 @@ namespace PoS.Presentation
             Collection<string> seen = new Collection<string>();
             Collection<Order> orders = createOrder.OrdDb.OrdList;
 
+
+            lstOrderCustList.Items.Clear();
+            lstOrderItems.Items.Clear();
+            lstUpdateList.Items.Clear();
+
+            cmbOrderProducts.Items.Clear();
+            cmbUpdateProducts.Items.Clear();
+
             foreach (Customer customer in customers)
             {
                 lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
@@ -343,7 +351,6 @@ namespace PoS.Presentation
             }
             foreach (Order x in orders)
             {
-                lstOrderCustList.Items.Add("Order ID: "+x.OrderID +" Customer: "+x.Owner.Name);
                 lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
                 lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
             }
@@ -372,11 +379,11 @@ namespace PoS.Presentation
                     break;
                 case ("Create a New Order"):
                     hideAll();
-                    grpOrderSelect.Location = showLocation;
+                    grpNewOrderCust.Location = showLocation;
+                    //grpOrderSelect.Location = showLocation; lost code
                     break;
                 case ("Update an Order"):
                     hideAll();
-                    grpUpdate.BringToFront();
                     grpUpdate.Location = showLocation;
                     break;
                 case ("Generate a Picking List"):
@@ -413,6 +420,7 @@ namespace PoS.Presentation
             grpNewCustomer.Location = hiddenLocation;
 
             grpOrderSelect.Location = hiddenLocation;
+            grpNewOrderCust.Location = hiddenLocation;
             grpOrderManagement.Location = hiddenLocation;
 
             grpReport.Location = hiddenLocation;

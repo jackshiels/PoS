@@ -120,6 +120,7 @@
             this.btnUpdateCreateOrder = new System.Windows.Forms.Button();
             this.lblUpdateName = new System.Windows.Forms.Label();
             this.lstUpdateOrderItems = new System.Windows.Forms.ListBox();
+            this.grpNewOrderCust = new System.Windows.Forms.GroupBox();
             this.grpFunction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).BeginInit();
             this.grpOrderManagement.SuspendLayout();
@@ -131,7 +132,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grpOrderSubmitted.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.grpOrderSelect.SuspendLayout();
             this.grpPickingSelect.SuspendLayout();
             this.grpReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.expiredItems)).BeginInit();
@@ -139,6 +139,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.grpUpdateOrder2.SuspendLayout();
+            this.grpNewOrderCust.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblHome
@@ -715,8 +716,6 @@
             // 
             // grpOrderSelect
             // 
-            this.grpOrderSelect.Controls.Add(this.lstOrderCustList);
-            this.grpOrderSelect.Controls.Add(this.btnSelect);
             this.grpOrderSelect.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpOrderSelect.Location = new System.Drawing.Point(257, 106);
             this.grpOrderSelect.Name = "grpOrderSelect";
@@ -728,7 +727,6 @@
             // lstOrderCustList
             // 
             this.lstOrderCustList.FormattingEnabled = true;
-            this.lstOrderCustList.ItemHeight = 19;
             this.lstOrderCustList.Location = new System.Drawing.Point(6, 26);
             this.lstOrderCustList.Name = "lstOrderCustList";
             this.lstOrderCustList.Size = new System.Drawing.Size(734, 251);
@@ -784,7 +782,7 @@
             this.grpReport.Controls.Add(this.reportTable);
             this.grpReport.Controls.Add(this.dateBox);
             this.grpReport.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpReport.Location = new System.Drawing.Point(267, 107);
+            this.grpReport.Location = new System.Drawing.Point(922, 480);
             this.grpReport.Name = "grpReport";
             this.grpReport.Size = new System.Drawing.Size(746, 367);
             this.grpReport.TabIndex = 43;
@@ -1023,11 +1021,23 @@
             this.lstUpdateOrderItems.Size = new System.Drawing.Size(730, 213);
             this.lstUpdateOrderItems.TabIndex = 40;
             // 
+            // grpNewOrderCust
+            // 
+            this.grpNewOrderCust.Controls.Add(this.lstOrderCustList);
+            this.grpNewOrderCust.Controls.Add(this.btnSelect);
+            this.grpNewOrderCust.Location = new System.Drawing.Point(257, 107);
+            this.grpNewOrderCust.Name = "grpNewOrderCust";
+            this.grpNewOrderCust.Size = new System.Drawing.Size(746, 367);
+            this.grpNewOrderCust.TabIndex = 44;
+            this.grpNewOrderCust.TabStop = false;
+            this.grpNewOrderCust.Text = "Order (1/2)";
+            // 
             // Main
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.ClientSize = new System.Drawing.Size(1018, 485);
+            this.Controls.Add(this.grpNewOrderCust);
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpOrderManagement);
             this.Controls.Add(this.grpSuccessfulCustomer);
@@ -1064,7 +1074,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.grpOrderSubmitted.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.grpOrderSelect.ResumeLayout(false);
             this.grpPickingSelect.ResumeLayout(false);
             this.grpReport.ResumeLayout(false);
             this.grpReport.PerformLayout();
@@ -1074,6 +1083,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.grpUpdateOrder2.ResumeLayout(false);
             this.grpUpdateOrder2.PerformLayout();
+            this.grpNewOrderCust.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1166,5 +1176,6 @@
         private System.Windows.Forms.Button btnUpdateCreateOrder;
         private System.Windows.Forms.Label lblUpdateName;
         private System.Windows.Forms.ListBox lstUpdateOrderItems;
+        private System.Windows.Forms.GroupBox grpNewOrderCust;
     }
 }
