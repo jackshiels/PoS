@@ -191,21 +191,37 @@ namespace PoS.Presentation
         {
             int number;
             Int32.TryParse(txtOrderQuantity.Text, out number);
-            if (cmbOrderProducts.Text.Equals("") || number >= 0) //invalid input error
+
+            string[] txt = cmbOrderProducts.Text.Split();
+            int i;
+            for (i = 0; i < txt.Length; i++)
+            {
+                if (txt[i].Equals("(Available:"))
+                {
+                    break;
+                }
+            }
+            string prodName = "";
+            for (int j = 0; j < i ; j++)
+            {
+                prodName += txt[j] + " ";
+            }
+            prodName = prodName.TrimEnd();
+
+            if (cmbOrderProducts.Text.Equals("") || number <= 0) //invalid input error
             {
                 MessageBox.Show("Please input valid data");
             }
-            else if (number > createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text))
+            else if (number > createOrder.ProdDB.FindNumProduct(prodName))//createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text))
             {
-                MessageBox.Show("Unfortunately we only have "+ createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text)+" available");
+                MessageBox.Show("Unfortunately we only have "+ createOrder.ProdDB.FindNumProduct(prodName)+" available");
             }
             else
             {
-                Product prod = createOrder.ProdDB.FindNonReservedProduct(cmbOrderProducts.Text);
+                Product prod = createOrder.ProdDB.FindNonReservedProduct(prodName);
                 OrderItem orderItem = new OrderItem(prod, number);
-                ordItems.Add(orderItem); //
                 lstOrderItems.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
-                Boolean success = order.AddToOrder(prod,number);
+                Boolean success = order.AddToOrder(orderItem);
                 clearText();
             }
         }
@@ -229,8 +245,11 @@ namespace PoS.Presentation
         // remove an item from the order
         private void btnOrderRemoveItem_Click(object sender, EventArgs e)
         {
-            string item = cmbOrderProducts.Text.Split()[3];
-            order.RemoveFromOrder(item);
+            string[] text = lstOrderItems.Text.Split();
+            string itemID = text[3];
+
+            itemID.Trim();
+            order.RemoveFromOrder(itemID);
             fillLists();
         }
         #endregion
