@@ -34,9 +34,7 @@ namespace PoS.DB
         public bool InsertOrder(Order anOrd)
         {
             bool successful = false;
-
             
-
             // Add the order into the list anyway
             ordList.Add(anOrd);
 
@@ -59,6 +57,7 @@ namespace PoS.DB
                 // Submit it to the table
                 dsMain.Tables["Table"].Rows.Add(newOrderRow);
 
+                cnMain.Open();
                 daMain.Update(dsMain, "Table");
 
                 // --- OrderRegister -------------------------------------------
@@ -77,7 +76,6 @@ namespace PoS.DB
                 dsMain.Tables["Table3"].Rows.Add(newOrdRegRow);
 
                 daMain.Update(dsMain, "Table3");
-
 
                 // --- OrderItem ---------------------------------
 
@@ -113,10 +111,9 @@ namespace PoS.DB
 
                     daMain.Update(dsMain, "Table2");
                 }
+                cnMain.Close();
 
-                // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
-                // daMain.InsertCommand.ExecuteNonQuery();
-                UpdateDataSource(sqlOrd);
+                FillDataSet(sqlOrd);
 
                 // Set true
                 successful = true;
@@ -276,8 +273,8 @@ namespace PoS.DB
                     // Kill it with fire
                     updatedOrderRow.Delete();
 
+                    cnMain.Open();
                     daMain.Update(dsMain, "Table");
-
 
                     // --- OrderItem -------------------------------------------
 
@@ -296,6 +293,7 @@ namespace PoS.DB
                     }
 
                     daMain.Update(dsMain, "Table1");
+                    cnMain.Close();
 
                     // Set true
                     successful = true;
@@ -305,6 +303,8 @@ namespace PoS.DB
                     MessageBox.Show("An error of type " + ex);
                 }
             }
+
+            FillDataSet(sqlOrd);
 
             return successful;
         }

@@ -56,6 +56,7 @@ namespace PoS.DB
                 // Submit it to the table
                 dsMain.Tables["Table1"].Rows.Add(newCustRow);
 
+                cnMain.Open();
                 daMain.Update(dsMain, "Table1");
 
                 // --- PERSON -------------------------------------------
@@ -91,6 +92,7 @@ namespace PoS.DB
                 dsMain.Tables["Table"].Rows.Add(newRegRow);
 
                 daMain.Update(dsMain, "Table");
+                cnMain.Close();
 
                 FillDataSet(sqlCust);
 
