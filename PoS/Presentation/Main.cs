@@ -183,6 +183,7 @@ namespace PoS.Presentation
         {
             hideAll();
             grpOrderSelect.Location = showLocation;
+            clearText();
         }
 
         private void btnOrderAddItem_Click(object sender, EventArgs e) // add item to the order
@@ -204,6 +205,7 @@ namespace PoS.Presentation
                 ordItems.Add(orderItem); //
                 cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
+                clearText();
             }
         }
         
@@ -211,11 +213,9 @@ namespace PoS.Presentation
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
             createOrder.InsertIntoOrderDB(order);
+            MessageBox.Show("Order successfully created");
             hideAll();
-            fillLists();
-            grpOrderSubmitted.Location = showLocation;
-            Thread.Sleep(5000);
-            hideAll();
+            clearText();
             grpFunction.Location = showLocation;
         }
          //cancel the order  and go back to home screen
@@ -235,7 +235,7 @@ namespace PoS.Presentation
         #endregion
 
         #region Create a new Customer
-        // Clear all the text Boxes
+ 
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtCustCardName.Text = "";
@@ -288,6 +288,7 @@ namespace PoS.Presentation
                 Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
                 hideAll();
                 grpFunction.Location = showLocation;
+                clearText();
             }           
         }
 
@@ -371,6 +372,7 @@ namespace PoS.Presentation
         {
             // no need to fill twice. It's a big operation
             fillLists();
+            clearText();
             switch (lstFunctions.Text)
             {
                 case ("Create a New Customer"):
@@ -468,6 +470,22 @@ namespace PoS.Presentation
                     break;
             }
         }
+
+        private void clearText()
+        {
+            txtCustCardName.Text = "";
+            txtCustCardNum.Text = "";
+            txtCustCity.Text = "";
+            txtCustCVV.Text = "";
+            txtCustName.Text = "";
+            txtCustPostal.Text = "";
+            txtCustProvince.Text = "";
+            txtCustStreet.Text = "";
+            txtCustSuburb.Text = "";
+            txtOrderQuantity.Text = "";
+            txtUpdateQuantity.Text = "";
+        }
+
         #endregion
 
         private void Main_Load(object sender, EventArgs e)
