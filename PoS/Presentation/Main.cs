@@ -183,6 +183,7 @@ namespace PoS.Presentation
         {
             hideAll();
             grpOrderSelect.Location = showLocation;
+            clearText();
         }
 
         private void btnOrderAddItem_Click(object sender, EventArgs e) // add item to the order
@@ -204,6 +205,7 @@ namespace PoS.Presentation
                 ordItems.Add(orderItem); //
                 cmbOrderProducts.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(prod,number);
+                clearText();
             }
         }
         
@@ -211,11 +213,9 @@ namespace PoS.Presentation
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
             createOrder.InsertIntoOrderDB(order);
+            MessageBox.Show("Order successfully created");
             hideAll();
-            fillLists();
-            grpOrderSubmitted.Location = showLocation;
-            Thread.Sleep(5000);
-            hideAll();
+            clearText();
             grpFunction.Location = showLocation;
         }
          //cancel the order  and go back to home screen
@@ -235,7 +235,7 @@ namespace PoS.Presentation
         #endregion
 
         #region Create a new Customer
-        // Clear all the text Boxes
+ 
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtCustCardName.Text = "";
@@ -252,13 +252,25 @@ namespace PoS.Presentation
         // Submit and add that cutsomer to the DB
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            int postalCode;
+            int cardNum;
+            int CVV;
             if ( (txtCustName.Text.Equals("")) || (txtCustStreet.Text.Equals("")) 
                 || (txtCustSuburb.Text.Equals("")) || (txtCustPostal.Text.Equals("")) ||
                 (txtCustCity.Text.Equals("")) || (txtCustProvince.Text.Equals("")) || 
                 ( cmbCustPayment.Text.Equals("Credit Card") && ( txtCustCardName.Text.Equals("") 
-                || txtCustCardNum.Text.Equals("") || txtCustCVV.Text.Equals("") ) ) )
+                || txtCustCardNum.Text.Equals("") || txtCustCVV.Text.Equals("") ) ) || cmbCustPayment.Text.Equals(""))
             {
                 MessageBox.Show("Invalid customer data has been entered.\nPlease re enter any missing data and try again.");
+            }
+            else if ( !(Int32.TryParse(txtCustPostal.Text,out postalCode)) )
+            {
+                MessageBox.Show("Invalid Postal Code\nPlease try again");
+            }
+            else if ( cmbCustPayment.Text.Equals("Credit Card") && (txtCustCardNum.Text.Length != 16 || txtCustCVV.Text.Length != 3 
+                || !(Int32.TryParse(txtCustCardNum.Text, out cardNum)) || !(Int32.TryParse(txtCustCVV.Text, out CVV))) )
+            {
+                MessageBox.Show("Invalid Creddit Card Data\nPlease try again");
             }
             else
             {
@@ -286,6 +298,7 @@ namespace PoS.Presentation
                 MessageBox.Show("Customer Saved");
                 hideAll();
                 grpFunction.Location = showLocation;
+                clearText();
             }           
         }
 
@@ -369,6 +382,7 @@ namespace PoS.Presentation
         {
             // no need to fill twice. It's a big operation
             fillLists();
+            clearText();
             switch (lstFunctions.Text)
             {
                 case ("Create a New Customer"):
@@ -466,6 +480,22 @@ namespace PoS.Presentation
                     break;
             }
         }
+
+        private void clearText()
+        {
+            txtCustCardName.Text = "";
+            txtCustCardNum.Text = "";
+            txtCustCity.Text = "";
+            txtCustCVV.Text = "";
+            txtCustName.Text = "";
+            txtCustPostal.Text = "";
+            txtCustProvince.Text = "";
+            txtCustStreet.Text = "";
+            txtCustSuburb.Text = "";
+            txtOrderQuantity.Text = "";
+            txtUpdateQuantity.Text = "";
+        }
+
         #endregion
 
         private void Main_Load(object sender, EventArgs e)
