@@ -34,9 +34,7 @@ namespace PoS.DB
         public bool InsertOrder(Order anOrd)
         {
             bool successful = false;
-
             
-
             // Add the order into the list anyway
             ordList.Add(anOrd);
 
@@ -59,6 +57,7 @@ namespace PoS.DB
                 // Submit it to the table
                 dsMain.Tables["Table"].Rows.Add(newOrderRow);
 
+                cnMain.Open();
                 daMain.Update(dsMain, "Table");
 
                 // --- OrderRegister -------------------------------------------
@@ -77,7 +76,6 @@ namespace PoS.DB
                 dsMain.Tables["Table3"].Rows.Add(newOrdRegRow);
 
                 daMain.Update(dsMain, "Table3");
-
 
                 // --- OrderItem ---------------------------------
 
@@ -113,10 +111,9 @@ namespace PoS.DB
 
                     daMain.Update(dsMain, "Table2");
                 }
+                cnMain.Close();
 
-                // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
-                // daMain.InsertCommand.ExecuteNonQuery();
-                UpdateDataSource(sqlOrd);
+                FillDataSet(sqlOrd);
 
                 // Set true
                 successful = true;
@@ -256,12 +253,6 @@ namespace PoS.DB
         {
             bool successful = false;
 
-            // Create the parameters to hide data
-            CreateDeleteParameters();
-
-            // Create the sql command for deletion
-            daMain.DeleteCommand = new SqlCommand("DELETE FROM Order WHERE OrderID = @ORID; DELETE FROM OrderItem WHERE OrderItemID = @OIID;", cnMain);
-
             // Checks if the object exists, delete it. Otherwise exit with a failure
             if (DeleteListItem(anOrd) == true)
             {
@@ -271,26 +262,38 @@ namespace PoS.DB
 
                     // --- Order ------------------------------------------
 
+                    // Create the sql command for deletion
+                    daMain.DeleteCommand = new SqlCommand("DELETE FROM Order WHERE OrderID = @ORID;", cnMain);
+
+                    // Create the parameters to hide data
+                    CreateDeleteParameters();
+
                     // Delete a row based on the table schema
-                    DataRow updatedOrderRow = dsMain.Tables["Order"].Rows[FindRowIndex(anOrd, "Order")];
+                    DataRow updatedOrderRow = dsMain.Tables["Table"].Rows[FindRowIndex(anOrd, "Order")];
                     // Kill it with fire
                     updatedOrderRow.Delete();
 
+                    cnMain.Open();
+                    daMain.Update(dsMain, "Table");
+
                     // --- OrderItem -------------------------------------------
 
-                    foreach(OrderItem item in anOrd.ItemList)
+                    // Create the sql command for deletion
+                    daMain.DeleteCommand = new SqlCommand("DELETE FROM OrderItem WHERE OrderItemID = @OIID;", cnMain);
+
+                    // Create the parameters to hide data
+                    CreateDeleteParameters();
+
+                    foreach (OrderItem item in anOrd.ItemList)
                     {
                         // Update a row based on the table schema
-                        DataRow updatedOrderItemRow = dsMain.Tables["OrderItem"].Rows[FindRowIndex(item, "OrderItem")];
+                        DataRow updatedOrderItemRow = dsMain.Tables["Table1"].Rows[FindRowIndex(item, "OrderItem")];
                         // End its existence
                         updatedOrderItemRow.Delete();
                     }
 
-                    // SHOULD AUTOMATICALLY CASCADE. TEST THIS!
-
-                    // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
-                    // daMain.DeleteCommand.ExecuteNonQuery();
-                    UpdateDataSource(sqlOrd);
+                    daMain.Update(dsMain, "Table1");
+                    cnMain.Close();
 
                     // Set true
                     successful = true;
@@ -300,6 +303,8 @@ namespace PoS.DB
                     MessageBox.Show("An error of type " + ex);
                 }
             }
+
+            FillDataSet(sqlOrd);
 
             return successful;
         }

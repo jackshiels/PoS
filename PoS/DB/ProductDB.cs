@@ -175,8 +175,9 @@ namespace PoS.DB
             bool successful = false;
             try
             {
-                UpdateDataSource(sqlProd);
+                daMain.Update(dsMain, "Table");
                 successful = true;
+                FillDataSet(sqlProd);
             }
             catch (Exception ex)
             {
@@ -188,7 +189,7 @@ namespace PoS.DB
         public void CreateUpdateParameters()
         {
             SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@PRID", SqlDbType.Int, 30, "ProductID");
+            param = new SqlParameter("@PRID", SqlDbType.NVarChar, 12, "ProductID");
             daMain.UpdateCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PRNM", SqlDbType.NVarChar, 50, "Name");
@@ -200,7 +201,7 @@ namespace PoS.DB
             param = new SqlParameter("@DIMS", SqlDbType.NVarChar, 40, "Dimensions");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@WGHT", SqlDbType.Float, 53, "Weight");
+            param = new SqlParameter("@WGHT", SqlDbType.Float, 50, "Weight");
             daMain.UpdateCommand.Parameters.Add(param);
 
             param = new SqlParameter("@LOCN", SqlDbType.NVarChar, 20, "Location");
@@ -231,17 +232,22 @@ namespace PoS.DB
         {
             Product aProd = FindNonReservedProduct(name);
             aProd.Reserved = 1;
+
             bool successful = false;
             // Create the parameters to hide data
             CreateUpdateParameters();
-            // Create the insert command
+            // Create the update command
             daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved = @RSVD WHERE ProductID = @PRID;", cnMain);
+
             try
             {
-                DataRow updatedProdRow = dsMain.Tables["Product"].Rows[FindRowIndex(aProd, "Product")];
+                DataRow updatedProdRow = dsMain.Tables["Table"].Rows[FindRowIndex(aProd, "Product")];
                 // Parse the product object into the row
                 FillRow(updatedProdRow, aProd);
-                UpdateDataSource(sqlProd);
+
+                cnMain.Open();
+                daMain.Update(dsMain, "Table");
+                cnMain.Close();
 
                 successful = true;
             }
@@ -259,14 +265,19 @@ namespace PoS.DB
             bool successful = false;
             // Create the parameters to hide data
             CreateUpdateParameters();
-            // Create the insert command
+
+            // Create the update command
             daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved = @RSVD WHERE ProductID = @PRID;", cnMain);
+
             try
             {
-                DataRow updatedProdRow = dsMain.Tables["Product"].Rows[FindRowIndex(aProd, "Product")];
+                DataRow updatedProdRow = dsMain.Tables["Table"].Rows[FindRowIndex(aProd, "Product")];
                 // Parse the product object into the row
                 FillRow(updatedProdRow, aProd);
-                UpdateDataSource(sqlProd);
+
+                cnMain.Open();
+                daMain.Update(dsMain, "Table");
+                cnMain.Close();
 
                 successful = true;
             }
