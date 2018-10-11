@@ -35,11 +35,7 @@ namespace PoS.DB
         {
             bool successful = false;
 
-            // Create the parameters to hide data
-            CreateInsertParameters();
-
-            // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Order (OrderID, Total) VALUES (@ORID, @TOTL); INSERT INTO OrderRegister (OrderID, CustomerID) VALUES (@ORID, @CUID); INSERT INTO OrderItem (OrderItemID, Quantity, Subtotal) VALUES (@OIID, @QUAN, @STOT); INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@ORID, @PRID, @OIID);", cnMain);
+            
 
             // Add the order into the list anyway
             ordList.Add(anOrd);
@@ -50,39 +46,72 @@ namespace PoS.DB
 
                 // --- Order ------------------------------------------
 
+                // Create the insert command
+                daMain.InsertCommand = new SqlCommand("INSERT INTO Order (OrderID, Total) VALUES (@ORID, @TOTL);", cnMain);
+
+                // Create the parameters to hide data
+                CreateInsertParameters("Order");
+
                 // Create a new row based on the table schema
-                DataRow newOrderRow = dsMain.Tables["Order"].NewRow();
+                DataRow newOrderRow = dsMain.Tables["Table"].NewRow();
                 // Parse the order object into the row
                 FillRow(newOrderRow, anOrd);
                 // Submit it to the table
-                dsMain.Tables["Order"].Rows.Add(newOrderRow);
+                dsMain.Tables["Table"].Rows.Add(newOrderRow);
+
+                daMain.Update(dsMain, "Table");
 
                 // --- OrderRegister -------------------------------------------
 
+                // Create the insert command
+                daMain.InsertCommand = new SqlCommand("INSERT INTO OrderRegister (OrderID, CustomerID) VALUES (@ORID, @CUID);", cnMain);
+
+                // Create the parameters to hide data
+                CreateInsertParameters("OrderRegister");
+
                 // Create a new row based on the table schema
-                DataRow newOrdRegRow = dsMain.Tables["OrderRegister"].NewRow();
+                DataRow newOrdRegRow = dsMain.Tables["Table3"].NewRow();
                 // Parse the register object into the row
                 FillRow(newOrdRegRow, anOrd);
                 // Submit it to the table
-                dsMain.Tables["OrderRegister"].Rows.Add(newOrdRegRow);
+                dsMain.Tables["Table3"].Rows.Add(newOrdRegRow);
+
+                daMain.Update(dsMain, "Table3");
+
 
                 // --- OrderItem ---------------------------------
 
                 foreach (OrderItem item in anOrd.ItemList)
                 {
+                    // Create the insert command
+                    daMain.InsertCommand = new SqlCommand("INSERT INTO OrderItem (OrderItemID, Quantity, Subtotal) VALUES (@OIID, @QUAN, @STOT);", cnMain);
+
+                    // Create the parameters to hide data
+                    CreateInsertParameters("OrderItem");
+
                     // Create a new row based on the table schema
-                    DataRow newOItemRow = dsMain.Tables["OrderItem"].NewRow();
+                    DataRow newOItemRow = dsMain.Tables["Table1"].NewRow();
                     // Parse the orderitem object into the row
                     FillRow(newOItemRow, item, anOrd);
                     // Submit it to the table
-                    dsMain.Tables["OrderItem"].Rows.Add(newOItemRow);
+                    dsMain.Tables["Table1"].Rows.Add(newOItemRow);
+
+                    daMain.Update(dsMain, "Table1");
+
+                    // Create the insert command
+                    daMain.InsertCommand = new SqlCommand("INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@OIID, @PRID, @OIID);", cnMain);
+
+                    // Create the parameters to hide data
+                    CreateInsertParameters("OrderItemRegister");
 
                     // Create a new row based on the table schema
-                    DataRow newOIRtemRow = dsMain.Tables["OrderItemRegister"].NewRow();
+                    DataRow newOIRtemRow = dsMain.Tables["Table2"].NewRow();
                     // Parse the orderitemregister object into the row
                     FillRow(newOIRtemRow, item, anOrd);
                     // Submit it to the table
-                    dsMain.Tables["OrderItemRegister"].Rows.Add(newOIRtemRow);
+                    dsMain.Tables["Table2"].Rows.Add(newOIRtemRow);
+
+                    daMain.Update(dsMain, "Table2");
                 }
 
                 // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
@@ -100,29 +129,50 @@ namespace PoS.DB
             return successful;
         }
 
-        public void CreateInsertParameters()
+        public void CreateInsertParameters(string table)
         {
-            SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
-            daMain.InsertCommand.Parameters.Add(param);
+            if (table == "Order")
+            {
+                SqlParameter param = default(SqlParameter);
+                param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@TOTL", SqlDbType.Money, 15, "Total");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@TOTL", SqlDbType.Money, 15, "Total");
+                daMain.InsertCommand.Parameters.Add(param);
+            }
+            else if (table == "OrderItem")
+            {
+                SqlParameter param = default(SqlParameter);
+                param = new SqlParameter("@OIID", SqlDbType.NVarChar, 12, "OrderItemID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@OIID", SqlDbType.NVarChar, 12, "OrderItemID");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@QUAN", SqlDbType.Int, 8, "Quantity");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@QUAN", SqlDbType.Int, 8, "Quantity");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@STOT", SqlDbType.Money, 12, "Subtotal");
+                daMain.InsertCommand.Parameters.Add(param);
+            }
+            else if (table == "OrderItemRegister")
+            {
+                SqlParameter param = default(SqlParameter);
+                param = new SqlParameter("@OIID", SqlDbType.NVarChar, 12, "OrderItemID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@STOT", SqlDbType.Money, 12, "Subtotal");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@PRID", SqlDbType.NVarChar, 12, "ProductID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PRID", SqlDbType.NVarChar, 12, "ProductID");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
+                daMain.InsertCommand.Parameters.Add(param);
+            }
+            else if (table == "OrderRegister")
+            {
+                SqlParameter param = default(SqlParameter);
+                param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
+                daMain.InsertCommand.Parameters.Add(param);
+            }
         }
         // This method fills the given row with appropriate members from a customer object, depending on the table the row comes from
         #endregion
