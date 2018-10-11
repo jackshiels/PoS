@@ -20,8 +20,8 @@ namespace PoS.Presentation
         #region Members
         private CustomerDB customerDB = new CustomerDB();
         private ProductDB productDB = new ProductDB();
-        private CreateAnOrder createOrder = new CreateAnOrder();
-        private CreateACustomer createCust = new CreateACustomer();
+        private CreateAnOrder createOrder;
+        private CreateACustomer createCust;
         private GeneratePickingList genPicking = new GeneratePickingList();
         private CreateReport createRep;
         private CancelAnItem cancel = new CancelAnItem();
@@ -257,24 +257,26 @@ namespace PoS.Presentation
             }
             else
             {
-                String name = txtCustName.Text;
-                String address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " +
+                string name = txtCustName.Text;
+                string address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " +
                     txtCustCity.Text + " " + txtCustProvince.Text;
                 Customer customer;
+                createCust = new CreateACustomer();
+
                 string[] payment = null;
+
                 if (cmbCustPayment.Text.Equals("EFT"))
                 {
-                    customer = new Customer(name, address);
-                    createCust = new CreateACustomer(name, address, payment);
+                    customer = new Customer(name, address, payment);
                 }
                 else
                 {
-                    string[] paymentDetails = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
-                    customer = new Customer(name, address, paymentDetails);
-                    createCust = new CreateACustomer(name, address, paymentDetails);
+                    payment = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
+                    customer = new Customer(name, address, payment);
                 }
 
-                Boolean success = createCust.CustDB.InsertCustomer(customer);
+                bool success = createCust.SubmitCustomer(customer.Name, customer.Address, customer.CardHolderDetails);
+
                 fillLists();
                 grpNewCustomer.Hide();
                 grpSuccessfulCustomer.Show();
@@ -311,6 +313,7 @@ namespace PoS.Presentation
          */
         public void fillLists()
         {
+            
             Collection<Customer> customers = createOrder.ValidCustomers();
             Collection<Product> products = createOrder.ProdDB.ProdList;
             Collection<string> seen = new Collection<string>();

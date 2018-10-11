@@ -1050,7 +1050,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "Main";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.exitOnClose);
             this.grpFunction.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).EndInit();
             this.grpNewCustomer.ResumeLayout(false);

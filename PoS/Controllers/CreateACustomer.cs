@@ -16,12 +16,14 @@ namespace PoS.Controllers
         #endregion
 
         #region Constructors
-        public CreateACustomer() {}
+        public CreateACustomer()
+        {
+            CustDB = new CustomerDB();
+        }
 
         public CreateACustomer(string name, string address, string[] paymentDetails)
         {
             CustDB = new CustomerDB();
-            SubmitCustomer(name, address, paymentDetails);
         }
         #endregion
 

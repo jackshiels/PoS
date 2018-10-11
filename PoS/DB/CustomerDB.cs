@@ -34,10 +34,6 @@ namespace PoS.DB
         {
             bool successful = false;
 
-            
-
-            
-
             // Add the customer into the list anyway
             custList.Add(aCust);
 
@@ -51,7 +47,7 @@ namespace PoS.DB
                 daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, Debt, BlackListed) VALUES (@CUID, @PMNT, @DEBT, @BLCK);", cnMain);
 
                 // Create the parameters to hide data
-                CreateInsertParameters();
+                CreateInsertParameters("Customer");
 
                 // Create a new row based on the table schema
                 DataRow newCustRow = dsMain.Tables["Table1"].NewRow();
@@ -68,7 +64,7 @@ namespace PoS.DB
                 daMain.InsertCommand = new SqlCommand("INSERT INTO Person (PersonID, Name, Address) VALUES (@PEID, @PENM, @ADDR);", cnMain);
 
                 // Create the parameters to hide data
-                CreateInsertParameters();
+                CreateInsertParameters("Person");
 
                 // Create a new row based on the table schema
                 DataRow newPersRow = dsMain.Tables["Table2"].NewRow();
@@ -85,7 +81,7 @@ namespace PoS.DB
                 daMain.InsertCommand = new SqlCommand("INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
 
                 // Create the parameters to hide data
-                CreateInsertParameters();
+                CreateInsertParameters("CustomerRegister");
 
                 // Create a new row based on the table schema
                 DataRow newRegRow = dsMain.Tables["Table"].NewRow();
@@ -95,6 +91,8 @@ namespace PoS.DB
                 dsMain.Tables["Table"].Rows.Add(newRegRow);
 
                 daMain.Update(dsMain, "Table");
+
+                FillDataSet(sqlCust);
 
                 // Set true
                 successful = true;
@@ -107,31 +105,46 @@ namespace PoS.DB
             return successful;
         }
 
-        public void CreateInsertParameters()
+        public void CreateInsertParameters(string table)
         {
-            SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
-            daMain.InsertCommand.Parameters.Add(param);
+            daMain.InsertCommand.Parameters.Clear();
 
-            param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
-            daMain.InsertCommand.Parameters.Add(param);
+            if (table == "Customer")
+            {
+                SqlParameter param = default(SqlParameter);
+                param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@DEBT", SqlDbType.Money, 50, "Debt");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@BLCK", SqlDbType.Int, 1, "BlackListed");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@DEBT", SqlDbType.Money, 50, "Debt");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PEID", SqlDbType.NVarChar, 12, "PersonID");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@BLCK", SqlDbType.Int, 1, "BlackListed");
+                daMain.InsertCommand.Parameters.Add(param);
+            }
+            else if (table == "Person")
+            {
+                SqlParameter param = default(SqlParameter);
+                param = new SqlParameter("@PEID", SqlDbType.NVarChar, 12, "PersonID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
+                daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
-            daMain.InsertCommand.Parameters.Add(param);
+                param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
+                daMain.InsertCommand.Parameters.Add(param);
+            }
+            else if (table == "CustomerRegister")
+            {
+                SqlParameter param = default(SqlParameter);
+                param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
+                daMain.InsertCommand.Parameters.Add(param);
 
-
+                param = new SqlParameter("@PEID", SqlDbType.NVarChar, 12, "PersonID");
+                daMain.InsertCommand.Parameters.Add(param);
+            }
         }
         #endregion
 
