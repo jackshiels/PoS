@@ -20,8 +20,8 @@ namespace PoS.Presentation
         #region Members
         private CustomerDB customerDB = new CustomerDB();
         private ProductDB productDB = new ProductDB();
-        private CreateAnOrder createOrder = new CreateAnOrder();
-        private CreateACustomer createCust = new CreateACustomer();
+        private CreateAnOrder createOrder;
+        private CreateACustomer createCust;
         private GeneratePickingList genPicking = new GeneratePickingList();
         private CreateReport createRep;
         private CancelAnItem cancel = new CancelAnItem();
@@ -30,6 +30,7 @@ namespace PoS.Presentation
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
+        private Point showLocation = new Point(259,110);
         #endregion
 
         #region Constructor
@@ -38,7 +39,7 @@ namespace PoS.Presentation
             InitializeComponent();
             PopulateFunctions();
             hideAll();
-            grpFunction.Show();
+            grpFunction.Location = showLocation; ;
         }
 
         public Main(Employee anEmp)
@@ -49,12 +50,12 @@ namespace PoS.Presentation
             emp = anEmp;
             PopulateFunctions();
             hideAll();
-            grpFunction.Show();
+            grpFunction.Location = showLocation;
         }
         #endregion
 
         #region Constant Buttons
-        // COnstant Logout Button top of display back to login screen
+        // Constant Logout Button top of display back to login screen
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             LogIn logIn = new LogIn();
@@ -80,7 +81,7 @@ namespace PoS.Presentation
             order = null;
             order = createOrder.OrdDb.FindOrder(orderID);
             grpPickingSelect.Hide();
-            grpPickingList.Show();
+            grpPickingList.Location = showLocation; ;
             populatePickingList(order);
         }
 
@@ -89,7 +90,7 @@ namespace PoS.Presentation
         {
             grpPickingList.Hide();
             fillLists(); // Auxilary method
-            grpPickingSelect.Show();
+            grpPickingSelect.Location = showLocation; ;
         }
         #endregion
 
@@ -109,17 +110,30 @@ namespace PoS.Presentation
                 lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
             }
             grpUpdate.Hide();
-            grpUpdateOrder2.Show();
+            grpUpdateOrder2.Location = showLocation; ;
         }
 
         private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
         {
-            OrderItem item = new OrderItem(cancel.ProdDB.FindNonReservedProduct(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
-            ordItems.Add(item);
-            foreach (OrderItem orderitem in ordItems)
+            int number;
+            Int32.TryParse(txtUpdateQuantity.Text, out number);
+            if (cmbUpdateProducts.Text.Equals("") || number >= 0)
             {
-                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+                MessageBox.Show("Please input valid data");
             }
+            else if (number > cancel.ProdDB.FindNumProduct(cmbUpdateProducts.Text))
+            {
+                MessageBox.Show("Unfortunately we only have " + createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text) + " available");
+            }
+            else
+            {
+                OrderItem item = new OrderItem(cancel.ProdDB.FindNonReservedProduct(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
+                ordItems.Add(item);
+                foreach (OrderItem orderitem in ordItems)
+                {
+                    lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+                }
+            } 
         }
 
         private void btnUpdateRemoveButton_Click(object sender, EventArgs e)
@@ -144,8 +158,9 @@ namespace PoS.Presentation
         private void btnUpdateCreateOrder_Click(object sender, EventArgs e)
         {
             cancel.UpdateOrder(order, ordItems);
-            grpFunction.Show();
-            grpUpdateOrder2.Hide();
+            hideAll();
+            grpFunction.Location = showLocation;
+            
         }
         #endregion
 
@@ -155,24 +170,23 @@ namespace PoS.Presentation
         {
             String[] text = lstOrderCustList.Text.Split();
             aCust = createOrder.CustDB.FindCustomerObject(text[text.Length]);
-            grpOrderSelect.Hide();
-            grpOrderManagement.Show();
+            hideAll();
+            grpOrderManagement.Location = showLocation;
             lblOrderCustName.Text = aCust.Name;
             order = new Order(aCust);
-            //ordItems = new Collection<OrderItem>();
         }
 
         private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
         {
-            grpOrderSelect.Show();
-            grpOrderManagement.Show();
+            hideAll();
+            grpOrderSelect.Location = showLocation;
         }
 
         private void btnOrderAddItem_Click(object sender, EventArgs e) // add item to the order
         {
             int number;
             Int32.TryParse(txtOrderQuantity.Text, out number);
-            if (cmbOrderProducts.Text.Equals("") || txtOrderQuantity.Text.Equals("0")) //invalid input error
+            if (cmbOrderProducts.Text.Equals("") || number >= 0) //invalid input error
             {
                 MessageBox.Show("Please input valid data");
             }
@@ -194,26 +208,24 @@ namespace PoS.Presentation
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
             createOrder.InsertIntoOrderDB(order);
-            grpOrderManagement.Hide();
+            hideAll();
             fillLists();
-            grpOrderSubmitted.Show();
+            grpOrderSubmitted.Location = showLocation;
             Thread.Sleep(5000);
-            grpOrderSubmitted.Hide();
-            grpFunction.Show();
+            hideAll();
+            grpFunction.Location = showLocation;
         }
          //cancel the order  and go back to home screen
         private void btnOrderCancel_Click(object sender, EventArgs e)
         {
             lstOrderItems.Text = "";
-            grpOrderManagement.Hide();
+            hideAll();
             grpFunction.Show();
         }
         // remove an item from the order
         private void btnOrderRemoveItem_Click(object sender, EventArgs e)
         {
             string item = cmbOrderProducts.Text.Split()[3];
-            //OrderItem x = order.FindOrderItem(item);
-            //ordItems.Remove(x);
             order.RemoveFromOrder(item);
             fillLists();
         }
@@ -237,30 +249,45 @@ namespace PoS.Presentation
         // Submit and add that cutsomer to the DB
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            String name = txtCustName.Text;
-            String address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " + 
-                txtCustCity.Text + " " + txtCustProvince.Text;
-            Customer customer;
-            string[] payment = null;
-            if (cmbCustPayment.Text.Equals("EFT"))
+            if ( (txtCustName.Text.Equals("")) || (txtCustStreet.Text.Equals("")) 
+                || (txtCustSuburb.Text.Equals("")) || (txtCustPostal.Text.Equals("")) ||
+                (txtCustCity.Text.Equals("")) || (txtCustProvince.Text.Equals("")) || 
+                ( cmbCustPayment.Text.Equals("Credit Card") && ( txtCustCardName.Text.Equals("") 
+                || txtCustCardNum.Text.Equals("") || txtCustCVV.Text.Equals("") ) ) )
             {
-                customer = new Customer(name,address);
-                createCust = new CreateACustomer(name,address,payment);
+                MessageBox.Show("Invalid customer data has been entered.\nPlease re enter any missing data and try again.");
             }
             else
             {
-                string[] paymentDetails = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
-                customer = new Customer(name,address,paymentDetails);
-                createCust = new CreateACustomer(name, address, paymentDetails);
-            }
+                string name = txtCustName.Text;
+                string address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " +
+                    txtCustCity.Text + " " + txtCustProvince.Text;
+                Customer customer;
+                createCust = new CreateACustomer();
 
-            Boolean success = createCust.CustDB.InsertCustomer(customer);
-            fillLists();
-            grpNewCustomer.Hide();
-            grpSuccessfulCustomer.Show();
-            Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
-            grpSuccessfulCustomer.Hide();
-            grpFunction.Show();
+            grpFunction.Location = showLocation;
+
+                string[] payment = null;
+
+                if (cmbCustPayment.Text.Equals("EFT"))
+                {
+                    customer = new Customer(name, address, payment);
+                }
+                else
+                {
+                    payment = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
+                    customer = new Customer(name, address, payment);
+                }
+
+                bool success = createCust.SubmitCustomer(customer.Name, customer.Address, customer.CardHolderDetails);
+
+                fillLists();
+                grpNewCustomer.Hide();
+                grpSuccessfulCustomer.Show();
+                Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
+                grpSuccessfulCustomer.Hide();
+                grpFunction.Show();
+            }           
         }
 
         //payment method
@@ -271,6 +298,9 @@ namespace PoS.Presentation
                 txtCustCardName.Enabled = false;
                 txtCustCardNum.Enabled = false;
                 txtCustCVV.Enabled = false;
+                txtCustCardName.Text = "";
+                txtCustCardNum.Text = "";
+                txtCustCVV.Text = "";
             }
             else
             {
@@ -287,6 +317,7 @@ namespace PoS.Presentation
          */
         public void fillLists()
         {
+            
             Collection<Customer> customers = createOrder.ValidCustomers();
             Collection<Product> products = createOrder.ProdDB.ProdList;
             Collection<string> seen = new Collection<string>();
@@ -371,17 +402,26 @@ namespace PoS.Presentation
 
         private void hideAll()
         {
-            grpUpdateOrder2.Hide();
-            grpFunction.Hide();
-            grpUpdate.Hide();
-            grpOrderManagement.Hide();
-            grpOrderSelect.Hide();
-            grpOrderSubmitted.Hide();
-            grpReport.Hide();
-            grpNewCustomer.Hide();
-            grpSuccessfulCustomer.Hide();
-            grpPickingList.Hide();
-            grpPickingSelect.Hide();
+            Point hiddenLocation = new Point(125,110);
+
+            grpFunction.Location = hiddenLocation;
+
+            grpSuccessfulCustomer.Location = hiddenLocation;
+            grpOrderSubmitted.Location = hiddenLocation;
+
+            grpUpdateOrder.Location = hiddenLocation; //ghost in the shell
+            grpUpdate.Location = hiddenLocation;
+            grpUpdateOrder2.Location = hiddenLocation;
+
+            grpNewCustomer.Location = hiddenLocation;
+
+            grpOrderSelect.Location = hiddenLocation;
+            grpOrderManagement.Location = hiddenLocation;
+
+            grpReport.Location = hiddenLocation;
+
+            grpPickingList.Location = hiddenLocation;
+            grpPickingSelect.Location = hiddenLocation;
         }
 
         private void PopulateFunctions()
@@ -403,9 +443,5 @@ namespace PoS.Presentation
         }
         #endregion
 
-        private void exitOnClose(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }
