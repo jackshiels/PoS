@@ -188,7 +188,7 @@ namespace PoS.DB
         public void CreateUpdateParameters()
         {
             SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@PRID", SqlDbType.Int, 30, "ProductID");
+            param = new SqlParameter("@PRID", SqlDbType.NVarChar, 12, "ProductID");
             daMain.UpdateCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PRNM", SqlDbType.NVarChar, 50, "Name");
@@ -200,7 +200,7 @@ namespace PoS.DB
             param = new SqlParameter("@DIMS", SqlDbType.NVarChar, 40, "Dimensions");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@WGHT", SqlDbType.Float, 53, "Weight");
+            param = new SqlParameter("@WGHT", SqlDbType.Float, 50, "Weight");
             daMain.UpdateCommand.Parameters.Add(param);
 
             param = new SqlParameter("@LOCN", SqlDbType.NVarChar, 20, "Location");
@@ -263,7 +263,7 @@ namespace PoS.DB
             daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved = @RSVD WHERE ProductID = @PRID;", cnMain);
             try
             {
-                DataRow updatedProdRow = dsMain.Tables["Product"].Rows[FindRowIndex(aProd, "Product")];
+                DataRow updatedProdRow = dsMain.Tables["Table"].Rows[FindRowIndex(aProd, "Product")];
                 // Parse the product object into the row
                 FillRow(updatedProdRow, aProd);
                 UpdateDataSource(sqlProd);
