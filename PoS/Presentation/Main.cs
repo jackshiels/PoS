@@ -379,8 +379,11 @@ namespace PoS.Presentation
             
             foreach (Product product in products)
             {
-                cmbOrderProducts.Items.Add(product.Name+" (Available: "+ product.Stock +")");
-                cmbUpdateProducts.Items.Add(product.Name + " (Available: " + product.Stock + ")");
+                if (product.Expiry >= DateTime.Now)
+                {
+                    cmbOrderProducts.Items.Add(product.Name + " (Available: " + product.Stock + ")");
+                    cmbUpdateProducts.Items.Add(product.Name + " (Available: " + product.Stock + ")");
+                }
             }
 
             foreach (Order x in orders)
@@ -392,8 +395,8 @@ namespace PoS.Presentation
 
             foreach (Product prod in expired)
             {
-                lstExpiredProd.Items.Add("Product:"+prod.Name+ " Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
-                    "\nLocation: "+prod.Location+" Write-Off: "+ (prod.Price*prod.Stock) );
+                lstExpiredProd.Items.Add("Product: "+prod.Name+ " Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
+                    " Location: "+prod.Location+" Write-Off: "+ (prod.Price*prod.Stock) );
             }
         }
 
