@@ -227,14 +227,16 @@ namespace PoS.DB
             }
 
             bool successful = false;
-            // Create the parameters to hide data
-            CreateUpdateParameters();
+
             // Create the update command
             daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Stock = @STCK WHERE ProductID = @PRID;", cnMain);
 
+            // Create the parameters to hide data
+            CreateUpdateParameters();
+
             try
             {
-                DataRow updatedProdRow = dsMain.Tables["Table"].Rows[FindRowIndex(aProd, "Product")];
+                DataRow updatedProdRow = dsMain.Tables["Table"].Rows[FindRowIndex(aProd, "Table")];
                 // Parse the product object into the row
                 FillRow(updatedProdRow, aProd);
 

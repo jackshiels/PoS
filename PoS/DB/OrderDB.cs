@@ -97,7 +97,7 @@ namespace PoS.DB
                     daMain.Update(dsMain, "Table1");
 
                     // Create the insert command
-                    daMain.InsertCommand = new SqlCommand("INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@OIID, @PRID, @OIID);", cnMain);
+                    daMain.InsertCommand = new SqlCommand("INSERT INTO OrderItemRegister (OrderID, ProductID, OrderItemID) VALUES (@ORID, @PRID, @OIID);", cnMain);
 
                     // Create the parameters to hide data
                     CreateInsertParameters("OrderItemRegister");
