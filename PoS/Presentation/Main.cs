@@ -399,11 +399,10 @@ namespace PoS.Presentation
 
         public void populatePickingList(Order ord)
         {
-            foreach (OrderItem item in ord.ItemList)
+            Collection<string> details = genPicking.GetPickingList(ord);
+            foreach (string item in details)
             {
-
-                string temp = "Name: "+item.ItemProduct.Name+" Quantity: "+item.Quantity+" Location: "+item.ItemProduct.Location;
-                lstPickingList.Items.Add(temp);
+                lstPickingList.Items.Add(item);
             }
         }
        
