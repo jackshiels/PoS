@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Collections.ObjectModel;
 using PoS.Controllers;
+using System.Globalization;
 
 namespace PoS.Presentation
 {
@@ -428,11 +429,12 @@ namespace PoS.Presentation
                     grpPickingSelect.Location = showLocation;
                     break;
                 case ("Generate Stock Report"):
+                    hideAll();
                     createRep = new CreateReport();
                     lblReportNum.Text = createRep.Exp.ReportID;
-                    // = createRep.Exp.DataGrid; //table
+                    dateBox.Text = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     expiredItems = createRep.Exp.Chart; //chart
-                    hideAll();
+                    grpReport.Show();
                     grpReport.Location = showLocation;
                     break;
                 default:

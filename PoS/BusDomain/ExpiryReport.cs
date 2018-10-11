@@ -32,6 +32,8 @@ namespace PoS.BusDomain
             reportId = "REP"+generator.CreateID();
             expiredAndExpiring = new Collection<OrderItem>();
             prodConnect = new ProductDB();
+            chart = new Chart();
+            dataGrid = new DataGridView();
             expiredAndExpiring = prodConnect.ExpiryList();
             populateChart(expiredAndExpiring);
             populateTable(expiredAndExpiring);
