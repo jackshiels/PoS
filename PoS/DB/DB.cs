@@ -32,6 +32,7 @@ namespace PoS.DB
         // Connection upon initialise, creates a data set.
         public DB(string sql)
         {
+            // a
             // Initialise the components of the DB class
             cnMain = new SqlConnection(connStr);
             daMain = new SqlDataAdapter(sql, cnMain);
