@@ -14,7 +14,7 @@ namespace PoS.Controllers
     {
         #region Members
         private ProductDB prodDb;
-        private Collection<OrderItem> expiredList;
+        private Collection<Product> expiredList;
         private ExpiryReport exp;
         #endregion
 

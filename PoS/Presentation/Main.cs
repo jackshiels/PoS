@@ -361,8 +361,9 @@ namespace PoS.Presentation
             Collection<Customer> customers = createOrder.ValidCustomers();
             Collection<Product> products = createOrder.ProdDB.ProdList;
             Collection<Order> orders = createOrder.OrdDb.OrdList;
+            Collection<Product> expired = createOrder.ProdDB.ExpiryList();
 
-
+            lstExpiredItems.Items.Clear();
             lstOrderCustList.Items.Clear();
             lstOrderItems.Items.Clear();
             lstUpdateList.Items.Clear();
@@ -390,6 +391,12 @@ namespace PoS.Presentation
             foreach (Order x in orders)
             {
                 lstReportOrders.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
+            }
+
+            foreach (Product prod in expired)
+            {
+                lstExpiredItems.Items.Add("Product:"+prod.Name+ "Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
+                    " Location: "+prod.Location+"Write-Off: "+ (prod.Price*prod.Stock) );
             }
         }
 
@@ -430,6 +437,7 @@ namespace PoS.Presentation
                     break;
                 case ("Generate Stock Report"):
                     hideAll();
+                    fillLists();
                     createRep = new CreateReport();
                     lblReportNum.Text = createRep.Exp.ReportID;
                     dateBox.Text = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);

@@ -52,7 +52,7 @@ namespace PoS.Presentation
         }
 
         //call this after making report
-        public void populateChart(Collection<OrderItem> items)
+        public void populateChart(Collection<Product> items)
         {
             // both collections should alays be of the same length
             string date = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture); //get todays date in the form dd/mm/yy
@@ -66,8 +66,8 @@ namespace PoS.Presentation
             for (int i = 1; i < items.Count+1; i++)
             {
                 //expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i].ItemProduct, items[i].Quantity); // add Coke,500 to chart
-                expiredItems.Series["Expired/Expiring Objects"].Points.AddY(items[i].Quantity);
-                expiredItems.Series["Expired/Expiring Objects"].Points[i].AxisLabel = items[i].ItemProduct.Name;
+                expiredItems.Series["Expired/Expiring Objects"].Points.AddY(items[i].Stock);
+                expiredItems.Series["Expired/Expiring Objects"].Points[i].AxisLabel = items[i].Name;
             }
 
             Color[] colors = new Color[] {Color.Red, Color.Blue, Color.Yellow, Color.Chartreuse, Color.Fuchsia, Color.SlateBlue, Color.Cyan }; // order of colours in chart

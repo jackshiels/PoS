@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -98,12 +98,6 @@
             this.grpReport = new System.Windows.Forms.GroupBox();
             this.lblReportNum = new System.Windows.Forms.Label();
             this.expiredItems = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.reportTable = new System.Windows.Forms.DataGridView();
-            this.prodName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.expiryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.shelfLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.writeOff = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateBox = new System.Windows.Forms.Label();
             this.pbOrderLogo = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -118,6 +112,7 @@
             this.lblUpdateName = new System.Windows.Forms.Label();
             this.lstUpdateOrderItems = new System.Windows.Forms.ListBox();
             this.grpNewOrderCust = new System.Windows.Forms.GroupBox();
+            this.lstExpiredItems = new System.Windows.Forms.ListView();
             this.grpFunction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).BeginInit();
             this.grpOrderManagement.SuspendLayout();
@@ -131,7 +126,6 @@
             this.grpPickingSelect.SuspendLayout();
             this.grpReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.expiredItems)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.grpUpdateOrder2.SuspendLayout();
@@ -768,12 +762,12 @@
             // 
             // grpReport
             // 
+            this.grpReport.Controls.Add(this.lstExpiredItems);
             this.grpReport.Controls.Add(this.lblReportNum);
             this.grpReport.Controls.Add(this.expiredItems);
-            this.grpReport.Controls.Add(this.reportTable);
             this.grpReport.Controls.Add(this.dateBox);
             this.grpReport.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpReport.Location = new System.Drawing.Point(242, 126);
+            this.grpReport.Location = new System.Drawing.Point(257, 105);
             this.grpReport.Name = "grpReport";
             this.grpReport.Size = new System.Drawing.Size(746, 367);
             this.grpReport.TabIndex = 43;
@@ -795,9 +789,9 @@
             this.expiredItems.BackColor = System.Drawing.Color.GhostWhite;
             this.expiredItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.expiredItems.BorderSkin.BorderColor = System.Drawing.Color.Blue;
-            chartArea2.Name = "ChartArea1";
-            chartArea2.ShadowColor = System.Drawing.Color.Transparent;
-            this.expiredItems.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            chartArea1.ShadowColor = System.Drawing.Color.Transparent;
+            this.expiredItems.ChartAreas.Add(chartArea1);
             this.expiredItems.Location = new System.Drawing.Point(521, 27);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -807,71 +801,21 @@
         System.Drawing.Color.Red,
         System.Drawing.Color.Yellow,
         System.Drawing.Color.Fuchsia};
-            series2.BorderColor = System.Drawing.Color.DarkGray;
-            series2.ChartArea = "ChartArea1";
-            series2.Color = System.Drawing.Color.Blue;
-            series2.IsValueShownAsLabel = true;
-            series2.Name = "Series1";
-            series2.Points.Add(dataPoint4);
-            series2.Points.Add(dataPoint5);
-            series2.Points.Add(dataPoint6);
-            this.expiredItems.Series.Add(series2);
+            series1.BorderColor = System.Drawing.Color.DarkGray;
+            series1.ChartArea = "ChartArea1";
+            series1.Color = System.Drawing.Color.Blue;
+            series1.IsValueShownAsLabel = true;
+            series1.Name = "Series1";
+            series1.Points.Add(dataPoint1);
+            series1.Points.Add(dataPoint2);
+            series1.Points.Add(dataPoint3);
+            this.expiredItems.Series.Add(series1);
             this.expiredItems.Size = new System.Drawing.Size(219, 299);
             this.expiredItems.TabIndex = 43;
-            title2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title2.Name = "Bar Graph Representing the Number of Expired Objects";
-            title2.Text = "Bar Graph Representing the Number of Expired Objects";
-            this.expiredItems.Titles.Add(title2);
-            // 
-            // reportTable
-            // 
-            this.reportTable.AllowUserToAddRows = false;
-            this.reportTable.AllowUserToDeleteRows = false;
-            this.reportTable.AllowUserToResizeColumns = false;
-            this.reportTable.AllowUserToResizeRows = false;
-            this.reportTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.reportTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.prodName,
-            this.expiryDate,
-            this.dataGridViewTextBoxColumn1,
-            this.shelfLocation,
-            this.writeOff});
-            this.reportTable.Location = new System.Drawing.Point(12, 27);
-            this.reportTable.Name = "reportTable";
-            this.reportTable.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.reportTable.Size = new System.Drawing.Size(494, 328);
-            this.reportTable.TabIndex = 44;
-            // 
-            // prodName
-            // 
-            this.prodName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.prodName.HeaderText = "Product Name";
-            this.prodName.Name = "prodName";
-            this.prodName.Width = 90;
-            // 
-            // expiryDate
-            // 
-            this.expiryDate.HeaderText = "Expiry Date";
-            this.expiryDate.Name = "expiryDate";
-            this.expiryDate.Width = 90;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Quantity";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 90;
-            // 
-            // shelfLocation
-            // 
-            this.shelfLocation.HeaderText = "Location on Shelf";
-            this.shelfLocation.Name = "shelfLocation";
-            this.shelfLocation.Width = 90;
-            // 
-            // writeOff
-            // 
-            this.writeOff.HeaderText = "Total Write-Off (R)";
-            this.writeOff.Name = "writeOff";
-            this.writeOff.Width = 90;
+            title1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "Bar Graph Representing the Number of Expired Objects";
+            title1.Text = "Bar Graph Representing the Number of Expired Objects";
+            this.expiredItems.Titles.Add(title1);
             // 
             // dateBox
             // 
@@ -1017,12 +961,20 @@
             // 
             this.grpNewOrderCust.Controls.Add(this.lstOrderCustList);
             this.grpNewOrderCust.Controls.Add(this.btnSelect);
-            this.grpNewOrderCust.Location = new System.Drawing.Point(257, 107);
+            this.grpNewOrderCust.Location = new System.Drawing.Point(340, 518);
             this.grpNewOrderCust.Name = "grpNewOrderCust";
             this.grpNewOrderCust.Size = new System.Drawing.Size(746, 367);
             this.grpNewOrderCust.TabIndex = 44;
             this.grpNewOrderCust.TabStop = false;
             this.grpNewOrderCust.Text = "Order (1/2)";
+            // 
+            // lstExpiredItems
+            // 
+            this.lstExpiredItems.Location = new System.Drawing.Point(6, 26);
+            this.lstExpiredItems.Name = "lstExpiredItems";
+            this.lstExpiredItems.Size = new System.Drawing.Size(509, 332);
+            this.lstExpiredItems.TabIndex = 46;
+            this.lstExpiredItems.UseCompatibleStateImageBehavior = false;
             // 
             // Main
             // 
@@ -1070,7 +1022,6 @@
             this.grpReport.ResumeLayout(false);
             this.grpReport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.expiredItems)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.grpUpdateOrder2.ResumeLayout(false);
@@ -1137,12 +1088,6 @@
         private System.Windows.Forms.Button btnPickingSelect;
         private System.Windows.Forms.ListBox lstReportOrders;
         private System.Windows.Forms.DataVisualization.Charting.Chart expiredItems;
-        private System.Windows.Forms.DataGridView reportTable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn prodName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn expiryDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn shelfLocation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn writeOff;
         private System.Windows.Forms.Label dateBox;
         private System.Windows.Forms.TextBox txtCustCardNum;
         private System.Windows.Forms.Label lblCustCVV;
@@ -1166,5 +1111,6 @@
         private System.Windows.Forms.ListBox lstUpdateOrderItems;
         private System.Windows.Forms.GroupBox grpNewOrderCust;
         private System.Windows.Forms.ListBox lstPickingList;
+        private System.Windows.Forms.ListView lstExpiredItems;
     }
 }
