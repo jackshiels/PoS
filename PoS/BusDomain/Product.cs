@@ -16,7 +16,7 @@ namespace PoS.BusDomain
         private float price;
         private string location;
         private DateTime expiryDate;
-        private int reserved;
+        private int stock;
         #endregion
 
         #region Constructors
@@ -31,7 +31,7 @@ namespace PoS.BusDomain
             this.price = priceVal;
             this.location = Location;
             this.expiryDate = ExpiryDate;
-            this.reserved = Reserved;
+            this.stock = Reserved;
         }
         #endregion
 
@@ -71,10 +71,10 @@ namespace PoS.BusDomain
             get { return expiryDate; }
             set { expiryDate = value; }
         }
-        public int Reserved
+        public int Stock
         {
-            get { return reserved; }
-            set { reserved = value; }
+            get { return stock; }
+            set { stock = value; }
         }
         #endregion
     }

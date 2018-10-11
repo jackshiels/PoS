@@ -49,7 +49,7 @@ namespace PoS.DB
                     aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
                     aProd.Location = Convert.ToString(myRow["Location"]);
-                    aProd.Reserved = Convert.ToByte(myRow["Reserved"]);
+                    aProd.Stock = Convert.ToByte(myRow["Stock"]);
                 }
 
                 if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
@@ -117,7 +117,7 @@ namespace PoS.DB
                         aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
                         aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
                         aProd.Location = Convert.ToString(myRow["Location"]).TrimEnd();
-                        aProd.Reserved = Convert.ToInt32(myRow["Reserved"]);
+                        aProd.Stock = Convert.ToInt32(myRow["Stock"]);
                         // Add to the list
                         prodList.Add(aProd);
 
@@ -160,9 +160,9 @@ namespace PoS.DB
             int count = 0;
             foreach (Product product in prodList)
             {
-                if (name.Equals(product.Name) && product.Reserved == 0)
+                if (name.Equals(product.Name))
                 {
-                    count++;
+                    count = product.Stock;
                 }
             }
             return count;
@@ -210,34 +210,28 @@ namespace PoS.DB
             param = new SqlParameter("@EXPD", SqlDbType.Date, 100, "ExpiryDate");
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@RSVD", SqlDbType.Int, 1, "Reserved");
+            param = new SqlParameter("@STCK", SqlDbType.Int, 1, "Stock");
             daMain.UpdateCommand.Parameters.Add(param);
         }
 
-        public Product FindNonReservedProduct(string name)
+        public bool ReserveProduct(string name, int quantity)
         {
-            Product aProd = null;
-            foreach (Product product in prodList)
+            Product aProd = new Product();
+
+            foreach (Product prod in prodList)
             {
-                if (name.Equals(product.Name) && product.Reserved == 0)
+                if ((prod.Name == name) && prod.Stock != 0)
                 {
-                    aProd = product;
-                    break;
+                    aProd = prod;
+                    aProd.Stock -= quantity;
                 }
             }
-            return aProd;
-        }
-
-        public bool ReserveProduct(string name)
-        {
-            Product aProd = FindNonReservedProduct(name);
-            aProd.Reserved = 1;
 
             bool successful = false;
             // Create the parameters to hide data
             CreateUpdateParameters();
             // Create the update command
-            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved = @RSVD WHERE ProductID = @PRID;", cnMain);
+            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Stock = @STCK WHERE ProductID = @PRID;", cnMain);
 
             try
             {
@@ -256,68 +250,6 @@ namespace PoS.DB
                 MessageBox.Show("Error of type " + ex);
             }
             return successful;
-        }
-
-        public bool DereserveProduct(string name)
-        {
-            Product aProd = FindReservedProduct(name);
-            aProd.Reserved = 0;
-            bool successful = false;
-            // Create the parameters to hide data
-            CreateUpdateParameters();
-
-            // Create the update command
-            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Reserved = @RSVD WHERE ProductID = @PRID;", cnMain);
-
-            try
-            {
-                DataRow updatedProdRow = dsMain.Tables["Table"].Rows[FindRowIndex(aProd, "Product")];
-                // Parse the product object into the row
-                FillRow(updatedProdRow, aProd);
-
-                cnMain.Open();
-                daMain.Update(dsMain, "Table");
-                cnMain.Close();
-
-                successful = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error of type " + ex);
-            }
-            return successful;
-        }
-
-        public Product FindReservedProduct(string name)
-        {
-            Product aProd = null;
-            foreach (Product product in prodList)
-            {
-                if (name.Equals(product.Name) && product.Reserved == 1)
-                {
-                    aProd = product;
-                }
-            }
-            return aProd;
-        }
-
-        public bool DereserveProducts(string name, int num)
-        {
-            bool[] successful = new bool[num];
-            int count = 0;
-
-            for (int i = 0; i < num; i++)
-            {
-                successful[count] = DereserveProduct(name);
-                count++;
-            }
-
-            if (successful.Contains(false))
-                return false;
-            else
-                return true;
-
-
         }
         #endregion
 
@@ -344,7 +276,7 @@ namespace PoS.DB
 
         public void FillRow(DataRow row, Product aProd)
         {
-            row["Reserved"] = aProd.Reserved;
+            row["Stock"] = aProd.Stock;
         }
         #endregion
 

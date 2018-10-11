@@ -344,12 +344,12 @@ namespace PoS.DB
         // Used by INSERT and UPDATE
         public void FillRow(DataRow row, Order ord)
         {
-            if (row.Table.TableName == "Order")
+            if (row.Table.TableName == "Table")
             {
                 row["OrderID"] = ord.OrderID;
                 row["Total"] = ord.Total;
             }
-            else if (row.Table.TableName == "OrderRegister")
+            else if (row.Table.TableName == "Table3")
             {
                 row["OrderID"] = ord.OrderID;
                 row["CustomerID"] = ord.Owner.CustomerID;
@@ -358,13 +358,13 @@ namespace PoS.DB
 
         public void FillRow(DataRow row, OrderItem item, Order ord)
         {
-            if (row.Table.TableName == "OrderItem")
+            if (row.Table.TableName == "Table1")
             {
                 row["OrderItemID"] = item.OrderItemID;
                 row["Quantity"] = item.Quantity;
                 row["Subtotal"] = item.SubTotal;
             }
-            else if (row.Table.TableName == "OrderItemRegister")
+            else if (row.Table.TableName == "Table2")
             {
                 row["OrderID"] = ord.OrderID;
                 row["ProductID"] = item.ItemProduct.ProdID;
