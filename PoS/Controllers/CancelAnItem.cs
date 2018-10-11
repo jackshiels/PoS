@@ -20,7 +20,12 @@ namespace PoS.Controllers
         #endregion
 
         #region Constructors
-        public CancelAnItem() { }
+        public CancelAnItem()
+        {
+            ordDb = new OrderDB();
+            prodDb = new ProductDB();
+            toBeReserved = new Collection<string>();
+        }
 
         public CancelAnItem(Order updateOrd)
         {
@@ -32,6 +37,11 @@ namespace PoS.Controllers
         #endregion
 
         #region Methods
+
+        public Order findOrd(string id)
+        {
+            return ordDb.FindOrder(id);
+        }
         public bool UpdateOrder(Order ord, Collection<OrderItem> items)
         {
             bool success = false;

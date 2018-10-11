@@ -31,7 +31,7 @@ namespace PoS.Presentation
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
-        private Point showLocation = new Point(259,107);
+        private Point showLocation = new Point(259, 107);
         #endregion
 
         #region Constructor
@@ -44,7 +44,7 @@ namespace PoS.Presentation
             grpFunction.Location = showLocation; ;
         }
 
-       public Main(Employee anEmp)
+        public Main(Employee anEmp)
         {
             InitializeComponent();
             lblUserName.Text = anEmp.Name;
@@ -69,7 +69,7 @@ namespace PoS.Presentation
             //moveForward();
             hideAll();
             grpFunction.Location = showLocation;
-            
+
         }
         #endregion
 
@@ -114,11 +114,15 @@ namespace PoS.Presentation
 
         #region Update Order
         //choose order to update
-        private void btnUpdateSelect_Click(object sender, EventArgs e)
+
+        private void button6_Click(object sender, EventArgs e)
         {
-            string orderID = lstOrderItems.Text.Split()[2];
+            lstUpdateOrderItems.Items.Clear();
+            cancel = new CancelAnItem();
+            string orderID = listBox2.Text.Split()[2];
             order = null;
-            order = cancel.OrdDB.FindOrder(orderID);
+            //order = cancel .OrdDB.FindOrder(orderID);
+            order = cancel.findOrd(orderID);
             lblUpdateName.Text = order.Owner.Name;
             cmbUpdateProducts.Text = "";
             ordItems = new Collection<OrderItem>();
@@ -133,49 +137,84 @@ namespace PoS.Presentation
 
         private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
         {
+            //MessageBox.Show("Button Pressed");
+            cancel = new CancelAnItem();
+            createOrder = new CreateAnOrder();
             int number;
             Int32.TryParse(txtUpdateQuantity.Text, out number);
-            if (cmbUpdateProducts.Text.Equals("") || number >= 0)
+
+            string[] txt = cmbUpdateProducts.Text.Split();
+            int i;
+            for (i = 0; i < txt.Length; i++)
+            {
+                if (txt[i].Equals("(Available:"))
+                {
+                    break;
+                }
+            }
+            string prodName = "";
+            for (int j = 0; j < i; j++)
+            {
+                prodName += txt[j] + " ";
+            }
+            prodName = prodName.TrimEnd();
+
+            if (cmbUpdateProducts.Text.Equals("") || number <= 0)
             {
                 MessageBox.Show("Please input valid data");
             }
-            else if (number > cancel.ProdDB.FindNumProduct(cmbUpdateProducts.Text))
+            else if (number > cancel.ProdDB.FindNumProduct(prodName))
             {
-                MessageBox.Show("Unfortunately we only have " + createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text) + " available");
+                MessageBox.Show("Unfortunately we only have " + cancel.ProdDB.FindNumProduct(prodName) + " available");
+            }
+            else if (!Int32.TryParse(txtUpdateQuantity.Text, out number))
+            {
+                MessageBox.Show("Please enter a valid quantity");
             }
             else
             {
-                OrderItem item = new OrderItem(cancel.ProdDB.FindProductObject(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
+                OrderItem item = new OrderItem(cancel.ProdDB.FindProductObject(prodName), number);
                 ordItems.Add(item);
+                lstUpdateOrderItems.Items.Clear();
                 foreach (OrderItem orderitem in ordItems)
                 {
                     lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
                 }
-            } 
+                txtUpdateQuantity.Text = "";
+            }
         }
 
         private void btnUpdateRemoveButton_Click(object sender, EventArgs e)
         {
-            string id = lstUpdateList.Text.Split()[3].TrimEnd();
-
-            for (int i = 0; i < ordItems.Count(); i++)
+            //MessageBox.Show("Button Pressed");
+            if (lstOrderItems.Text.Equals(""))
             {
-                if (ordItems[i].OrderItemID.Equals(id))
+                MessageBox.Show("Please make a valid selection");
+            }
+            else
+            {
+                string id = lstUpdateOrderItems.Text.Split()[3].TrimEnd();
+
+                for (int i = 0; i < ordItems.Count(); i++)
                 {
-                    ordItems.RemoveAt(i);
-                    break;
+                    if (ordItems[i].OrderItemID.Equals(id))
+                    {
+                        ordItems.RemoveAt(i);
+                        break;
+                    }
+                }
+                lstUpdateOrderItems.Items.Clear();
+                foreach (OrderItem orderitem in ordItems)
+                {
+                    lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
                 }
             }
-
-            foreach (OrderItem orderitem in ordItems)
-            {
-                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
-            }
         }
+  
 
         private void btnUpdateCreateOrder_Click(object sender, EventArgs e)
         {
-            cancel.UpdateOrder(order, ordItems);
+            bool success = cancel.UpdateOrder(order, ordItems);
             hideAll();
             grpFunction.Location = showLocation;
             
@@ -386,6 +425,7 @@ namespace PoS.Presentation
             cmbOrderProducts.Items.Clear();
             cmbUpdateProducts.Items.Clear();
             lstPickingList.Items.Clear();
+            listBox2.Items.Clear();
 
             foreach (Customer customer in customers)
             {
@@ -403,8 +443,10 @@ namespace PoS.Presentation
 
             foreach (Order x in orders)
             {
-                lstUpdateList.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);
-                lstUpdateOrderItems.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);
+                string txt = "Order ID: " + x.OrderID + " Customer: " + x.Owner.Name;
+                lstReportOrders.Items.Add(txt);
+                listBox2.Items.Add(txt);
+
                 lstReportOrders.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);
             }
 
@@ -552,11 +594,6 @@ namespace PoS.Presentation
         #endregion
 
         private void Main_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
         {
 
         }
