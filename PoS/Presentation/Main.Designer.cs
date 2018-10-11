@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -86,10 +88,6 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.grpPickingList = new System.Windows.Forms.GroupBox();
             this.btnPickingBack = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpOrderSubmitted = new System.Windows.Forms.GroupBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.grpOrderSelect = new System.Windows.Forms.GroupBox();
@@ -121,6 +119,7 @@
             this.lblUpdateName = new System.Windows.Forms.Label();
             this.lstUpdateOrderItems = new System.Windows.Forms.ListBox();
             this.grpNewOrderCust = new System.Windows.Forms.GroupBox();
+            this.lstPickingList = new System.Windows.Forms.ListBox();
             this.grpFunction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).BeginInit();
             this.grpOrderManagement.SuspendLayout();
@@ -129,7 +128,6 @@
             this.grpSuccessfulCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.grpPickingList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grpOrderSubmitted.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.grpPickingSelect.SuspendLayout();
@@ -655,10 +653,11 @@
             // 
             // grpPickingList
             // 
+            this.grpPickingList.Controls.Add(this.lstPickingList);
             this.grpPickingList.Controls.Add(this.btnPickingBack);
-            this.grpPickingList.Controls.Add(this.dataGridView1);
             this.grpPickingList.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpPickingList.Location = new System.Drawing.Point(1202, 1460);
+            this.grpPickingList.Location = new System.Drawing.Point(257, 107);
+
             this.grpPickingList.Name = "grpPickingList";
             this.grpPickingList.Size = new System.Drawing.Size(746, 367);
             this.grpPickingList.TabIndex = 43;
@@ -675,33 +674,6 @@
             this.btnPickingBack.Text = "Back";
             this.btnPickingBack.UseVisualStyleBackColor = true;
             this.btnPickingBack.Click += new System.EventHandler(this.btnPickingBack_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Product,
-            this.Quantity,
-            this.Location});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 58);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(728, 269);
-            this.dataGridView1.TabIndex = 32;
-            // 
-            // Product
-            // 
-            this.Product.HeaderText = "Product";
-            this.Product.Name = "Product";
-            // 
-            // Quantity
-            // 
-            this.Quantity.HeaderText = "Quantity";
-            this.Quantity.Name = "Quantity";
-            // 
-            // Location
-            // 
-            this.Location.HeaderText = "Location";
-            this.Location.Name = "Location";
             // 
             // grpOrderSubmitted
             // 
@@ -795,7 +767,7 @@
             this.grpReport.Controls.Add(this.reportTable);
             this.grpReport.Controls.Add(this.dateBox);
             this.grpReport.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpReport.Location = new System.Drawing.Point(922, 480);
+            this.grpReport.Location = new System.Drawing.Point(890, 529);
             this.grpReport.Name = "grpReport";
             this.grpReport.Size = new System.Drawing.Size(746, 367);
             this.grpReport.TabIndex = 43;
@@ -820,6 +792,7 @@
             chartArea1.Name = "ChartArea1";
             chartArea1.ShadowColor = System.Drawing.Color.Transparent;
             this.expiredItems.ChartAreas.Add(chartArea1);
+
             this.expiredItems.Location = new System.Drawing.Point(521, 27);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -844,6 +817,7 @@
             title1.Name = "Bar Graph Representing the Number of Expired Objects";
             title1.Text = "Bar Graph Representing the Number of Expired Objects";
             this.expiredItems.Titles.Add(title1);
+
             // 
             // reportTable
             // 
@@ -1039,23 +1013,35 @@
             // 
             this.grpNewOrderCust.Controls.Add(this.lstOrderCustList);
             this.grpNewOrderCust.Controls.Add(this.btnSelect);
+
+            this.grpNewOrderCust.Controls.Add(this.grpPickingList);
             this.grpNewOrderCust.Location = new System.Drawing.Point(257, 107);
+
             this.grpNewOrderCust.Name = "grpNewOrderCust";
             this.grpNewOrderCust.Size = new System.Drawing.Size(746, 367);
             this.grpNewOrderCust.TabIndex = 44;
             this.grpNewOrderCust.TabStop = false;
             this.grpNewOrderCust.Text = "Order (1/2)";
             // 
+            // lstPickingList
+            // 
+            this.lstPickingList.FormattingEnabled = true;
+            this.lstPickingList.ItemHeight = 19;
+            this.lstPickingList.Location = new System.Drawing.Point(6, 55);
+            this.lstPickingList.Name = "lstPickingList";
+            this.lstPickingList.Size = new System.Drawing.Size(734, 289);
+            this.lstPickingList.TabIndex = 34;
+            // 
             // Main
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1106, 608);
+            this.ClientSize = new System.Drawing.Size(1010, 481);
             this.Controls.Add(this.grpNewOrderCust);
             this.Controls.Add(this.grpNewCustomer);
+            this.Controls.Add(this.grpPickingList);
             this.Controls.Add(this.grpOrderManagement);
             this.Controls.Add(this.grpSuccessfulCustomer);
-            this.Controls.Add(this.grpPickingList);
             this.Controls.Add(this.grpUpdate);
             this.Controls.Add(this.grpUpdateOrder2);
             this.Controls.Add(this.grpOrderSubmitted);
@@ -1086,7 +1072,6 @@
             this.grpSuccessfulCustomer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.grpPickingList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.grpOrderSubmitted.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.grpPickingSelect.ResumeLayout(false);
@@ -1155,10 +1140,6 @@
         private System.Windows.Forms.Button btnUpdateSelect;
         private System.Windows.Forms.GroupBox grpPickingList;
         private System.Windows.Forms.Button btnPickingBack;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Product;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Quantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Location;
         private System.Windows.Forms.GroupBox grpPickingSelect;
         private System.Windows.Forms.GroupBox grpReport;
         private System.Windows.Forms.Button btnPickingSelect;
@@ -1192,5 +1173,6 @@
         private System.Windows.Forms.Label lblUpdateName;
         private System.Windows.Forms.ListBox lstUpdateOrderItems;
         private System.Windows.Forms.GroupBox grpNewOrderCust;
+        private System.Windows.Forms.ListBox lstPickingList;
     }
 }

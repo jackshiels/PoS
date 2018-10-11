@@ -53,6 +53,7 @@ namespace PoS.Presentation
             //moveForward();
             hideAll();
             grpFunction.Location = showLocation;
+            
         }
         #endregion
 
@@ -79,10 +80,9 @@ namespace PoS.Presentation
         {
             //fillLists();
             string orderID = lstReportOrders.Text.Split()[2].Trim();
-
             order = new Order();
             order = createOrder.OrdDb.FindOrder(orderID);
-            grpPickingSelect.Hide();
+            hideAll();
             grpPickingList.Location = showLocation; ;
             populatePickingList(order);
         }
@@ -90,7 +90,7 @@ namespace PoS.Presentation
         // go back to the picking list screen
         private void btnPickingBack_Click(object sender, EventArgs e)
         {
-            grpPickingList.Hide();
+            hideAll();
             fillLists(); // Auxilary method
             grpPickingSelect.Location = showLocation; ;
         }
@@ -359,7 +359,6 @@ namespace PoS.Presentation
             createOrder = new CreateAnOrder();
             Collection<Customer> customers = createOrder.ValidCustomers();
             Collection<Product> products = createOrder.ProdDB.ProdList;
-            Collection<string> seen = new Collection<string>();
             Collection<Order> orders = createOrder.OrdDb.OrdList;
 
 
@@ -369,6 +368,7 @@ namespace PoS.Presentation
             lstReportOrders.Items.Clear();
             cmbOrderProducts.Items.Clear();
             cmbUpdateProducts.Items.Clear();
+            lstPickingList.Items.Clear();
 
             foreach (Customer customer in customers)
             {
@@ -377,14 +377,8 @@ namespace PoS.Presentation
             
             foreach (Product product in products)
             {
-                if (seen.Contains(product.Name))
-                    continue;
-                else
-                {
-                    cmbOrderProducts.Items.Add(product.Name+" (Available: "+createOrder.ProdDB.FindNumProduct(product.Name)+")");
-                    cmbUpdateProducts.Items.Add(product.Name + " (Available: " + createOrder.ProdDB.FindNumProduct(product.Name) + ")");
-                    seen.Add(product.Name);
-                }
+                cmbOrderProducts.Items.Add(product.Name+" (Available: "+ product.Stock +")");
+                cmbUpdateProducts.Items.Add(product.Name + " (Available: " + product.Stock + ")");
             }
 
             foreach (Order x in orders)
@@ -402,8 +396,8 @@ namespace PoS.Presentation
         {
             foreach (OrderItem item in ord.ItemList)
             {
-                reportTable.Rows.Add();
-                reportTable.Rows.Insert(0, new string[] { item.ItemProduct.Name, Convert.ToString(item.Quantity), item.ItemProduct.Location });
+                string temp = "Name: "+item.ItemProduct.Name+" Quantity: "+item.Quantity+" Location: "+item.ItemProduct.Location;
+                lstPickingList.Items.Add(temp);
             }
         }
        
@@ -435,7 +429,7 @@ namespace PoS.Presentation
                 case ("Generate Stock Report"):
                     createRep = new CreateReport();
                     lblReportNum.Text = createRep.Exp.ReportID;
-                    dataGridView1 = createRep.Exp.DataGrid; //table
+                    // = createRep.Exp.DataGrid; //table
                     expiredItems = createRep.Exp.Chart; //chart
                     hideAll();
                     grpReport.Location = showLocation;
