@@ -140,6 +140,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LogIn";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Log In";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.exitApp);
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).EndInit();

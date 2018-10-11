@@ -374,29 +374,29 @@ namespace PoS.Presentation
 
             foreach (Customer customer in customers)
             {
-                lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
+                lstOrderCustList.Items.Add("Name: "+customer.Name+" | Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
             }
             
             foreach (Product product in products)
             {
                 if (product.Expiry >= DateTime.Now)
                 {
-                    cmbOrderProducts.Items.Add(product.Name + " (Available: " + product.Stock + ")");
-                    cmbUpdateProducts.Items.Add(product.Name + " (Available: " + product.Stock + ")");
+                    cmbOrderProducts.Items.Add(product.Name + " | (Available: " + product.Stock + ")");
+                    cmbUpdateProducts.Items.Add(product.Name + " | (Available: " + product.Stock + ")");
                 }
             }
 
             foreach (Order x in orders)
             {
-                lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
-                lstUpdateOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
-                lstReportOrders.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
+                lstUpdateList.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);
+                lstUpdateOrderItems.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);
+                lstReportOrders.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);
             }
 
             foreach (Product prod in expired)
             {
-                lstExpiredProd.Items.Add("Product: "+prod.Name+ " Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
-                    " Location: "+prod.Location+" Write-Off: "+ (prod.Price*prod.Stock) );
+                lstExpiredProd.Items.Add("Product: "+prod.Name+ " | Amount: "+prod.Stock+" | Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
+                    " | Location: "+prod.Location+" | Write-Off: "+ (prod.Price*prod.Stock) );
             }
         }
 
