@@ -38,5 +38,10 @@ namespace PoS
                 MessageBox.Show("Invalid Login Credentials");
             
         }
+
+        private void exitApp(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

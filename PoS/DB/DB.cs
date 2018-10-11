@@ -63,7 +63,6 @@ namespace PoS.DB
             // Close the connection
             cnMain.Close();
         }
-
         protected bool UpdateDataSource(string sql)
         {
             // Success bool
@@ -82,9 +81,9 @@ namespace PoS.DB
                 // Update the success bool
                 success = true;
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Connection Error Exception");
+                MessageBox.Show("Connection Error Exception" + ex.ToString());
             }
 
             return success;

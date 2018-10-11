@@ -21,7 +21,14 @@ namespace PoS.Controllers
         #endregion
 
         #region Constructors
-        public CreateAnOrder() { }
+        public CreateAnOrder()
+        {
+            OrdDb = new OrderDB();
+            prodDb = new ProductDB();
+            anOrd = new Order();
+            custDb = new CustomerDB();
+            toBeReserved = new Collection<string>();
+        }
 
         public CreateAnOrder(Customer aCust)
         {

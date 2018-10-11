@@ -34,11 +34,11 @@ namespace PoS.DB
         {
             bool successful = false;
 
-            // Create the parameters to hide data
-            CreateInsertParameters();
-
             // Create the insert command
             daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, Debt, BlackListed) VALUES (@CUID, @PMNT, @DEBT, @BLCK); INSERT INTO Person (PersonID, Name, Address) VALUES (@PEID, @PENM, @ADDR); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
+
+            // Create the parameters to hide data
+            CreateInsertParameters();
 
             // Add the customer into the list anyway
             custList.Add(aCust);
@@ -50,29 +50,29 @@ namespace PoS.DB
                 // --- CUSTOMER ------------------------------------------
 
                 // Create a new row based on the table schema
-                DataRow newCustRow = dsMain.Tables["Customer"].NewRow();
+                DataRow newCustRow = dsMain.Tables["Table1"].NewRow();
                 // Parse the customer object into the row
                 FillRow(newCustRow, aCust);
                 // Submit it to the table
-                dsMain.Tables["Customer"].Rows.Add(newCustRow);
+                dsMain.Tables["Table1"].Rows.Add(newCustRow);
 
                 // --- PERSON -------------------------------------------
 
                 // Create a new row based on the table schema
-                DataRow newPersRow = dsMain.Tables["Person"].NewRow();
+                DataRow newPersRow = dsMain.Tables["Table2"].NewRow();
                 // Parse the customer object into the row
                 FillRow(newPersRow, aCust);
                 // Submit it to the table
-                dsMain.Tables["Person"].Rows.Add(newPersRow);
+                dsMain.Tables["Table2"].Rows.Add(newPersRow);
 
                 // --- CUSTOMERREGISTER ---------------------------------
 
                 // Create a new row based on the table schema
-                DataRow newRegRow = dsMain.Tables["CustomerRegister"].NewRow();
+                DataRow newRegRow = dsMain.Tables["Table"].NewRow();
                 // Parse the customer object into the row
                 FillRow(newRegRow, aCust);
                 // Submit it to the table
-                dsMain.Tables["CustomerRegister"].Rows.Add(newRegRow);
+                dsMain.Tables["Table"].Rows.Add(newRegRow);
 
                 // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
                 // daMain.InsertCommand.ExecuteNonQuery();
@@ -112,6 +112,7 @@ namespace PoS.DB
 
             param = new SqlParameter("@ADDR", SqlDbType.NVarChar, 100, "Address");
             daMain.InsertCommand.Parameters.Add(param);
+
 
         }
         #endregion
@@ -243,7 +244,7 @@ namespace PoS.DB
         public void CreateUpdateParameters()
         {
             SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@CUID", SqlDbType.Int, 10, "CustomerID");
+            param = new SqlParameter("@CUID", SqlDbType.NVarChar, 12, "CustomerID");
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PMNT", SqlDbType.NVarChar, 50, "Payment");
@@ -255,7 +256,7 @@ namespace PoS.DB
             param = new SqlParameter("@BLCK", SqlDbType.Int, 1, "BlackListed");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@PEID", SqlDbType.Int, 10, "PersonID");
+            param = new SqlParameter("@PEID", SqlDbType.NVarChar, 12, "PersonID");
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@PENM", SqlDbType.NVarChar, 50, "Name");
@@ -375,21 +376,21 @@ namespace PoS.DB
         // Used by INSERT and UPDATE
         public void FillRow(DataRow row, Customer cust)
         {
-            if (row.Table.TableName == "Customer")
+            if (row.Table.TableName == "Table1")
             {
                 row["CustomerID"] = cust.CustomerID;
-                row["BlackListed"] = cust.BlackListed;
-                row["Debt"] = cust.Debt;
+                row["BlackListed"] = Convert.ToInt32(cust.BlackListed);
+                row["Debt"] = Convert.ToDecimal(cust.Debt);
                 // Converts the array into a single string
-                row["Payment"] = cust.CardHolderDetails[0] + cust.CardHolderDetails[1] + cust.CardHolderDetails[2];
+                row["Payment"] = Convert.ToString(cust.CardHolderDetails[0] + cust.CardHolderDetails[1] + cust.CardHolderDetails[2]);
             }
-            else if (row.Table.TableName == "Person")
+            else if (row.Table.TableName == "Table2")
             {
                 row["PersonID"] = cust.PersonID;
                 row["Name"] = cust.Name;
                 row["Address"] = cust.Address;
             }
-            else if (row.Table.TableName == "CustomerRegister")
+            else if (row.Table.TableName == "Table")
             {
                 row["CustomerID"] = cust.CustomerID;
                 row["PersonID"] = cust.PersonID;

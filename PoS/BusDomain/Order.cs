@@ -20,7 +20,8 @@ namespace PoS.BusDomain
         #region Constructors
         public Order()
         {
-            Collection<OrderItem> itemList = new Collection<OrderItem>();
+            generator = new IDGen();
+            itemList = new Collection<OrderItem>();
             orderId = "ORD" + Convert.ToString(generator.CreateID());
         }
 

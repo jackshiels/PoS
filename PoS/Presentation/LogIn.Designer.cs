@@ -57,6 +57,7 @@
             this.txtLoginPass.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLoginPass.Location = new System.Drawing.Point(300, 213);
             this.txtLoginPass.Name = "txtLoginPass";
+            this.txtLoginPass.PasswordChar = '*';
             this.txtLoginPass.Size = new System.Drawing.Size(219, 27);
             this.txtLoginPass.TabIndex = 1;
             // 
@@ -138,6 +139,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LogIn";
             this.Text = "Log In";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.exitApp);
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

@@ -72,6 +72,23 @@ namespace PoS.DB
 
             return expiryList;
         }
+
+        public Product FindProductObject(string prodId)
+        {
+            Product foundProd = new Product();
+
+            // Search for this thing
+            for (int i = 0; i < prodList.Count; i++)
+            {
+                if (prodList[i].ProdID == prodId)
+                {
+                    foundProd = prodList[i];
+                    break;
+                }
+            }
+
+            return foundProd;
+        }
         #endregion
 
         #region Methods - READ

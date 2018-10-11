@@ -43,9 +43,10 @@ namespace PoS.Presentation
 
         public Main(Employee anEmp)
         {
+            InitializeComponent();
             lblUserName.Text = anEmp.Name;
             lblUserRole.Text = anEmp.Role.ToString();
-            InitializeComponent();
+            emp = anEmp;
             PopulateFunctions();
             hideAll();
             grpFunction.Show();
@@ -107,7 +108,7 @@ namespace PoS.Presentation
             {
                 lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
             }
-            grpUpdateOrder.Hide();
+            grpUpdate.Hide();
             grpUpdateOrder2.Show();
         }
 
@@ -329,7 +330,8 @@ namespace PoS.Presentation
         // make it open screens
         private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fillLists();
+            // no need to fill twice. It's a big operation
+            // fillLists();
             switch (lstFunctions.Text)
             {
                 case ("Create a New Customer"):
@@ -369,9 +371,9 @@ namespace PoS.Presentation
 
         private void hideAll()
         {
-
+            grpUpdateOrder2.Hide();
             grpFunction.Hide();
-            grpUpdateOrder.Hide();
+            grpUpdate.Hide();
             grpOrderManagement.Hide();
             grpOrderSelect.Hide();
             grpOrderSubmitted.Hide();
@@ -401,5 +403,9 @@ namespace PoS.Presentation
         }
         #endregion
 
+        private void exitOnClose(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

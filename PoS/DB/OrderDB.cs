@@ -15,7 +15,7 @@ namespace PoS.DB
     {
         #region Members
         private Collection<Order> ordList;
-        private string sqlOrd = "SELECT * FROM Order; SELECT * FROM OrderItem; SELECT * FROM OrderItemRegister; SELECT * FROM OrderRegister;";
+        private string sqlOrd = "SELECT * FROM [Order]; SELECT * FROM OrderItem; SELECT * FROM OrderItemRegister; SELECT * FROM OrderRegister;";
         private string tableOrd = "Table";
         #endregion
 
@@ -130,29 +130,39 @@ namespace PoS.DB
         #region Methods - READ
         private void ReadOrders()
         {
+            // Sets the PK manually to allow .Find() to function
+            DataColumn[] pk1 = new DataColumn[1];
+            pk1[0] = dsMain.Tables["Table3"].Columns[0];
+            dsMain.Tables["Table3"].PrimaryKey = pk1;
+
+            // Sets the PK manually to allow .Find() to function
+            DataColumn[] pk2 = new DataColumn[1];
+            pk2[0] = dsMain.Tables["Table1"].Columns[0];
+            dsMain.Tables["Table1"].PrimaryKey = pk2;
+
+            CustomerDB findCust = new CustomerDB();
+            ProductDB findProd = new ProductDB();
+
             foreach (DataRow dRow in dsMain.Tables[tableOrd].Rows)
             {
+                Order anOrd = new Order();
+
                 if (!(dRow.RowState == DataRowState.Deleted))
                 {
-                    Order anOrd = new Order();
-
                     // Do the Order conversion stuff here.
                     anOrd.OrderID = Convert.ToString(dRow["OrderID"]).TrimEnd();
                     anOrd.Total = (float)Convert.ToDouble(dRow["Total"]);
 
-                    // Find the corresponding customer id
-                    // THIS MAY THROW AN ERROR, AS THE PK IS TWO-PART. CHECK!
-                    DataRow temp = dsMain.Tables["OrderRegister"].Rows.Find(Convert.ToString(dRow["OrderID"]));
+                    DataRow temp = dsMain.Tables["Table3"].Rows.Find(Convert.ToString(dRow["OrderID"]));
                     string cust = Convert.ToString(temp["CustomerID"]);
 
                     // Connect to the customer DB to get the customer
-                    CustomerDB findCust = new CustomerDB();
                     Customer owner = findCust.FindCustomerObject(Convert.ToString(temp["CustomerID"]));
 
                     // check for null
                     if (owner.Name != null)
                     {
-                        anOrd.Owner = findCust.FindCustomerObject(Convert.ToString(temp["CustomerID"]));
+                        anOrd.Owner = owner;
                     }
                     else
                     {
@@ -161,21 +171,30 @@ namespace PoS.DB
                     }
 
                     // Now the big one - get every orderitem and insert it into the order object
-                    foreach (DataRow rRow in dsMain.Tables["OrderItemRegister"].Rows)
+                    foreach (DataRow rRow in dsMain.Tables["Table2"].Rows)
                     {
-                        if (Convert.ToString(rRow["OrderItemID"]) == Convert.ToString(dRow["OrderItemID"]))
+                        if (Convert.ToString(rRow["OrderID"]) == Convert.ToString(dRow["OrderID"]))
                         {
                             OrderItem item = new OrderItem();
 
                             item.OrderItemID = Convert.ToString(rRow["OrderItemID"]).TrimEnd();
-                            DataRow tempRow = dsMain.Tables["OrderItem"].Rows.Find(Convert.ToString(rRow["OrderItemID"]));
+
+                            // Find orderitem
+                            DataRow tempRow = dsMain.Tables["Table1"].Rows.Find(Convert.ToString(rRow["OrderItemID"]));
+                            // Convert orderitem
                             item.Quantity = Convert.ToInt32(tempRow["Quantity"]);
                             item.SubTotal = (float)Convert.ToDouble(tempRow["Subtotal"]);
+
+                            Product itemProd = findProd.FindProductObject(Convert.ToString(rRow["ProductID"]));
+                            item.ItemProduct = itemProd;
 
                             // Add item to the order's list
                             anOrd.ItemList.Add(item);
                         }
                     }
+
+                    // Add the completed order
+                    ordList.Add(anOrd);
                 }
             }
         }
