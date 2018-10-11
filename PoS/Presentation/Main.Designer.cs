@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint19 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint20 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint21 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
-            System.Windows.Forms.DataVisualization.Charting.Title title7 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint25 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
+            System.Windows.Forms.DataVisualization.Charting.Title title9 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -737,7 +737,9 @@
             // 
             // lstOrderCustList
             // 
+            this.lstOrderCustList.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstOrderCustList.FormattingEnabled = true;
+            this.lstOrderCustList.ItemHeight = 19;
             this.lstOrderCustList.Location = new System.Drawing.Point(6, 26);
             this.lstOrderCustList.Name = "lstOrderCustList";
             this.lstOrderCustList.Size = new System.Drawing.Size(734, 251);
@@ -815,9 +817,9 @@
             this.expiredItems.BackColor = System.Drawing.Color.GhostWhite;
             this.expiredItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.expiredItems.BorderSkin.BorderColor = System.Drawing.Color.Blue;
-            chartArea7.Name = "ChartArea1";
-            chartArea7.ShadowColor = System.Drawing.Color.Transparent;
-            this.expiredItems.ChartAreas.Add(chartArea7);
+            chartArea9.Name = "ChartArea1";
+            chartArea9.ShadowColor = System.Drawing.Color.Transparent;
+            this.expiredItems.ChartAreas.Add(chartArea9);
             this.expiredItems.Location = new System.Drawing.Point(521, 27);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -827,21 +829,21 @@
         System.Drawing.Color.Red,
         System.Drawing.Color.Yellow,
         System.Drawing.Color.Fuchsia};
-            series7.BorderColor = System.Drawing.Color.DarkGray;
-            series7.ChartArea = "ChartArea1";
-            series7.Color = System.Drawing.Color.Blue;
-            series7.IsValueShownAsLabel = true;
-            series7.Name = "Series1";
-            series7.Points.Add(dataPoint19);
-            series7.Points.Add(dataPoint20);
-            series7.Points.Add(dataPoint21);
-            this.expiredItems.Series.Add(series7);
+            series9.BorderColor = System.Drawing.Color.DarkGray;
+            series9.ChartArea = "ChartArea1";
+            series9.Color = System.Drawing.Color.Blue;
+            series9.IsValueShownAsLabel = true;
+            series9.Name = "Series1";
+            series9.Points.Add(dataPoint25);
+            series9.Points.Add(dataPoint26);
+            series9.Points.Add(dataPoint27);
+            this.expiredItems.Series.Add(series9);
             this.expiredItems.Size = new System.Drawing.Size(219, 299);
             this.expiredItems.TabIndex = 43;
-            title7.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title7.Name = "Bar Graph Representing the Number of Expired Objects";
-            title7.Text = "Bar Graph Representing the Number of Expired Objects";
-            this.expiredItems.Titles.Add(title7);
+            title9.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title9.Name = "Bar Graph Representing the Number of Expired Objects";
+            title9.Text = "Bar Graph Representing the Number of Expired Objects";
+            this.expiredItems.Titles.Add(title9);
             // 
             // reportTable
             // 
@@ -1048,7 +1050,7 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1377, 2302);
+            this.ClientSize = new System.Drawing.Size(1010, 480);
             this.Controls.Add(this.grpNewOrderCust);
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpOrderManagement);

@@ -420,7 +420,7 @@ namespace PoS.DB
             // Iterate
             foreach(Order orda in ordList)
             {
-                if (ord.OrderID == orderId)
+                if (orda.OrderID == orderId)
                 {
                     ord = orda;
                 }

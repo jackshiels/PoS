@@ -78,9 +78,9 @@ namespace PoS.Presentation
         private void btnPickingSelect_Click(object sender, EventArgs e)
         {
             //fillLists();
-            string orderID = lstOrderCustList.Text.Split()[2];
+            string orderID = lstReportOrders.Text.Split()[2].Trim();
 
-            order = null;
+            order = new Order();
             order = createOrder.OrdDb.FindOrder(orderID);
             grpPickingSelect.Hide();
             grpPickingList.Location = showLocation; ;
@@ -328,9 +328,6 @@ namespace PoS.Presentation
         #endregion
 
         #region Auxilary
-        /**
-         * Populate some of the list and combo box objects 
-         */
         public void fillLists()
         {
             createOrder = new CreateAnOrder();
@@ -343,7 +340,7 @@ namespace PoS.Presentation
             lstOrderCustList.Items.Clear();
             lstOrderItems.Items.Clear();
             lstUpdateList.Items.Clear();
-
+            lstReportOrders.Items.Clear();
             cmbOrderProducts.Items.Clear();
             cmbUpdateProducts.Items.Clear();
 
@@ -364,20 +361,24 @@ namespace PoS.Presentation
                     seen.Add(product.Name);
                 }
             }
+
             foreach (Order x in orders)
             {
-                //lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
                 lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
             }
-            //lstUpdateList;
+
+            foreach (Order x in orders)
+            {
+                lstReportOrders.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
+            }
         }
 
         public void populatePickingList(Order ord)
         {
-            Collection<string> list = genPicking.GetPickingList(ord);
-            foreach (string x in list)
+            foreach (OrderItem item in ord.ItemList)
             {
-                lstReportOrders.Items.Add(x);
+                reportTable.Rows.Add();
+                reportTable.Rows.Insert(0, new string[] { item.ItemProduct.Name, Convert.ToString(item.Quantity), item.ItemProduct.Location });
             }
         }
        
