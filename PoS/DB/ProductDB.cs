@@ -50,7 +50,7 @@ namespace PoS.DB
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
                     aProd.Location = Convert.ToString(myRow["Location"]);
                     aProd.Stock = Convert.ToInt32(myRow["Stock"]);
-
+                }
 
                 if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
                 {

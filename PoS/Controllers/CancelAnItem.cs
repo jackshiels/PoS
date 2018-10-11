@@ -41,7 +41,7 @@ namespace PoS.Controllers
             // Remove reservations
             foreach (OrderItem item in ord.ItemList)
             {
-                prodDb.DereserveProducts(item.ItemProduct.Name, item.Quantity);
+                // prodDb.DereserveProducts(item.ItemProduct.Name, item.Quantity);
             }
 
             // Retain the orderid
