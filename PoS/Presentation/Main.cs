@@ -343,9 +343,9 @@ namespace PoS.Presentation
             }
             foreach (Order x in orders)
             {
-                lstOrderCustList.Items.Add("Order ID: "+x.OrderID +" Customer: "+x.Owner);
-                lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner);
-                lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner);
+                lstOrderCustList.Items.Add("Order ID: "+x.OrderID +" Customer: "+x.Owner.Name);
+                lstOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
+                lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
             }
             //lstUpdateList;
         }
@@ -376,7 +376,7 @@ namespace PoS.Presentation
                     break;
                 case ("Update an Order"):
                     hideAll();
-                    grpUpdate.Show();
+                    grpUpdate.BringToFront();
                     grpUpdate.Location = showLocation;
                     break;
                 case ("Generate a Picking List"):
