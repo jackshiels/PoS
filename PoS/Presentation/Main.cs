@@ -54,7 +54,7 @@ namespace PoS.Presentation
         #endregion
 
         #region Constant Buttons
-        // COnstant Logout Button top of display back to login screen
+        // Constant Logout Button top of display back to login screen
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             LogIn logIn = new LogIn();
@@ -114,12 +114,25 @@ namespace PoS.Presentation
 
         private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
         {
-            OrderItem item = new OrderItem(cancel.ProdDB.FindNonReservedProduct(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
-            ordItems.Add(item);
-            foreach (OrderItem orderitem in ordItems)
+            int number;
+            Int32.TryParse(txtUpdateQuantity.Text, out number);
+            if (cmbUpdateProducts.Text.Equals("") || number >= 0)
             {
-                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+                MessageBox.Show("Please input valid data");
             }
+            else if (number > cancel.ProdDB.FindNumProduct(cmbUpdateProducts.Text))
+            {
+                MessageBox.Show("Unfortunately we only have " + createOrder.ProdDB.FindNumProduct(cmbOrderProducts.Text) + " available");
+            }
+            else
+            {
+                OrderItem item = new OrderItem(cancel.ProdDB.FindNonReservedProduct(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
+                ordItems.Add(item);
+                foreach (OrderItem orderitem in ordItems)
+                {
+                    lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+                }
+            } 
         }
 
         private void btnUpdateRemoveButton_Click(object sender, EventArgs e)
@@ -159,7 +172,6 @@ namespace PoS.Presentation
             grpOrderManagement.Show();
             lblOrderCustName.Text = aCust.Name;
             order = new Order(aCust);
-            //ordItems = new Collection<OrderItem>();
         }
 
         private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
@@ -172,7 +184,7 @@ namespace PoS.Presentation
         {
             int number;
             Int32.TryParse(txtOrderQuantity.Text, out number);
-            if (cmbOrderProducts.Text.Equals("") || txtOrderQuantity.Text.Equals("0")) //invalid input error
+            if (cmbOrderProducts.Text.Equals("") || number >= 0) //invalid input error
             {
                 MessageBox.Show("Please input valid data");
             }
@@ -212,8 +224,6 @@ namespace PoS.Presentation
         private void btnOrderRemoveItem_Click(object sender, EventArgs e)
         {
             string item = cmbOrderProducts.Text.Split()[3];
-            //OrderItem x = order.FindOrderItem(item);
-            //ordItems.Remove(x);
             order.RemoveFromOrder(item);
             fillLists();
         }
@@ -237,30 +247,41 @@ namespace PoS.Presentation
         // Submit and add that cutsomer to the DB
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            String name = txtCustName.Text;
-            String address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " + 
-                txtCustCity.Text + " " + txtCustProvince.Text;
-            Customer customer;
-            string[] payment = null;
-            if (cmbCustPayment.Text.Equals("EFT"))
+            if ( (txtCustName.Text.Equals("")) || (txtCustStreet.Text.Equals("")) 
+                || (txtCustSuburb.Text.Equals("")) || (txtCustPostal.Text.Equals("")) ||
+                (txtCustCity.Text.Equals("")) || (txtCustProvince.Text.Equals("")) || 
+                ( cmbCustPayment.Text.Equals("Credit Card") && ( txtCustCardName.Text.Equals("") 
+                || txtCustCardNum.Text.Equals("") || txtCustCVV.Text.Equals("") ) ) )
             {
-                customer = new Customer(name,address);
-                createCust = new CreateACustomer(name,address,payment);
+                MessageBox.Show("Invalid customer data has been entered.\nPlease re enter any missing data and try again.");
             }
             else
             {
-                string[] paymentDetails = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
-                customer = new Customer(name,address,paymentDetails);
-                createCust = new CreateACustomer(name, address, paymentDetails);
-            }
+                String name = txtCustName.Text;
+                String address = txtCustStreet.Text + " " + txtCustSuburb.Text + " " + txtCustPostal.Text + " " +
+                    txtCustCity.Text + " " + txtCustProvince.Text;
+                Customer customer;
+                string[] payment = null;
+                if (cmbCustPayment.Text.Equals("EFT"))
+                {
+                    customer = new Customer(name, address);
+                    createCust = new CreateACustomer(name, address, payment);
+                }
+                else
+                {
+                    string[] paymentDetails = new string[] { txtCustCardNum.Text, txtCustCVV.Text, txtCustCardName.Text };
+                    customer = new Customer(name, address, paymentDetails);
+                    createCust = new CreateACustomer(name, address, paymentDetails);
+                }
 
-            Boolean success = createCust.CustDB.InsertCustomer(customer);
-            fillLists();
-            grpNewCustomer.Hide();
-            grpSuccessfulCustomer.Show();
-            Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
-            grpSuccessfulCustomer.Hide();
-            grpFunction.Show();
+                Boolean success = createCust.CustDB.InsertCustomer(customer);
+                fillLists();
+                grpNewCustomer.Hide();
+                grpSuccessfulCustomer.Show();
+                Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
+                grpSuccessfulCustomer.Hide();
+                grpFunction.Show();
+            }           
         }
 
         //payment method
@@ -271,6 +292,9 @@ namespace PoS.Presentation
                 txtCustCardName.Enabled = false;
                 txtCustCardNum.Enabled = false;
                 txtCustCVV.Enabled = false;
+                txtCustCardName.Text = "";
+                txtCustCardNum.Text = "";
+                txtCustCVV.Text = "";
             }
             else
             {
@@ -403,9 +427,5 @@ namespace PoS.Presentation
         }
         #endregion
 
-        private void exitOnClose(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }
