@@ -792,7 +792,7 @@
             chartArea1.Name = "ChartArea1";
             chartArea1.ShadowColor = System.Drawing.Color.Transparent;
             this.expiredItems.ChartAreas.Add(chartArea1);
-            this.expiredItems.Location = new System.Drawing.Point(521, 27);
+            this.expiredItems.Location = new System.Drawing.Point(512, 28);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
             this.expiredItems.PaletteCustomColors = new System.Drawing.Color[] {
@@ -810,7 +810,7 @@
             series1.Points.Add(dataPoint2);
             series1.Points.Add(dataPoint3);
             this.expiredItems.Series.Add(series1);
-            this.expiredItems.Size = new System.Drawing.Size(219, 299);
+            this.expiredItems.Size = new System.Drawing.Size(228, 299);
             this.expiredItems.TabIndex = 43;
             title1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             title1.Name = "Bar Graph Representing the Number of Expired Objects";
@@ -974,7 +974,7 @@
             this.lstExpiredProd.ItemHeight = 19;
             this.lstExpiredProd.Location = new System.Drawing.Point(7, 27);
             this.lstExpiredProd.Name = "lstExpiredProd";
-            this.lstExpiredProd.Size = new System.Drawing.Size(508, 327);
+            this.lstExpiredProd.Size = new System.Drawing.Size(499, 327);
             this.lstExpiredProd.TabIndex = 46;
             // 
             // Main

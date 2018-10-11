@@ -112,7 +112,7 @@ namespace PoS.Presentation
             {
                 lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
             }
-            grpUpdate.Hide();
+            hideAll();
             grpUpdateOrder2.Location = showLocation; ;
         }
 
@@ -386,17 +386,14 @@ namespace PoS.Presentation
             foreach (Order x in orders)
             {
                 lstUpdateList.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
-            }
-
-            foreach (Order x in orders)
-            {
+                lstUpdateOrderItems.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
                 lstReportOrders.Items.Add("Order ID: " + x.OrderID + " Customer: " + x.Owner.Name);
             }
 
             foreach (Product prod in expired)
             {
                 lstExpiredProd.Items.Add("Product:"+prod.Name+ " Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
-                    " Location: "+prod.Location+" Write-Off: "+ (prod.Price*prod.Stock) );
+                    "\nLocation: "+prod.Location+" Write-Off: "+ (prod.Price*prod.Stock) );
             }
         }
 
