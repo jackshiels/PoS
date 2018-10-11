@@ -30,6 +30,7 @@ namespace PoS.Presentation
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
+        private Point showLocation = new Point(259,110);
         #endregion
 
         #region Constructor
@@ -38,7 +39,7 @@ namespace PoS.Presentation
             InitializeComponent();
             PopulateFunctions();
             hideAll();
-            grpFunction.Show();
+            grpFunction.Location = showLocation; ;
         }
 
         public Main(Employee anEmp)
@@ -49,7 +50,7 @@ namespace PoS.Presentation
             emp = anEmp;
             PopulateFunctions();
             hideAll();
-            grpFunction.Show();
+            grpFunction.Location = showLocation;
         }
         #endregion
 
@@ -80,7 +81,7 @@ namespace PoS.Presentation
             order = null;
             order = createOrder.OrdDb.FindOrder(orderID);
             grpPickingSelect.Hide();
-            grpPickingList.Show();
+            grpPickingList.Location = showLocation; ;
             populatePickingList(order);
         }
 
@@ -89,7 +90,7 @@ namespace PoS.Presentation
         {
             grpPickingList.Hide();
             fillLists(); // Auxilary method
-            grpPickingSelect.Show();
+            grpPickingSelect.Location = showLocation; ;
         }
         #endregion
 
@@ -109,7 +110,7 @@ namespace PoS.Presentation
                 lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
             }
             grpUpdate.Hide();
-            grpUpdateOrder2.Show();
+            grpUpdateOrder2.Location = showLocation; ;
         }
 
         private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
@@ -157,8 +158,9 @@ namespace PoS.Presentation
         private void btnUpdateCreateOrder_Click(object sender, EventArgs e)
         {
             cancel.UpdateOrder(order, ordItems);
-            grpFunction.Show();
-            grpUpdateOrder2.Hide();
+            hideAll();
+            grpFunction.Location = showLocation;
+            
         }
         #endregion
 
@@ -169,16 +171,16 @@ namespace PoS.Presentation
             createOrder = new CreateAnOrder();
             String[] text = lstOrderCustList.Text.Split();
             aCust = createOrder.CustDB.FindCustomerObject(text[text.Length]);
-            grpOrderSelect.Hide();
-            grpOrderManagement.Show();
+            hideAll();
+            grpOrderManagement.Location = showLocation;
             lblOrderCustName.Text = aCust.Name;
             order = new Order(aCust);
         }
 
         private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
         {
-            grpOrderSelect.Show();
-            grpOrderManagement.Show();
+            hideAll();
+            grpOrderSelect.Location = showLocation;
         }
 
         private void btnOrderAddItem_Click(object sender, EventArgs e) // add item to the order
@@ -207,18 +209,18 @@ namespace PoS.Presentation
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
             createOrder.InsertIntoOrderDB(order);
-            grpOrderManagement.Hide();
+            hideAll();
             fillLists();
-            grpOrderSubmitted.Show();
+            grpOrderSubmitted.Location = showLocation;
             Thread.Sleep(5000);
-            grpOrderSubmitted.Hide();
-            grpFunction.Show();
+            hideAll();
+            grpFunction.Location = showLocation;
         }
          //cancel the order  and go back to home screen
         private void btnOrderCancel_Click(object sender, EventArgs e)
         {
             lstOrderItems.Text = "";
-            grpOrderManagement.Hide();
+            hideAll();
             grpFunction.Show();
         }
         // remove an item from the order
@@ -279,11 +281,11 @@ namespace PoS.Presentation
                 bool success = createCust.SubmitCustomer(customer.Name, customer.Address, customer.CardHolderDetails);
 
                 fillLists();
-                grpNewCustomer.Hide();
-                grpSuccessfulCustomer.Show();
+                hideAll();
+                grpSuccessfulCustomer.Location = showLocation;
                 Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
-                grpSuccessfulCustomer.Hide();
-                grpFunction.Show();
+                hideAll();
+                grpFunction.Location = showLocation;
             }           
         }
 
@@ -399,17 +401,26 @@ namespace PoS.Presentation
 
         private void hideAll()
         {
-            grpUpdateOrder2.Hide();
-            grpFunction.Hide();
-            grpUpdate.Hide();
-            grpOrderManagement.Hide();
-            grpOrderSelect.Hide();
-            grpOrderSubmitted.Hide();
-            grpReport.Hide();
-            grpNewCustomer.Hide();
-            grpSuccessfulCustomer.Hide();
-            grpPickingList.Hide();
-            grpPickingSelect.Hide();
+            Point hiddenLocation = new Point(125,110);
+
+            grpFunction.Location = hiddenLocation;
+
+            grpSuccessfulCustomer.Location = hiddenLocation;
+            grpOrderSubmitted.Location = hiddenLocation;
+
+            grpUpdateOrder.Location = hiddenLocation; //ghost in the shell
+            grpUpdate.Location = hiddenLocation;
+            grpUpdateOrder2.Location = hiddenLocation;
+
+            grpNewCustomer.Location = hiddenLocation;
+
+            grpOrderSelect.Location = hiddenLocation;
+            grpOrderManagement.Location = hiddenLocation;
+
+            grpReport.Location = hiddenLocation;
+
+            grpPickingList.Location = hiddenLocation;
+            grpPickingSelect.Location = hiddenLocation;
         }
 
         private void PopulateFunctions()
