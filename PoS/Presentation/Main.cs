@@ -363,6 +363,7 @@ namespace PoS.Presentation
             Collection<Order> orders = createOrder.OrdDb.OrdList;
             Collection<Product> expired = createOrder.ProdDB.ExpiryList();
 
+            //clear all lists
             lstExpiredProd.Items.Clear();
             lstOrderCustList.Items.Clear();
             lstOrderItems.Items.Clear();
@@ -410,9 +411,10 @@ namespace PoS.Presentation
         // make it open screens
         private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // no need to fill twice. It's a big operation
-            fillLists();
+            // no need to fill twice. It's a big operation    
             clearText();
+            fillLists();
+
             switch (lstFunctions.Text)
             {
                 case ("Create a New Customer"):
@@ -434,7 +436,6 @@ namespace PoS.Presentation
                     break;
                 case ("Generate Stock Report"):
                     hideAll();
-                    fillLists();
                     createRep = new CreateReport();
                     lblReportNum.Text = createRep.Exp.ReportID;
                     dateBox.Text = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
