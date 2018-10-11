@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using PoS.DB;
 using PoS.BusDomain;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PoS.Controllers
 {
@@ -19,10 +21,10 @@ namespace PoS.Controllers
         #endregion
 
         #region
-        public CreateReport()
+        public CreateReport(Chart aChart)
         {
             prodDb = new ProductDB();
-            exp = new ExpiryReport();
+            exp = new ExpiryReport(aChart);
             expiredList = prodDb.ExpiryList();
         }
         #endregion

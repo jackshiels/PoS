@@ -26,7 +26,7 @@ namespace PoS.BusDomain
         #endregion
 
         #region Constructors
-        public ExpiryReport()
+        public ExpiryReport(Chart prodCharta)
         {
             generator = new IDGen();
             reportId = "REP"+generator.CreateID();
@@ -35,7 +35,7 @@ namespace PoS.BusDomain
             chart = new Chart();
             dataGrid = new DataGridView();
             expiredAndExpiring = prodConnect.ExpiryList();
-            //populateChart(expiredAndExpiring);
+            populateChart(expiredAndExpiring, prodCharta);
         }
         #endregion
 
@@ -47,27 +47,28 @@ namespace PoS.BusDomain
             //expiryReport.load();
         }
 
-        public void populateChart(Collection<Product> items)
+        public void populateChart(Collection<Product> items, Chart prodChart)
         {
-            chart.Series.Add("Expired/Expiring Objects");
-            chart.Series["Expired/Expiring Objects"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
-            chart.Series["Expired/Expiring Objects"].Enabled = true;
-            chart.Series["Expired/Expiring Objects"].SetDefault(true);
+            prodChart.Series.Add("Expired/Expiring Objects");
+            prodChart.Series["Expired/Expiring Objects"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            prodChart.Series["Expired/Expiring Objects"].Enabled = true;
+            prodChart.Series["Expired/Expiring Objects"].SetDefault(true);
+
             // add items to columns
-            for (int i = 1; i < items.Count + 1; i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                //expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i].ItemProduct, items[i].Quantity); // add Coke,500 to chart
-                chart.Series["Expired/Expiring Objects"].Points.AddY(items[i].Stock);
-                chart.Series["Expired/Expiring Objects"].Points[i].AxisLabel = items[i].Name;
+                // expiredItems.Series["Expired/Expiring Objects"].Points.AddXY(items[i].ItemProduct, items[i].Quantity); // add Coke,500 to chart
+                prodChart.Series["Expired/Expiring Objects"].Points.AddY(items[i].Stock);
+                prodChart.Series["Expired/Expiring Objects"].Points[i].AxisLabel = items[i].Name;
             }
 
             Color[] colors = new Color[] { Color.Red, Color.Blue, Color.Yellow, Color.Chartreuse, Color.Fuchsia, Color.SlateBlue, Color.Cyan }; // order of colours in chart
 
-            for (int i = 0; i < chart.Series["Expired/Expiring Objects"].Points.Count; i++)
+            for (int i = 0; i < prodChart.Series["Expired/Expiring Objects"].Points.Count; i++)
             {
-                chart.Series["Expired/Expiring Objects"].Points[i].Color = colors[i]; //shouldnt have more than 5 items but added padding . Changes colour of data at point i
+                prodChart.Series["Expired/Expiring Objects"].Points[i].Color = colors[i]; //shouldnt have more than 5 items but added padding . Changes colour of data at point i
             }
-            chart.Visible = true;
+            prodChart.Visible = true;
         }
 
         public void populateTable(Collection<OrderItem> items)

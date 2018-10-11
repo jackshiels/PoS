@@ -434,10 +434,10 @@ namespace PoS.Presentation
                 case ("Generate Stock Report"):
                     hideAll();
                     fillLists();
-                    createRep = new CreateReport();
+                    createRep = new CreateReport(expiredItems);
                     lblReportNum.Text = createRep.Exp.ReportID;
                     dateBox.Text = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    //expiredItems = createRep.Exp.Chart; //chart
+                    // expiredItems = createRep.Exp.Chart; //chart
                     grpReport.Show();
                     grpReport.Location = showLocation;
                     break;
@@ -534,6 +534,11 @@ namespace PoS.Presentation
         #endregion
 
         private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
         {
 
         }
