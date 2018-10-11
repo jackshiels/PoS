@@ -31,7 +31,7 @@ namespace PoS.Presentation
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
-        private Point showLocation = new Point(259,107);
+        private Point showLocation = new Point(259, 107);
         #endregion
 
         #region Constructor
@@ -44,7 +44,7 @@ namespace PoS.Presentation
             grpFunction.Location = showLocation; ;
         }
 
-       public Main(Employee anEmp)
+        public Main(Employee anEmp)
         {
             InitializeComponent();
             lblUserName.Text = anEmp.Name;
@@ -69,7 +69,7 @@ namespace PoS.Presentation
             //moveForward();
             hideAll();
             grpFunction.Location = showLocation;
-            
+
         }
         #endregion
 
@@ -167,6 +167,10 @@ namespace PoS.Presentation
             {
                 MessageBox.Show("Unfortunately we only have " + cancel.ProdDB.FindNumProduct(prodName) + " available");
             }
+            else if (!Int32.TryParse(txtUpdateQuantity.Text, out number))
+            {
+                MessageBox.Show("Please enter a valid quantity");
+            }
             else
             {
                 OrderItem item = new OrderItem(cancel.ProdDB.FindProductObject(prodName), number);
@@ -177,34 +181,40 @@ namespace PoS.Presentation
                     lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
                 }
                 txtUpdateQuantity.Text = "";
-            } 
+            }
         }
 
         private void btnUpdateRemoveButton_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Button Pressed");
-            string id = lstUpdateOrderItems.Text.Split()[3].TrimEnd();
-
-            for (int i = 0; i < ordItems.Count(); i++)
+            if (lstOrderItems.Text.Equals(""))
             {
-                if (ordItems[i].OrderItemID.Equals(id))
+                MessageBox.Show("Please make a valid selection");
+            }
+            else
+            {
+                string id = lstUpdateOrderItems.Text.Split()[3].TrimEnd();
+
+                for (int i = 0; i < ordItems.Count(); i++)
                 {
-                    ordItems.RemoveAt(i);
-                    break;
+                    if (ordItems[i].OrderItemID.Equals(id))
+                    {
+                        ordItems.RemoveAt(i);
+                        break;
+                    }
+                }
+                lstUpdateOrderItems.Items.Clear();
+                foreach (OrderItem orderitem in ordItems)
+                {
+                    lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
                 }
             }
-            lstUpdateOrderItems.Items.Clear();
-            foreach (OrderItem orderitem in ordItems)
-            {
-                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
-            }
         }
+  
 
         private void btnUpdateCreateOrder_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Button Pressed");
             bool success = cancel.UpdateOrder(order, ordItems);
-            //MessageBox.Show(Convert.ToString(success));
             hideAll();
             grpFunction.Location = showLocation;
             
