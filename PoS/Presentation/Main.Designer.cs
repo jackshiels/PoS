@@ -96,6 +96,7 @@
             this.btnPickingSelect = new System.Windows.Forms.Button();
             this.lstReportOrders = new System.Windows.Forms.ListBox();
             this.grpReport = new System.Windows.Forms.GroupBox();
+            this.lstExpiredProd = new System.Windows.Forms.ListBox();
             this.lblReportNum = new System.Windows.Forms.Label();
             this.expiredItems = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dateBox = new System.Windows.Forms.Label();
@@ -112,7 +113,6 @@
             this.lblUpdateName = new System.Windows.Forms.Label();
             this.lstUpdateOrderItems = new System.Windows.Forms.ListBox();
             this.grpNewOrderCust = new System.Windows.Forms.GroupBox();
-            this.lstExpiredProd = new System.Windows.Forms.ListBox();
             this.grpFunction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).BeginInit();
             this.grpOrderManagement.SuspendLayout();
@@ -774,10 +774,19 @@
             this.grpReport.TabStop = false;
             this.grpReport.Text = "Generate Expiry Report";
             // 
+            // lstExpiredProd
+            // 
+            this.lstExpiredProd.FormattingEnabled = true;
+            this.lstExpiredProd.ItemHeight = 19;
+            this.lstExpiredProd.Location = new System.Drawing.Point(7, 27);
+            this.lstExpiredProd.Name = "lstExpiredProd";
+            this.lstExpiredProd.Size = new System.Drawing.Size(499, 327);
+            this.lstExpiredProd.TabIndex = 46;
+            // 
             // lblReportNum
             // 
             this.lblReportNum.AutoSize = true;
-            this.lblReportNum.Location = new System.Drawing.Point(650, 339);
+            this.lblReportNum.Location = new System.Drawing.Point(642, 335);
             this.lblReportNum.Name = "lblReportNum";
             this.lblReportNum.Size = new System.Drawing.Size(98, 19);
             this.lblReportNum.TabIndex = 45;
@@ -968,20 +977,11 @@
             this.grpNewOrderCust.TabStop = false;
             this.grpNewOrderCust.Text = "Order (1/2)";
             // 
-            // lstExpiredProd
-            // 
-            this.lstExpiredProd.FormattingEnabled = true;
-            this.lstExpiredProd.ItemHeight = 19;
-            this.lstExpiredProd.Location = new System.Drawing.Point(7, 27);
-            this.lstExpiredProd.Name = "lstExpiredProd";
-            this.lstExpiredProd.Size = new System.Drawing.Size(499, 327);
-            this.lstExpiredProd.TabIndex = 46;
-            // 
             // Main
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1049, 539);
+            this.ClientSize = new System.Drawing.Size(1013, 483);
             this.Controls.Add(this.grpNewOrderCust);
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpReport);

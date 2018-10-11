@@ -232,7 +232,7 @@ namespace PoS.DB
                             item.Quantity = Convert.ToInt32(tempRow["Quantity"]);
                             item.SubTotal = (float)Convert.ToDouble(tempRow["Subtotal"]);
 
-                            Product itemProd = findProd.FindProductObject(Convert.ToString(rRow["ProductID"]));
+                            Product itemProd = findProd.FindProductObjectById(Convert.ToString(rRow["ProductID"]));
                             item.ItemProduct = itemProd;
 
                             // Add item to the order's list
