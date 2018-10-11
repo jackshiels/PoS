@@ -50,7 +50,7 @@ namespace PoS.DB
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
                     aProd.Location = Convert.ToString(myRow["Location"]);
                     aProd.Stock = Convert.ToInt32(myRow["Stock"]);
-
+                }
 
                 if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
                 {
@@ -73,19 +73,18 @@ namespace PoS.DB
             return expiryList;
         }
 
-        public Product FindProductObject(string prodId)
+        public Product FindProductObject(string name)
         {
             Product foundProd = new Product();
 
             // Search for this thing
             for (int i = 0; i < prodList.Count; i++)
             {
-                if (prodList[i].ProdID == prodId)
+                if (prodList[i].Name.Equals(name))
                 {
                     foundProd = prodList[i];
                     break;
-                }
-            }
+                } }
 
             return foundProd;
         }

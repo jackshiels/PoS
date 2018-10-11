@@ -129,7 +129,7 @@ namespace PoS.Presentation
             }
             else
             {
-                OrderItem item = new OrderItem(cancel.ProdDB.FindNonReservedProduct(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
+                OrderItem item = new OrderItem(cancel.ProdDB.FindProductObject(cmbUpdateProducts.Text.Split()[0].TrimEnd()), Convert.ToInt32(txtUpdateQuantity));
                 ordItems.Add(item);
                 foreach (OrderItem orderitem in ordItems)
                 {
@@ -218,7 +218,7 @@ namespace PoS.Presentation
             }
             else
             {
-                Product prod = createOrder.ProdDB.FindNonReservedProduct(prodName);
+                Product prod = createOrder.ProdDB.FindProductObject(prodName);
                 OrderItem orderItem = new OrderItem(prod, number);
                 lstOrderItems.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(orderItem);
