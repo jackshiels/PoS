@@ -39,7 +39,7 @@ namespace PoS.Presentation
             InitializeComponent();
             PopulateFunctions();
             hideAll();
-            moveForward();
+            //moveForward();
             grpFunction.Location = showLocation; ;
         }
 
@@ -50,7 +50,7 @@ namespace PoS.Presentation
             lblUserRole.Text = anEmp.Role.ToString();
             emp = anEmp;
             PopulateFunctions();
-            moveForward();
+            //moveForward();
             hideAll();
             grpFunction.Location = showLocation;
         }
@@ -376,13 +376,14 @@ namespace PoS.Presentation
                     break;
                 case ("Update an Order"):
                     hideAll();
+                    grpUpdate.Show();
                     grpUpdate.Location = showLocation;
                     break;
                 case ("Generate a Picking List"):
                     hideAll();
                     grpPickingSelect.Location = showLocation;
                     break;
-                case ("Generate a Stock Report"):
+                case ("Generate Stock Report"):
                     createRep = new CreateReport();
                     lblReportNum.Text = createRep.Exp.ReportID;
                     reportTable = createRep.Exp.DataGrid; //table
@@ -460,5 +461,10 @@ namespace PoS.Presentation
             }
         }
         #endregion
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
