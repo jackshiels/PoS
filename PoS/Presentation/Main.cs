@@ -253,15 +253,15 @@ namespace PoS.Presentation
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             int postalCode;
-            int cardNum;
-            int CVV;
+            long cardNum;
+            long CVV;
             if ( (txtCustName.Text.Equals("")) || (txtCustStreet.Text.Equals("")) 
                 || (txtCustSuburb.Text.Equals("")) || (txtCustPostal.Text.Equals("")) ||
                 (txtCustCity.Text.Equals("")) || (txtCustProvince.Text.Equals("")) || 
                 ( cmbCustPayment.Text.Equals("Credit Card") && ( txtCustCardName.Text.Equals("") 
                 || txtCustCardNum.Text.Equals("") || txtCustCVV.Text.Equals("") ) ) || cmbCustPayment.Text.Equals(""))
             {
-                MessageBox.Show("Invalid customer data has been entered.\nPlease re enter any missing data and try again.");
+                MessageBox.Show("Invalid customer data has been entered.\nPlease re-enter any missing data and try again.");
             }
             else if ( !(Int32.TryParse(txtCustPostal.Text,out postalCode)) )
             {
@@ -269,9 +269,9 @@ namespace PoS.Presentation
             }
             else if ( cmbCustPayment.Text.Equals("Credit Card") && (txtCustCardNum.Text.Length != 16 || txtCustCVV.Text.Length != 3 ))
             {
-                MessageBox.Show("Invalid Credit Card Data Lenght\nPlease try again");
+                MessageBox.Show("Invalid Credit Card Data Length\nPlease try again");
             }
-            else if ( cmbCustPayment.Text.Equals("Credit Card") && (!(Int32.TryParse(txtCustCardNum.Text, out cardNum)) || !(Int32.TryParse(txtCustCVV.Text, out CVV))) )
+            else if ( cmbCustPayment.Text.Equals("Credit Card") && (!(Int64.TryParse(txtCustCardNum.Text, out cardNum)) || !(Int64.TryParse(txtCustCVV.Text, out CVV))) )
             {
                 MessageBox.Show("Invalid Credit Card Data\nPlease try again");
             }
