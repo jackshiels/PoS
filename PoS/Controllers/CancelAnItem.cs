@@ -41,7 +41,7 @@ namespace PoS.Controllers
             // Remove reservations
             foreach (OrderItem item in ord.ItemList)
             {
-                //prodDb.DereserveProducts(item.ItemProduct.Name, item.Quantity);
+                prodDb.DeReserveProduct(item.ItemProduct.Name, item.Quantity);
             }
 
             // Retain the orderid
@@ -50,6 +50,7 @@ namespace PoS.Controllers
             // Create a new order with the same orderid
             CreateAnOrder inserted = new CreateAnOrder(ord.Owner);
             inserted.AnOrd.OrderID = orderId;
+            inserted.AnOrd.ItemList = items;
 
             // Insert
             success = inserted.InsertIntoOrderDB(ord);

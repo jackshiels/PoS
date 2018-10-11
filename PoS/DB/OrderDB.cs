@@ -253,6 +253,14 @@ namespace PoS.DB
         {
             bool successful = false;
 
+            DataColumn[] pk1 = new DataColumn[1];
+            pk1[0] = dsMain.Tables["Table2"].Columns[0];
+            dsMain.Tables["Table2"].PrimaryKey = pk1;
+
+            DataColumn[] pk2 = new DataColumn[1];
+            pk2[0] = dsMain.Tables["Table3"].Columns[0];
+            dsMain.Tables["Table3"].PrimaryKey = pk2;
+
             // Checks if the object exists, delete it. Otherwise exit with a failure
             if (DeleteListItem(anOrd) == true)
             {
@@ -269,7 +277,7 @@ namespace PoS.DB
                     CreateDeleteParameters();
 
                     // Delete a row based on the table schema
-                    DataRow updatedOrderRow = dsMain.Tables["Table"].Rows[FindRowIndex(anOrd, "Order")];
+                    DataRow updatedOrderRow = dsMain.Tables["Table"].Rows[FindRowIndex(anOrd, "Table")];
                     // Kill it with fire
                     updatedOrderRow.Delete();
 
@@ -287,7 +295,7 @@ namespace PoS.DB
                     foreach (OrderItem item in anOrd.ItemList)
                     {
                         // Update a row based on the table schema
-                        DataRow updatedOrderItemRow = dsMain.Tables["Table1"].Rows[FindRowIndex(item, "OrderItem")];
+                        DataRow updatedOrderItemRow = dsMain.Tables["Table1"].Rows[FindRowIndex(item, "Table1")];
                         // End its existence
                         updatedOrderItemRow.Delete();
                     }

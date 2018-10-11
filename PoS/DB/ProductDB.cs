@@ -240,6 +240,47 @@ namespace PoS.DB
             }
             return successful;
         }
+
+        public bool DeReserveProduct(string name, int quantity)
+        {
+            Product aProd = new Product();
+
+            foreach (Product prod in prodList)
+            {
+                if (prod.Name == name)
+                {
+                    aProd = prod;
+                    aProd.Stock += quantity;
+                }
+            }
+
+            bool successful = false;
+
+            // Create the update command
+            daMain.UpdateCommand = new SqlCommand("UPDATE Product SET Stock = @STCK WHERE ProductID = @PRID;", cnMain);
+
+            // Create the parameters to hide data
+            CreateUpdateParameters();
+
+            try
+            {
+                DataRow updatedProdRow = dsMain.Tables["Table"].Rows[FindRowIndex(aProd, "Table")];
+                // Parse the product object into the row
+                FillRow(updatedProdRow, aProd);
+
+                cnMain.Open();
+                daMain.Update(dsMain, "Table");
+                cnMain.Close();
+
+                successful = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error of type " + ex);
+            }
+            return successful;
+        }
+
         #endregion
 
         #region Methods - Generalised
