@@ -48,7 +48,22 @@ namespace PoS.Presentation
         {
             InitializeComponent();
             lblUserName.Text = anEmp.Name;
-            lblUserRole.Text = anEmp.Role.ToString();
+            string role = anEmp.Role.ToString();
+
+            switch (role)
+            {
+                case ("MarketingClerk"):
+                    role = "Marketing Clerk";
+                    break;
+                case ("PickingClerk"):
+                    role = "Picking Clerk";
+                    break;
+                case ("StockControlClerk"):
+                    role = "Stock Control Clerk";
+                    break;
+            }
+
+            lblUserRole.Text = role;
             emp = anEmp;
             PopulateFunctions();
             //moveForward();
@@ -404,13 +419,16 @@ namespace PoS.Presentation
 
             foreach (Customer customer in customers)
             {
-                lstOrderCustList.Items.Add("Name: "+customer.Name+" Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
+                lstOrderCustList.Items.Add("Name: "+customer.Name+" | Customer ID: "+customer.CustomerID); // Name: Garfielf CustomerID: CUS26656
             }
             
             foreach (Product product in products)
             {
-                cmbOrderProducts.Items.Add(product.Name+" (Available: "+ product.Stock +")");
-                cmbUpdateProducts.Items.Add(product.Name + " (Available: " + product.Stock + ")");
+                if (product.Expiry >= DateTime.Now)
+                {
+                    cmbOrderProducts.Items.Add(product.Name + " | (Available: " + product.Stock + ")");
+                    cmbUpdateProducts.Items.Add(product.Name + " | (Available: " + product.Stock + ")");
+                }
             }
 
             foreach (Order x in orders)
@@ -418,12 +436,14 @@ namespace PoS.Presentation
                 string txt = "Order ID: " + x.OrderID + " Customer: " + x.Owner.Name;
                 lstReportOrders.Items.Add(txt);
                 listBox2.Items.Add(txt);
+
+                lstReportOrders.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);
             }
 
             foreach (Product prod in expired)
             {
-                lstExpiredProd.Items.Add("Product:"+prod.Name+ " Amount: "+prod.Stock+" Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
-                    "\nLocation: "+prod.Location+" Write-Off: "+ (prod.Price*prod.Stock) );
+                lstExpiredProd.Items.Add("Product: "+prod.Name+ " | Amount: "+prod.Stock+" | Expiry Date: "+ prod.Expiry.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)+
+                    " | Location: "+prod.Location+" | Write-Off: "+ (prod.Price*prod.Stock) );
             }
         }
 

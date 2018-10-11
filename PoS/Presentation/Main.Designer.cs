@@ -157,7 +157,7 @@
             this.lblUserName.BackColor = System.Drawing.Color.Transparent;
             this.lblUserName.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblUserName.Location = new System.Drawing.Point(791, 6);
+            this.lblUserName.Location = new System.Drawing.Point(696, 24);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(83, 19);
             this.lblUserName.TabIndex = 4;
@@ -170,7 +170,7 @@
             this.lblUserRole.BackColor = System.Drawing.Color.Transparent;
             this.lblUserRole.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserRole.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblUserRole.Location = new System.Drawing.Point(791, 25);
+            this.lblUserRole.Location = new System.Drawing.Point(696, 43);
             this.lblUserRole.Name = "lblUserRole";
             this.lblUserRole.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lblUserRole.Size = new System.Drawing.Size(111, 19);
@@ -773,6 +773,7 @@
             // lstExpiredProd
             // 
             this.lstExpiredProd.FormattingEnabled = true;
+            this.lstExpiredProd.HorizontalScrollbar = true;
             this.lstExpiredProd.ItemHeight = 19;
             this.lstExpiredProd.Location = new System.Drawing.Point(7, 27);
             this.lstExpiredProd.Name = "lstExpiredProd";
@@ -782,7 +783,7 @@
             // lblReportNum
             // 
             this.lblReportNum.AutoSize = true;
-            this.lblReportNum.Location = new System.Drawing.Point(642, 335);
+            this.lblReportNum.Location = new System.Drawing.Point(625, 336);
             this.lblReportNum.Name = "lblReportNum";
             this.lblReportNum.Size = new System.Drawing.Size(98, 19);
             this.lblReportNum.TabIndex = 45;
@@ -992,6 +993,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.exitApp);
             this.Load += new System.EventHandler(this.Main_Load);
