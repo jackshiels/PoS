@@ -398,7 +398,7 @@
             this.grpNewCustomer.Controls.Add(this.btnClear);
             this.grpNewCustomer.Controls.Add(this.btnSubmit);
             this.grpNewCustomer.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpNewCustomer.Location = new System.Drawing.Point(843, 2245);
+            this.grpNewCustomer.Location = new System.Drawing.Point(411, 1738);
             this.grpNewCustomer.Name = "grpNewCustomer";
             this.grpNewCustomer.Size = new System.Drawing.Size(746, 365);
             this.grpNewCustomer.TabIndex = 15;
@@ -1045,7 +1045,7 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1012, 483);
+            this.ClientSize = new System.Drawing.Size(1009, 480);
             this.Controls.Add(this.grpNewOrderCust);
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpOrderManagement);
@@ -1069,6 +1069,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "Main";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.exitApp);
             this.Load += new System.EventHandler(this.Main_Load);
             this.grpFunction.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbSelect)).EndInit();

@@ -496,6 +496,10 @@ namespace PoS.Presentation
             txtUpdateQuantity.Text = "";
         }
 
+        private void exitApp(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
         #endregion
 
         private void Main_Load(object sender, EventArgs e)
