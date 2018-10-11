@@ -147,7 +147,7 @@ namespace PoS.Presentation
             int i;
             for (i = 0; i < txt.Length; i++)
             {
-                if (txt[i].Equals("(Available:"))
+                if (txt[i].Equals("|"))
                 {
                     break;
                 }
