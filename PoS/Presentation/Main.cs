@@ -39,6 +39,7 @@ namespace PoS.Presentation
             InitializeComponent();
             PopulateFunctions();
             hideAll();
+            moveForward();
             grpFunction.Location = showLocation; ;
         }
 
@@ -49,6 +50,7 @@ namespace PoS.Presentation
             lblUserRole.Text = anEmp.Role.ToString();
             emp = anEmp;
             PopulateFunctions();
+            moveForward();
             hideAll();
             grpFunction.Location = showLocation;
         }
@@ -418,6 +420,28 @@ namespace PoS.Presentation
             grpPickingSelect.Location = hiddenLocation;
         }
 
+        private void moveForward()
+        {
+            grpFunction.BringToFront();
+
+            grpSuccessfulCustomer.BringToFront();
+            grpOrderSubmitted.BringToFront();
+
+            grpUpdateOrder.BringToFront(); //ghost in the shell
+            grpUpdate.BringToFront();
+            grpUpdateOrder2.BringToFront();
+
+            grpNewCustomer.BringToFront();
+
+            grpOrderSelect.BringToFront();
+            grpOrderManagement.BringToFront();
+
+            grpReport.BringToFront();
+
+            grpPickingList.BringToFront();
+            grpPickingSelect.BringToFront();
+        }
+
         private void PopulateFunctions()
         {
             switch (emp.Role)
@@ -436,6 +460,5 @@ namespace PoS.Presentation
             }
         }
         #endregion
-
     }
 }
