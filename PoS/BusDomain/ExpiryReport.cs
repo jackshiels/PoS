@@ -42,8 +42,7 @@ namespace PoS.BusDomain
         #region Methods
         public void generateReport()
         {
-            report expiryReport = new report();
-            expiryReport.populateChart(expiredAndExpiring);
+            //populateChart(expiredAndExpiring);
             //expiryReport.load();
         }
 

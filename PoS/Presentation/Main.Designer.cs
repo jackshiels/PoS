@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -157,7 +157,7 @@
             this.lblUserName.BackColor = System.Drawing.Color.Transparent;
             this.lblUserName.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblUserName.Location = new System.Drawing.Point(791, 6);
+            this.lblUserName.Location = new System.Drawing.Point(696, 24);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(83, 19);
             this.lblUserName.TabIndex = 4;
@@ -170,7 +170,7 @@
             this.lblUserRole.BackColor = System.Drawing.Color.Transparent;
             this.lblUserRole.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserRole.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblUserRole.Location = new System.Drawing.Point(791, 25);
+            this.lblUserRole.Location = new System.Drawing.Point(696, 43);
             this.lblUserRole.Name = "lblUserRole";
             this.lblUserRole.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lblUserRole.Size = new System.Drawing.Size(111, 19);
@@ -796,9 +796,9 @@
             this.expiredItems.BackColor = System.Drawing.Color.GhostWhite;
             this.expiredItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.expiredItems.BorderSkin.BorderColor = System.Drawing.Color.Blue;
-            chartArea2.Name = "ChartArea1";
-            chartArea2.ShadowColor = System.Drawing.Color.Transparent;
-            this.expiredItems.ChartAreas.Add(chartArea2);
+            chartArea6.Name = "ChartArea1";
+            chartArea6.ShadowColor = System.Drawing.Color.Transparent;
+            this.expiredItems.ChartAreas.Add(chartArea6);
             this.expiredItems.Location = new System.Drawing.Point(512, 28);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -810,10 +810,10 @@
         System.Drawing.Color.Fuchsia};
             this.expiredItems.Size = new System.Drawing.Size(228, 299);
             this.expiredItems.TabIndex = 43;
-            title2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title2.Name = "Bar Graph Representing the Number of Expired Objects";
-            title2.Text = "Bar Graph Representing the Number of Expired Objects";
-            this.expiredItems.Titles.Add(title2);
+            title6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title6.Name = "Bar Graph Representing the Number of Expired Objects";
+            title6.Text = "Bar Graph Representing the Number of Expired Objects";
+            this.expiredItems.Titles.Add(title6);
             // 
             // dateBox
             // 

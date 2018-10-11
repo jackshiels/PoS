@@ -48,7 +48,22 @@ namespace PoS.Presentation
         {
             InitializeComponent();
             lblUserName.Text = anEmp.Name;
-            lblUserRole.Text = anEmp.Role.ToString();
+            string role = anEmp.Role.ToString();
+
+            switch (role)
+            {
+                case ("MarketingClerk"):
+                    role = "Marketing Clerk";
+                    break;
+                case ("PickingClerk"):
+                    role = "Picking Clerk";
+                    break;
+                case ("StockControlClerk"):
+                    role = "Stock Control Clerk";
+                    break;
+            }
+
+            lblUserRole.Text = role;
             emp = anEmp;
             PopulateFunctions();
             //moveForward();
