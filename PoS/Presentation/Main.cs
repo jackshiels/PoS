@@ -265,8 +265,6 @@ namespace PoS.Presentation
                 Customer customer;
                 createCust = new CreateACustomer();
 
-            grpFunction.Location = showLocation;
-
                 string[] payment = null;
 
                 if (cmbCustPayment.Text.Equals("EFT"))
@@ -282,11 +280,11 @@ namespace PoS.Presentation
                 bool success = createCust.SubmitCustomer(customer.Name, customer.Address, customer.CardHolderDetails);
 
                 fillLists();
-                grpNewCustomer.Hide();
-                grpSuccessfulCustomer.Show();
+                hideAll();
+                grpSuccessfulCustomer.Location = showLocation;
                 Thread.Sleep(5000); // let the code sleep for 5 seconds before moving onto the next line
-                grpSuccessfulCustomer.Hide();
-                grpFunction.Show();
+                hideAll();
+                grpFunction.Location = showLocation;
             }           
         }
 
