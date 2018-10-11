@@ -43,7 +43,7 @@ namespace PoS.Presentation
             grpFunction.Location = showLocation; ;
         }
 
-        public Main(Employee anEmp)
+       public Main(Employee anEmp)
         {
             InitializeComponent();
             lblUserName.Text = anEmp.Name;

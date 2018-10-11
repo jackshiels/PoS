@@ -56,6 +56,7 @@
             // 
             this.txtLoginPass.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLoginPass.Location = new System.Drawing.Point(300, 213);
+            this.txtLoginPass.MaxLength = 30;
             this.txtLoginPass.Name = "txtLoginPass";
             this.txtLoginPass.PasswordChar = '*';
             this.txtLoginPass.Size = new System.Drawing.Size(219, 27);
@@ -65,6 +66,7 @@
             // 
             this.txtLoginEmpId.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLoginEmpId.Location = new System.Drawing.Point(300, 180);
+            this.txtLoginEmpId.MaxLength = 13;
             this.txtLoginEmpId.Name = "txtLoginEmpId";
             this.txtLoginEmpId.Size = new System.Drawing.Size(219, 27);
             this.txtLoginEmpId.TabIndex = 0;
