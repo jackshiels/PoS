@@ -30,7 +30,7 @@ namespace PoS.BusDomain
             generator = new IDGen();
 
             // This constructor takes the address field from the customer
-            Collection<OrderItem> itemList = new Collection<OrderItem>();
+            itemList = new Collection<OrderItem>();
             this.owner = Cust;
             orderId = "ORD" + Convert.ToString(generator.CreateID());
         }
@@ -42,13 +42,21 @@ namespace PoS.BusDomain
             // Adds a new product to the list if the list has been initialised
             bool added = false;
 
-            if (itemList != null)
-            {
-                OrderItem item = new OrderItem(prod, quant);
-                itemList.Add(item);
-                CalculateTotal();
-                added = true;
-            }
+            OrderItem item = new OrderItem(prod, quant);
+            itemList.Add(item);
+            CalculateTotal();
+            added = true;
+
+            return added;
+        }
+
+        public bool AddToOrder(OrderItem item)
+        {
+            bool added = false;
+
+            itemList.Add(item);
+            CalculateTotal();
+            added = true;
 
             return added;
         }

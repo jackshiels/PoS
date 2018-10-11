@@ -25,7 +25,9 @@ namespace PoS.BusDomain
         public OrderItem(Product inputProduct, int quant)
         {
             // Creates an order item and calculates the subtotal
-            subTotal = quant * itemProduct.Price;
+            itemProduct = inputProduct;
+            quantity = quant;
+            subTotal = quant * inputProduct.Price;
             orderItemId = "OID"+generator.CreateID();
             itemProduct = inputProduct;
         }
