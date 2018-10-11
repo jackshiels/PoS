@@ -51,9 +51,6 @@ namespace PoS.BusDomain
 
         public void populateChart(Collection<OrderItem> items)
         {
-            // both collections should alays be of the same length
-            string date = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture); //get todays date in the form dd/mm/yy
-
             chart.Series.Add("Expired/Expiring Objects");
             chart.Series["Expired/Expiring Objects"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
             chart.Series["Expired/Expiring Objects"].Enabled = true;

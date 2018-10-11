@@ -52,7 +52,7 @@ namespace PoS.DB
                     aProd.Stock = Convert.ToInt32(myRow["Stock"]);
                 }
 
-                if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
+                if (Convert.ToDateTime(aProd.Expiry) <= DateTime.Now || Convert.ToDateTime(aProd.Expiry) <= (DateTime.Now.AddDays(7)) ) //if the product is expired
                 {
                     for (int i = 0; i < expiryList.Count(); i++)  //iterate through all orderItems already in the Collection
                     {
