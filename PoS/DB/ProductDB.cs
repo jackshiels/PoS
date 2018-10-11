@@ -49,7 +49,7 @@ namespace PoS.DB
                     aProd.Weight = (float)Convert.ToDecimal(Convert.ToString(myRow["Weight"]));
                     aProd.Expiry = Convert.ToDateTime(myRow["ExpiryDate"]);
                     aProd.Location = Convert.ToString(myRow["Location"]);
-                    aProd.Stock = Convert.ToByte(myRow["Stock"]);
+                    aProd.Stock = Convert.ToInt32(myRow["Stock"]);
                 }
 
                 if (aProd.Expiry <= DateTime.Now || aProd.Expiry <= (DateTime.Now.AddDays(7)) ) //if the product is expired
@@ -220,7 +220,7 @@ namespace PoS.DB
 
             foreach (Product prod in prodList)
             {
-                if ((prod.Name == name) && prod.Stock != 0)
+                if ((prod.Name == name) && prod.Stock >= quantity)
                 {
                     aProd = prod;
                     aProd.Stock -= quantity;
