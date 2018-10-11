@@ -360,27 +360,23 @@ namespace PoS.Presentation
         private void lstFunctions_SelectedIndexChanged(object sender, EventArgs e)
         {
             // no need to fill twice. It's a big operation
-            // fillLists();
+            fillLists();
             switch (lstFunctions.Text)
             {
                 case ("Create a New Customer"):
                     hideAll();
-                    fillLists();
                     grpNewCustomer.Show();
                     break;
                 case ("Create a New Order"):
                     hideAll();
-                    fillLists();
                     grpOrderSelect.Show();
                     break;
                 case ("Update an Order"):
                     hideAll();
-                    fillLists();
-                    grpUpdateOrder.Show();
+                    grpUpdate.Location = showLocation;
                     break;
                 case ("Generate a Picking List"):
                     hideAll();
-                    fillLists();
                     grpPickingSelect.Show();
                     break;
                 case ("Generate a Stock Report"):
