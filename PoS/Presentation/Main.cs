@@ -252,13 +252,25 @@ namespace PoS.Presentation
         // Submit and add that cutsomer to the DB
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            int postalCode;
+            int cardNum;
+            int CVV;
             if ( (txtCustName.Text.Equals("")) || (txtCustStreet.Text.Equals("")) 
                 || (txtCustSuburb.Text.Equals("")) || (txtCustPostal.Text.Equals("")) ||
                 (txtCustCity.Text.Equals("")) || (txtCustProvince.Text.Equals("")) || 
                 ( cmbCustPayment.Text.Equals("Credit Card") && ( txtCustCardName.Text.Equals("") 
-                || txtCustCardNum.Text.Equals("") || txtCustCVV.Text.Equals("") ) ) )
+                || txtCustCardNum.Text.Equals("") || txtCustCVV.Text.Equals("") ) ) || cmbCustPayment.Text.Equals(""))
             {
                 MessageBox.Show("Invalid customer data has been entered.\nPlease re enter any missing data and try again.");
+            }
+            else if ( !(Int32.TryParse(txtCustPostal.Text,out postalCode)) )
+            {
+                MessageBox.Show("Invalid Postal Code\nPlease try again");
+            }
+            else if ( cmbCustPayment.Text.Equals("Credit Card") && (txtCustCardNum.Text.Length != 16 || txtCustCVV.Text.Length != 3 
+                || !(Int32.TryParse(txtCustCardNum.Text, out cardNum)) || !(Int32.TryParse(txtCustCVV.Text, out CVV))) )
+            {
+                MessageBox.Show("Invalid Creddit Card Data\nPlease try again");
             }
             else
             {
