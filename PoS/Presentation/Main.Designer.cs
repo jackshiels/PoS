@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint13 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint14 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint15 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
-            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint19 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 78D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint20 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 526D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint21 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 20D);
+            System.Windows.Forms.DataVisualization.Charting.Title title7 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.lblHome = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -274,6 +274,7 @@
             // 
             // cmbOrderProducts
             // 
+            this.cmbOrderProducts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbOrderProducts.FormattingEnabled = true;
             this.cmbOrderProducts.Location = new System.Drawing.Point(10, 51);
             this.cmbOrderProducts.Name = "cmbOrderProducts";
@@ -814,9 +815,9 @@
             this.expiredItems.BackColor = System.Drawing.Color.GhostWhite;
             this.expiredItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.expiredItems.BorderSkin.BorderColor = System.Drawing.Color.Blue;
-            chartArea5.Name = "ChartArea1";
-            chartArea5.ShadowColor = System.Drawing.Color.Transparent;
-            this.expiredItems.ChartAreas.Add(chartArea5);
+            chartArea7.Name = "ChartArea1";
+            chartArea7.ShadowColor = System.Drawing.Color.Transparent;
+            this.expiredItems.ChartAreas.Add(chartArea7);
             this.expiredItems.Location = new System.Drawing.Point(521, 27);
             this.expiredItems.Name = "expiredItems";
             this.expiredItems.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -826,21 +827,21 @@
         System.Drawing.Color.Red,
         System.Drawing.Color.Yellow,
         System.Drawing.Color.Fuchsia};
-            series5.BorderColor = System.Drawing.Color.DarkGray;
-            series5.ChartArea = "ChartArea1";
-            series5.Color = System.Drawing.Color.Blue;
-            series5.IsValueShownAsLabel = true;
-            series5.Name = "Series1";
-            series5.Points.Add(dataPoint13);
-            series5.Points.Add(dataPoint14);
-            series5.Points.Add(dataPoint15);
-            this.expiredItems.Series.Add(series5);
+            series7.BorderColor = System.Drawing.Color.DarkGray;
+            series7.ChartArea = "ChartArea1";
+            series7.Color = System.Drawing.Color.Blue;
+            series7.IsValueShownAsLabel = true;
+            series7.Name = "Series1";
+            series7.Points.Add(dataPoint19);
+            series7.Points.Add(dataPoint20);
+            series7.Points.Add(dataPoint21);
+            this.expiredItems.Series.Add(series7);
             this.expiredItems.Size = new System.Drawing.Size(219, 299);
             this.expiredItems.TabIndex = 43;
-            title5.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title5.Name = "Bar Graph Representing the Number of Expired Objects";
-            title5.Text = "Bar Graph Representing the Number of Expired Objects";
-            this.expiredItems.Titles.Add(title5);
+            title7.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title7.Name = "Bar Graph Representing the Number of Expired Objects";
+            title7.Text = "Bar Graph Representing the Number of Expired Objects";
+            this.expiredItems.Titles.Add(title7);
             // 
             // reportTable
             // 
@@ -985,6 +986,7 @@
             // 
             // cmbUpdateProducts
             // 
+            this.cmbUpdateProducts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbUpdateProducts.FormattingEnabled = true;
             this.cmbUpdateProducts.Location = new System.Drawing.Point(10, 51);
             this.cmbUpdateProducts.Name = "cmbUpdateProducts";
@@ -1046,7 +1048,7 @@
             // 
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1012, 483);
+            this.ClientSize = new System.Drawing.Size(1377, 2302);
             this.Controls.Add(this.grpNewOrderCust);
             this.Controls.Add(this.grpNewCustomer);
             this.Controls.Add(this.grpOrderManagement);
