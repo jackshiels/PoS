@@ -423,6 +423,7 @@ namespace PoS.DB
                 if (orda.OrderID == orderId)
                 {
                     ord = orda;
+                    break;
                 }
             }
 

@@ -616,7 +616,6 @@
             this.btnUpdateSelect.TabIndex = 31;
             this.btnUpdateSelect.Text = "&Select";
             this.btnUpdateSelect.UseVisualStyleBackColor = true;
-            this.btnUpdateSelect.Click += new System.EventHandler(this.btnUpdateSelect_Click);
             // 
             // grpSuccessfulCustomer
             // 
