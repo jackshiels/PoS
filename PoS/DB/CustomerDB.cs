@@ -34,11 +34,9 @@ namespace PoS.DB
         {
             bool successful = false;
 
-            // Create the insert command
-            daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, Debt, BlackListed) VALUES (@CUID, @PMNT, @DEBT, @BLCK); INSERT INTO Person (PersonID, Name, Address) VALUES (@PEID, @PENM, @ADDR); INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
+            
 
-            // Create the parameters to hide data
-            CreateInsertParameters();
+            
 
             // Add the customer into the list anyway
             custList.Add(aCust);
@@ -49,6 +47,12 @@ namespace PoS.DB
 
                 // --- CUSTOMER ------------------------------------------
 
+                // Create the insert command
+                daMain.InsertCommand = new SqlCommand("INSERT INTO Customer (CustomerID, Payment, Debt, BlackListed) VALUES (@CUID, @PMNT, @DEBT, @BLCK);", cnMain);
+
+                // Create the parameters to hide data
+                CreateInsertParameters();
+
                 // Create a new row based on the table schema
                 DataRow newCustRow = dsMain.Tables["Table1"].NewRow();
                 // Parse the customer object into the row
@@ -56,7 +60,15 @@ namespace PoS.DB
                 // Submit it to the table
                 dsMain.Tables["Table1"].Rows.Add(newCustRow);
 
+                daMain.Update(dsMain, "Table1");
+
                 // --- PERSON -------------------------------------------
+
+                // Create the insert command
+                daMain.InsertCommand = new SqlCommand("INSERT INTO Person (PersonID, Name, Address) VALUES (@PEID, @PENM, @ADDR);", cnMain);
+
+                // Create the parameters to hide data
+                CreateInsertParameters();
 
                 // Create a new row based on the table schema
                 DataRow newPersRow = dsMain.Tables["Table2"].NewRow();
@@ -65,7 +77,15 @@ namespace PoS.DB
                 // Submit it to the table
                 dsMain.Tables["Table2"].Rows.Add(newPersRow);
 
+                daMain.Update(dsMain, "Table2");
+
                 // --- CUSTOMERREGISTER ---------------------------------
+
+                // Create the insert command
+                daMain.InsertCommand = new SqlCommand("INSERT INTO CustomerRegister (CustomerID, PersonID) VALUES (@CUID, @PEID);", cnMain);
+
+                // Create the parameters to hide data
+                CreateInsertParameters();
 
                 // Create a new row based on the table schema
                 DataRow newRegRow = dsMain.Tables["Table"].NewRow();
@@ -74,9 +94,7 @@ namespace PoS.DB
                 // Submit it to the table
                 dsMain.Tables["Table"].Rows.Add(newRegRow);
 
-                // Execute the command CHECK THIS OUT!!! MIGHT NEED TO USE DAUPDATE
-                // daMain.InsertCommand.ExecuteNonQuery();
-                UpdateDataSource(sqlCust);
+                daMain.Update(dsMain, "Table");
 
                 // Set true
                 successful = true;
