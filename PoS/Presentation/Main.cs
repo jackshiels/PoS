@@ -187,7 +187,7 @@ namespace PoS.Presentation
         private void btnUpdateRemoveButton_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Button Pressed");
-            if (lstOrderItems.Text.Equals(""))
+            if (lstUpdateOrderItems.Text.Equals(""))
             {
                 MessageBox.Show("Please make a valid selection");
             }
