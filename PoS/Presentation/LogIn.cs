@@ -34,6 +34,8 @@ namespace PoS
                 main.Show();
                 Hide();
             }
+            else if (txtLoginEmpId.Text.Equals("") || txtLoginPass.Text.Equals(""))
+                MessageBox.Show("Please enter login data");
             else
                 MessageBox.Show("Invalid Login Credentials");
             

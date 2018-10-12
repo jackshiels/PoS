@@ -95,13 +95,19 @@ namespace PoS.Presentation
         //Method to select the order to print an order list for
         private void btnPickingSelect_Click(object sender, EventArgs e)
         {
-            //fillLists();
-            string orderID = lstReportOrders.Text.Split()[2].Trim();
-            order = new Order();
-            order = createOrder.OrdDb.FindOrder(orderID);
-            hideAll();
-            grpPickingList.Location = showLocation; ;
-            populatePickingList(order);
+            if (lstReportOrders.Text.Equals(""))
+            {
+                MessageBox.Show("Please select a valid order");
+            }
+            else
+            {
+                string orderID = lstReportOrders.Text.Split()[2].Trim();
+                order = new Order();
+                order = createOrder.OrdDb.FindOrder(orderID);
+                hideAll();
+                grpPickingList.Location = showLocation; ;
+                populatePickingList(order);
+            }
         }
 
         // go back to the picking list screen
@@ -118,29 +124,36 @@ namespace PoS.Presentation
 
         private void button6_Click(object sender, EventArgs e)
         {
-            lstUpdateOrderItems.Items.Clear();
-            string orderID = listBox2.Text.Split()[2];
-            originalOrder = new Order();
-
-            cancel = new CancelAnItem();
-
-            originalOrder = cancel.findOrd(orderID);
-            lblUpdateName.Text = originalOrder.Owner.Name;
-            cmbUpdateProducts.Text = "";
-            ordItems = new Collection<OrderItem>();
-
-            foreach(OrderItem item in originalOrder.ItemList)
+            try
             {
-                ordItems.Add(item);
-            }
+                lstUpdateOrderItems.Items.Clear();
+                string orderID = listBox2.Text.Split()[2];
+                originalOrder = new Order();
 
-            foreach (OrderItem orderitem in ordItems)
+                cancel = new CancelAnItem();
+
+                originalOrder = cancel.findOrd(orderID);
+                lblUpdateName.Text = originalOrder.Owner.Name;
+                cmbUpdateProducts.Text = "";
+                ordItems = new Collection<OrderItem>();
+
+                foreach (OrderItem item in originalOrder.ItemList)
+                {
+                    ordItems.Add(item);
+                }
+
+                foreach (OrderItem orderitem in ordItems)
+                {
+                    lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+                }
+
+                hideAll();
+                grpUpdateOrder2.Location = showLocation;
+            }
+            catch (Exception ex)
             {
-                lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
+                MessageBox.Show("Please select a valid order");
             }
-
-            hideAll();
-            grpUpdateOrder2.Location = showLocation; ;
         }
 
         private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
@@ -221,10 +234,16 @@ namespace PoS.Presentation
 
         private void btnUpdateCreateOrder_Click(object sender, EventArgs e)
         {
-            bool success = cancel.UpdateOrder(originalOrder, ordItems);
-            hideAll();
-            grpFunction.Location = showLocation;
-            
+            if (ordItems.Count == 0)
+            {
+                MessageBox.Show("Please enter a valid order with one or more order items");
+            }
+            else
+            {
+                bool success = cancel.UpdateOrder(originalOrder, ordItems);
+                hideAll();
+                grpFunction.Location = showLocation;
+            }
         }
         #endregion
 
@@ -233,12 +252,17 @@ namespace PoS.Presentation
         private void btnSelect_Click(object sender, EventArgs e)
         {
             createOrder = new CreateAnOrder();
-            String[] text = lstOrderCustList.Text.Split();
-            aCust = createOrder.CustDB.FindCustomerObject(text[text.Length-1]);
-            hideAll();
-            grpOrderManagement.Location = showLocation;
-            lblOrderCustName.Text = aCust.Name;
-            order = new Order(aCust);
+            if (lstOrderCustList.Text.Equals(""))
+                MessageBox.Show("Please select a valid customer");
+            else
+            {
+                String[] text = lstOrderCustList.Text.Split();
+                aCust = createOrder.CustDB.FindCustomerObject(text[text.Length - 1]);
+                hideAll();
+                grpOrderManagement.Location = showLocation;
+                lblOrderCustName.Text = aCust.Name;
+                order = new Order(aCust);
+            }
         }
 
         private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
@@ -278,6 +302,10 @@ namespace PoS.Presentation
             {
                 MessageBox.Show("Unfortunately we only have "+ createOrder.ProdDB.FindNumProduct(prodName)+" available");
             }
+            else if (!(Int32.TryParse(txtOrderQuantity.Text,out number)))
+            {
+                MessageBox.Show("Please enter a valid quantity");
+            }
             else
             {
                 Product prod = createOrder.ProdDB.FindProductObject(prodName);
@@ -291,11 +319,16 @@ namespace PoS.Presentation
         // add order to the orderDB
         private void btnOrderSubmit_Click(object sender, EventArgs e)
         {
-            createOrder.InsertIntoOrderDB(order);
-            MessageBox.Show("Order successfully created");
-            hideAll();
-            clearText();
-            grpFunction.Location = showLocation;
+            if (order.ItemList.Count == 0)
+                MessageBox.Show("Please enter a valid order with one or more order items");
+            else
+            {
+                createOrder.InsertIntoOrderDB(order);
+                MessageBox.Show("Order successfully created");
+                hideAll();
+                clearText();
+                grpFunction.Location = showLocation;
+            }
         }
          //cancel the order  and go back to home screen
         private void btnOrderCancel_Click(object sender, EventArgs e)
@@ -497,7 +530,7 @@ namespace PoS.Presentation
                     hideAll();
                     grpPickingSelect.Location = showLocation;
                     break;
-                case ("Generate Stock Report"):
+                case ("Generate an Expiry Report"):
                     hideAll();
                     fillLists();
                     createRep = new CreateReport(expiredItems);
