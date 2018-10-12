@@ -81,6 +81,8 @@ namespace PoS.DB
         #region Methods - READ
         private void ReadProducts()
         {
+            prodList.Clear();
+
             DataRow myRow = null;
             Product aProd =  new Product();
 

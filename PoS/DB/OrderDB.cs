@@ -175,8 +175,10 @@ namespace PoS.DB
         #endregion
 
         #region Methods - READ
-        private void ReadOrders()
+        public void ReadOrders()
         {
+            ordList.Clear();
+
             // Sets the PK manually to allow .Find() to function
             DataColumn[] pk1 = new DataColumn[1];
             pk1[0] = dsMain.Tables["Table3"].Columns[0];
@@ -253,14 +255,6 @@ namespace PoS.DB
         {
             bool successful = false;
 
-            DataColumn[] pk1 = new DataColumn[1];
-            pk1[0] = dsMain.Tables["Table2"].Columns[0];
-            dsMain.Tables["Table2"].PrimaryKey = pk1;
-
-            DataColumn[] pk2 = new DataColumn[1];
-            pk2[0] = dsMain.Tables["Table3"].Columns[0];
-            dsMain.Tables["Table3"].PrimaryKey = pk2;
-
             // Checks if the object exists, delete it. Otherwise exit with a failure
             if (DeleteListItem(anOrd) == true)
             {
@@ -271,18 +265,18 @@ namespace PoS.DB
                     // --- Order ------------------------------------------
 
                     // Create the sql command for deletion
-                    daMain.DeleteCommand = new SqlCommand("DELETE FROM Order WHERE OrderID = @ORID;", cnMain);
+                    daMain.DeleteCommand = new SqlCommand("DELETE FROM [Order] WHERE OrderID = @ORID;", cnMain);
 
                     // Create the parameters to hide data
-                    CreateDeleteParameters();
+                    CreateDeleteParameters("Table");
 
                     // Delete a row based on the table schema
                     DataRow updatedOrderRow = dsMain.Tables["Table"].Rows[FindRowIndex(anOrd, "Table")];
                     // Kill it with fire
                     updatedOrderRow.Delete();
 
-                    cnMain.Open();
                     daMain.Update(dsMain, "Table");
+                    FillDataSet(sqlOrd);
 
                     // --- OrderItem -------------------------------------------
 
@@ -290,7 +284,7 @@ namespace PoS.DB
                     daMain.DeleteCommand = new SqlCommand("DELETE FROM OrderItem WHERE OrderItemID = @OIID;", cnMain);
 
                     // Create the parameters to hide data
-                    CreateDeleteParameters();
+                    CreateDeleteParameters("Table1");
 
                     foreach (OrderItem item in anOrd.ItemList)
                     {
@@ -301,7 +295,45 @@ namespace PoS.DB
                     }
 
                     daMain.Update(dsMain, "Table1");
-                    cnMain.Close();
+                    FillDataSet(sqlOrd);
+
+                    // ---------------------------------------------------------------------------------------------------***
+
+
+                    // --- OrderRegister --------------------------------------------
+
+                    // Create the sql command for deletion
+                    daMain.DeleteCommand = new SqlCommand("DELETE FROM OrderRegister WHERE OrderID = @ORID;", cnMain);
+
+                    // Create the parameters to hide data
+                    CreateDeleteParameters("Table3");
+
+                    // Same thing but more difficulter
+                    DataRow RegisterRow = dsMain.Tables["Table3"].Rows[FindRowIndex(anOrd, "Table3")];
+                    // It's 12 hours I've been working. Rather delete me plz.
+                    RegisterRow.Delete();
+
+                    daMain.Update(dsMain, "Table3");
+                    FillDataSet(sqlOrd);
+
+                    // --- OrderItemRegister ---------------------------------------
+
+                    // Create the sql command for deletion
+                    daMain.DeleteCommand = new SqlCommand("DELETE FROM OrderItemRegister WHERE OrderItemID = @OIID;", cnMain);
+
+                    // Create the parameters to hide data
+                    CreateDeleteParameters("Both");
+
+                    foreach (OrderItem item in anOrd.ItemList)
+                    {
+                        // Same thing but more difficulter
+                        DataRow itemRegisterRow = dsMain.Tables["Table2"].Rows[FindRowIndex(item, anOrd, "Table2")];
+                        // It's 12 hours I've been working. Rather delete me plz.
+                        itemRegisterRow.Delete();
+                    }
+
+                    daMain.Update(dsMain, "Table2");
+                    FillDataSet(sqlOrd);
 
                     // Set true
                     successful = true;
@@ -312,19 +344,37 @@ namespace PoS.DB
                 }
             }
 
-            FillDataSet(sqlOrd);
-
             return successful;
         }
 
-        public void CreateDeleteParameters()
+        public void CreateDeleteParameters(string table)
         {
             SqlParameter param = default(SqlParameter);
-            param = new SqlParameter("@ORID", SqlDbType.NVarChar, 12, "OrderID");
-            daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@OIID", SqlDbType.NVarChar, 12, "OrderItemID");
-            daMain.InsertCommand.Parameters.Add(param);
+            switch (table)
+            {
+                case ("Table"):
+                    param = new SqlParameter("@ORID", SqlDbType.NVarChar, 13, "OrderID");
+                    daMain.DeleteCommand.Parameters.Add(param);
+                    break;
+                case ("Table1"):
+                    param = new SqlParameter("@OIID", SqlDbType.NVarChar, 13, "OrderItemID");
+                    daMain.DeleteCommand.Parameters.Add(param);
+                    break;
+                case ("Table3"):
+                    param = new SqlParameter("@ORID", SqlDbType.NVarChar, 13, "OrderID");
+                    daMain.DeleteCommand.Parameters.Add(param);
+                    param = new SqlParameter("@CUID", SqlDbType.NVarChar, 13, "CustomerID");
+                    daMain.DeleteCommand.Parameters.Add(param);
+                    break;
+                case ("Both"):
+                    param = new SqlParameter("@ORID", SqlDbType.NVarChar, 13, "OrderID");
+                    daMain.DeleteCommand.Parameters.Add(param);
+
+                    param = new SqlParameter("@OIID", SqlDbType.NVarChar, 13, "OrderItemID");
+                    daMain.DeleteCommand.Parameters.Add(param);
+                    break;
+            }
         }
 
         public bool DeleteListItem(Order ord)
@@ -390,9 +440,10 @@ namespace PoS.DB
             {
                 if (!(row.RowState == DataRowState.Deleted))
                 {
-                    if (ord.OrderID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["Order"]))
+                    if (ord.OrderID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["OrderID"]))
                     {
                         returnValue = rowIndex;
+                        break;
                     }
                 }
                 rowIndex += 1;
@@ -410,9 +461,31 @@ namespace PoS.DB
             {
                 if (!(row.RowState == DataRowState.Deleted))
                 {
-                    if (ord.OrderItemID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["OrderItem"]))
+                    if (ord.OrderItemID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["OrderItemID"]))
                     {
                         returnValue = rowIndex;
+                        break;
+                    }
+                }
+                rowIndex += 1;
+            }
+
+            return returnValue;
+        }
+
+        private int FindRowIndex(OrderItem ord, Order orda, string table)
+        {
+            int rowIndex = 0;
+            int returnValue = -1;
+
+            foreach (DataRow row in dsMain.Tables[table].Rows)
+            {
+                if (!(row.RowState == DataRowState.Deleted))
+                {
+                    if (ord.OrderItemID == Convert.ToString(dsMain.Tables[table].Rows[rowIndex]["OrderItemID"]))
+                    {
+                        returnValue = rowIndex;
+                        break;
                     }
                 }
                 rowIndex += 1;

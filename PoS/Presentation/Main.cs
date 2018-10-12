@@ -28,6 +28,7 @@ namespace PoS.Presentation
         private CancelAnItem cancel = new CancelAnItem();
         private OrderDB orderDB = new OrderDB();
         private Order order;
+        private Order originalOrder;
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
@@ -118,19 +119,26 @@ namespace PoS.Presentation
         private void button6_Click(object sender, EventArgs e)
         {
             lstUpdateOrderItems.Items.Clear();
-            cancel = new CancelAnItem();
             string orderID = listBox2.Text.Split()[2];
-            order = null;
-            //order = cancel .OrdDB.FindOrder(orderID);
-            order = cancel.findOrd(orderID);
-            lblUpdateName.Text = order.Owner.Name;
+            originalOrder = new Order();
+
+            cancel = new CancelAnItem();
+
+            originalOrder = cancel.findOrd(orderID);
+            lblUpdateName.Text = originalOrder.Owner.Name;
             cmbUpdateProducts.Text = "";
             ordItems = new Collection<OrderItem>();
-            ordItems = order.ItemList;
+
+            foreach(OrderItem item in originalOrder.ItemList)
+            {
+                ordItems.Add(item);
+            }
+
             foreach (OrderItem orderitem in ordItems)
             {
                 lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
             }
+
             hideAll();
             grpUpdateOrder2.Location = showLocation; ;
         }
@@ -138,7 +146,6 @@ namespace PoS.Presentation
         private void btnUpdateAddToOrder_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Button Pressed");
-            cancel = new CancelAnItem();
             createOrder = new CreateAnOrder();
             int number;
             Int32.TryParse(txtUpdateQuantity.Text, out number);
@@ -214,7 +221,7 @@ namespace PoS.Presentation
 
         private void btnUpdateCreateOrder_Click(object sender, EventArgs e)
         {
-            bool success = cancel.UpdateOrder(order, ordItems);
+            bool success = cancel.UpdateOrder(originalOrder, ordItems);
             hideAll();
             grpFunction.Location = showLocation;
             
@@ -444,7 +451,6 @@ namespace PoS.Presentation
             foreach (Order x in orders)
             {
                 string txt = "Order ID: " + x.OrderID + " Customer: " + x.Owner.Name;
-                lstReportOrders.Items.Add(txt);
                 listBox2.Items.Add(txt);
 
                 lstReportOrders.Items.Add("Order ID: " + x.OrderID + " | Customer: " + x.Owner.Name);

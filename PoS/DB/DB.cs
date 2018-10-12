@@ -53,6 +53,8 @@ namespace PoS.DB
         #region Methods
         public void FillDataSet(string sql)
         {
+            dsMain.Reset();
+
             if (daMain == null)
             {
                 daMain = new SqlDataAdapter(sql, cnMain);

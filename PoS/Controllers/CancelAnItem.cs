@@ -24,7 +24,6 @@ namespace PoS.Controllers
         {
             ordDb = new OrderDB();
             prodDb = new ProductDB();
-            toBeReserved = new Collection<string>();
         }
 
         public CancelAnItem(Order updateOrd)
@@ -32,7 +31,6 @@ namespace PoS.Controllers
             ordDb = new OrderDB();
             prodDb = new ProductDB();
             anOrd = updateOrd;
-            toBeReserved = new Collection<string>();
         }
         #endregion
 
@@ -42,6 +40,7 @@ namespace PoS.Controllers
         {
             return ordDb.FindOrder(id);
         }
+
         public bool UpdateOrder(Order ord, Collection<OrderItem> items)
         {
             bool success = false;
@@ -58,12 +57,18 @@ namespace PoS.Controllers
             string orderId = ord.OrderID;
 
             // Create a new order with the same orderid
-            CreateAnOrder inserted = new CreateAnOrder(ord.Owner);
-            inserted.AnOrd.OrderID = orderId;
-            inserted.AnOrd.ItemList = items;
+            CreateAnOrder inserted = new CreateAnOrder();
+
+            ord.ItemList.Clear();
+
+            foreach(OrderItem item in items)
+            {
+                ord.ItemList.Add(item);
+            }
 
             // Insert
             success = inserted.InsertIntoOrderDB(ord);
+
             return success;
         }
         #endregion
@@ -78,6 +83,11 @@ namespace PoS.Controllers
         {
             get { return prodDb; }
             set { prodDb = value; }
+        }
+        public Order AnOrd
+        {
+            get { return anOrd; }
+            set { anOrd = value; }
         }
         #endregion
     }
