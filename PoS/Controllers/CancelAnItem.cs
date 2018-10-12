@@ -16,7 +16,6 @@ namespace PoS.Controllers
         private ProductDB prodDb;
         private OrderDB ordDb;
         private Order anOrd;
-        private Collection<string> toBeReserved;
         #endregion
 
         #region Constructors

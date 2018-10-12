@@ -53,6 +53,7 @@ namespace PoS.DB
         #region Methods
         public void FillDataSet(string sql)
         {
+            // Empty the set
             dsMain.Reset();
 
             if (daMain == null)
