@@ -32,6 +32,8 @@ namespace PoS.Presentation
         private Customer aCust;
         private Employee emp;
         private Collection<OrderItem> ordItems;
+        private decimal updateTotal;
+        private decimal createTotal;
         private Point showLocation = new Point(259, 107);
         #endregion
 
@@ -126,6 +128,7 @@ namespace PoS.Presentation
         {
             try
             {
+                updateTotal = 0;
                 lstUpdateOrderItems.Items.Clear();
                 string orderID = listBox2.Text.Split()[2];
                 originalOrder = new Order();
@@ -140,17 +143,19 @@ namespace PoS.Presentation
                 foreach (OrderItem item in originalOrder.ItemList)
                 {
                     ordItems.Add(item);
+                    updateTotal += Convert.ToDecimal(item.SubTotal);
                 }
 
                 foreach (OrderItem orderitem in ordItems)
                 {
                     lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
                 }
-
+                
+                lblUpdateTotal.Text = "Total: R" + updateTotal;
                 hideAll();
                 grpUpdateOrder2.Location = showLocation;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Please select a valid order");
             }
@@ -200,7 +205,10 @@ namespace PoS.Presentation
                 {
                     lstUpdateOrderItems.Items.Add("Order Item ID: " + orderitem.OrderItemID + " Product: " + orderitem.ItemProduct.Name + " Subtotal: " + Convert.ToString(orderitem.SubTotal));
                 }
+                clearText();
                 txtUpdateQuantity.Text = "";
+                updateTotal += Convert.ToDecimal(item.SubTotal);
+                lblUpdateTotal.Text = "Total: R" + updateTotal;
             }
         }
 
@@ -214,15 +222,19 @@ namespace PoS.Presentation
             else
             {
                 string id = lstUpdateOrderItems.Text.Split()[3].TrimEnd();
-
+                OrderItem temp = null;
                 for (int i = 0; i < ordItems.Count(); i++)
                 {
                     if (ordItems[i].OrderItemID.Equals(id))
                     {
+                        temp = ordItems[i];
                         ordItems.RemoveAt(i);
                         break;
                     }
                 }
+                clearText();
+                updateTotal -= Convert.ToDecimal(temp.SubTotal);
+                lblUpdateTotal.Text = "Total: R" + updateTotal;
                 lstUpdateOrderItems.Items.Clear();
                 foreach (OrderItem orderitem in ordItems)
                 {
@@ -252,6 +264,7 @@ namespace PoS.Presentation
         private void btnSelect_Click(object sender, EventArgs e)
         {
             createOrder = new CreateAnOrder();
+            createTotal = 0;
             if (lstOrderCustList.Text.Equals(""))
                 MessageBox.Show("Please select a valid customer");
             else
@@ -262,8 +275,11 @@ namespace PoS.Presentation
                 grpOrderManagement.Location = showLocation;
                 lblOrderCustName.Text = aCust.Name;
                 order = new Order(aCust);
+                lblCreateTotal.Text = "Total: R"+createTotal;
             }
         }
+
+        
 
         private void btnOrderBack_Click(object sender, EventArgs e) //go back to select customer order is for
         {
@@ -313,6 +329,8 @@ namespace PoS.Presentation
                 lstOrderItems.Items.Add("Order Item ID: "+orderItem.OrderItemID+" Item Name: "+orderItem.ItemProduct.Name+" Quantity: "+orderItem.Quantity+" Sub-total: "+orderItem.SubTotal);
                 Boolean success = order.AddToOrder(orderItem);
                 clearText();
+                createTotal += Convert.ToDecimal(orderItem.SubTotal);
+                lblCreateTotal.Text = "Total: R" + createTotal;
             }
         }
         
@@ -335,6 +353,7 @@ namespace PoS.Presentation
         {
             lstOrderItems.Items.Clear();
             hideAll();
+            clearText();
             grpFunction.Location = showLocation;
         }
         // remove an item from the order
@@ -345,11 +364,25 @@ namespace PoS.Presentation
                 string[] text = lstOrderItems.Text.Split();
                 string itemID = text[3];
 
-                itemID.Trim();
+                itemID = itemID.Trim();
+                OrderItem temp = null;
+                foreach (OrderItem item in order.ItemList)
+                {
+                    if (itemID.Equals(item.OrderItemID))
+                    {
+                        temp = item;
+                        break;
+                    }
+                }
                 order.RemoveFromOrder(itemID);
+
                 lstOrderItems.Items.RemoveAt(lstOrderItems.SelectedIndex);
+
+                clearText();
+                createTotal -= Convert.ToDecimal(temp.SubTotal);
+                lblCreateTotal.Text = "Total: R" + createTotal;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Please select a valid item");
             }
@@ -624,6 +657,8 @@ namespace PoS.Presentation
             txtCustSuburb.Text = "";
             txtOrderQuantity.Text = "";
             txtUpdateQuantity.Text = "";
+            lblCreateTotal.Text = "";
+            lblUpdateTotal.Text = "";
         }
 
         private void exitApp(object sender, FormClosedEventArgs e)
