@@ -32,7 +32,7 @@ namespace PoS.BusDomain
             reportId = "REP"+generator.CreateID();
             expiredAndExpiring = new Collection<Product>();
             prodConnect = new ProductDB();
-            chart = new Chart();
+            Chart1 = new Chart();
             dataGrid = new DataGridView();
             expiredAndExpiring = prodConnect.ExpiryList();
             populateChart(expiredAndExpiring, prodCharta);
@@ -42,8 +42,7 @@ namespace PoS.BusDomain
         #region Methods
         public void generateReport()
         {
-            //populateChart(expiredAndExpiring);
-            //expiryReport.load();
+            
         }
 
         public void populateChart(Collection<Product> items, Chart prodChart)
@@ -70,6 +69,7 @@ namespace PoS.BusDomain
             prodChart.Visible = true;
         }
 
+        
         public void populateTable(Collection<OrderItem> items)
         {
             for (int i = 0; i < items.Count(); i++)
@@ -78,6 +78,7 @@ namespace PoS.BusDomain
             }
             dataGrid.Visible = true;
         }
+
         #endregion
 
         #region Property Methods
@@ -91,16 +92,13 @@ namespace PoS.BusDomain
             get => expiredAndExpiring;
             set => expiredAndExpiring = value;
         }
-        public DataGridView DataGrid
-        {
-            get { return dataGrid; }
-            set { dataGrid = value; }
-        }
         public Chart Chart
         {
-            get { return chart; }
-            set { chart = value; }
+            get { return Chart1; }
+            set { Chart1 = value; }
         }
+
+        public Chart Chart1 { get => chart; set => chart = value; }
         #endregion
     }
 }

@@ -569,7 +569,6 @@ namespace PoS.Presentation
                     createRep = new CreateReport(expiredItems);
                     lblReportNum.Text = createRep.Exp.ReportID;
                     dateBox.Text = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    // expiredItems = createRep.Exp.Chart; //chart
                     grpReport.Show();
                     grpReport.Location = showLocation;
                     break;
@@ -578,7 +577,7 @@ namespace PoS.Presentation
                     break;
             }
         }
-
+        
         private void hideAll()
         {
             Point hiddenLocation = new Point(257,524);
