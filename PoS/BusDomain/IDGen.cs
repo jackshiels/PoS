@@ -11,6 +11,7 @@ namespace PoS.BusDomain
 {
     public class IDGen
     {
+        // ID stuff
         #region Members
         private int hashVal; //int value that will be returned by the CreateID method
         private Guid hashKey; //GUID object used to generate the random string used as input for the Hash method
