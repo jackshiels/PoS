@@ -606,7 +606,7 @@ namespace PoS.Presentation
                     lstFunctions.Items.Add("Generate a Picking List");
                     break;
                 case (Employee.RoleType.StockControlClerk):
-                    lstFunctions.Items.Add("Generate Stock Report");
+                    lstFunctions.Items.Add("Generate an Expiry Report");
                     break;
             }
         }
