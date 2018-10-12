@@ -31,7 +31,7 @@ namespace PoS.BusDomain
             customerId = "CUS" + generator.CreateID();
         }
 
-        public Customer(string name, string address) : base(name,address)
+        public Customer(string name, string address) : base(name, address)
         {
             // Creates a Customer and fills the Person superclass with values
             generator = new IDGen();
